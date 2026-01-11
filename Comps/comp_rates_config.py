@@ -139,6 +139,7 @@ elif args.comps_all:
 
 elif args.duos:
     run_commands = [
+        "Char usages 8 - 10",
         "Duos check",
     ]
 

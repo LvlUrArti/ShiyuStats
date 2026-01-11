@@ -11,19 +11,9 @@ from slugify import slugify
 
 with open("../Comps/prydwen-slug.json") as slug_file:
     slug = json.load(slug_file)
-with open("phases.json") as phases_file:
-    phases = json.load(phases_file)
 
-if da_mode:
-    phases["da_phase"] = RECENT_PHASE
-else:
-    phases["sd_phase"] = RECENT_PHASE
-
-with open("phases.json", "w") as phases_file:
-    phases_file.write(json.dumps(phases, indent=2))
-
-sd_phase = phases["sd_phase"]
-da_phase = phases["da_phase"]
+sd_phase = RECENT_PHASE
+da_phase = RECENT_PHASE
 
 with open("../data/characters.json") as char_file:
     CHARACTERS = json.load(char_file)
@@ -33,6 +23,12 @@ with open("../char_results/" + sd_phase + "/all_C1.json") as stats:
     sd_dict_e1 = json.load(stats)
 with open("../char_results/" + sd_phase + "/all_E0S0.json") as stats:
     sd_dict_s0 = json.load(stats)
+with open("../char_results/" + sd_phase + "/5-1.json") as stats:
+    sd_dict_boss_1 = json.load(stats)
+with open("../char_results/" + sd_phase + "/5-2.json") as stats:
+    sd_dict_boss_2 = json.load(stats)
+with open("../char_results/" + sd_phase + "/5-3.json") as stats:
+    sd_dict_boss_3 = json.load(stats)
 with open("../char_results/" + da_phase + "_da/all2.json") as stats:
     da_dict = json.load(stats)
 with open("../char_results/" + da_phase + "_da/all_C1.json") as stats:
@@ -140,6 +136,18 @@ for char in CHARACTERS:
         (x for x in sd_dict_s0 if x["char"] == char),
         dict[str, str](),
     )
+    sd_dict_boss_1_char: dict[str, str] = next(
+        (x for x in sd_dict_boss_1 if x["char"] == char),
+        dict[str, str](),
+    )
+    sd_dict_boss_2_char: dict[str, str] = next(
+        (x for x in sd_dict_boss_2 if x["char"] == char),
+        dict[str, str](),
+    )
+    sd_dict_boss_3_char: dict[str, str] = next(
+        (x for x in sd_dict_boss_3 if x["char"] == char),
+        dict[str, str](),
+    )
     da_dict_e1_char: dict[str, str] = next(
         (x for x in da_dict_e1 if x["char"] == char),
         dict[str, str](),
@@ -171,6 +179,15 @@ for char in CHARACTERS:
         "avg_round_q1_sd_e1": sd_dict_e1_char.get("q1_round", 600),
         "avg_round_sd_s0": sd_dict_s0_char.get("avg_round", 600),
         "avg_round_q1_sd_s0": sd_dict_s0_char.get("q1_round", 600),
+        "app_rate_sd_boss_1": sd_dict_boss_1_char.get("app_rate", 0),
+        "avg_round_sd_boss_1": sd_dict_boss_1_char.get("avg_round", 0),
+        "avg_round_q1_sd_boss_1": sd_dict_boss_1_char.get("q1_round", 0),
+        "app_rate_sd_boss_2": sd_dict_boss_2_char.get("app_rate", 0),
+        "avg_round_sd_boss_2": sd_dict_boss_2_char.get("avg_round", 0),
+        "avg_round_q1_sd_boss_2": sd_dict_boss_2_char.get("q1_round", 0),
+        "app_rate_sd_boss_3": sd_dict_boss_3_char.get("app_rate", 0),
+        "avg_round_sd_boss_3": sd_dict_boss_3_char.get("avg_round", 0),
+        "avg_round_q1_sd_boss_3": sd_dict_boss_3_char.get("q1_round", 0),
         "sample_sd": uses_sd.get(char, {}).get("sample", 0),
         "sample_size_players_sd": (uses_sd.get(char, {}).get("sample_size_players", 0)),
         "app_rate_da": uses_da.get(char, {}).get("app_rate", 0),

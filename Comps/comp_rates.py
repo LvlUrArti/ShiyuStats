@@ -59,8 +59,24 @@ if isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         self_uids = set(next(iter(reader)))
+    with open("../../access.csv", encoding="UTF8") as f:
+        reader = csv.reader(f, delimiter=",")
+        random_uids = {item for sublist in list(reader) for item in sublist}
+    with open("../../collect/collected_interknot.csv", encoding="UTF8") as f:
+        reader = csv.reader(f, delimiter=",")
+        interknot_uids = {item for sublist in list(reader) for item in sublist}
+    with open("../../collect/collected_stardb.csv", encoding="UTF8") as f:
+        reader = csv.reader(f, delimiter=",")
+        star_db_uids = {item for sublist in list(reader) for item in sublist}
+    with open("../../collect/collected_hoyobuddy.csv", encoding="UTF8") as f:
+        reader = csv.reader(f, delimiter=",")
+        hoyobuddy_uids = {item for sublist in list(reader) for item in sublist}
 else:
     self_uids: set[str] = set()
+    random_uids: set[str] = set()
+    interknot_uids: set[str] = set()
+    star_db_uids: set[str] = set()
+    hoyobuddy_uids: set[str] = set()
 
 if da_mode:
     three_stages = ["1-1", "1-2", "1-3"]
@@ -305,9 +321,12 @@ def used_comps(
 ) -> dict[tuple[str, ...], CompUsage]:
     """Return the dictionary of all the comps used and how many times they were used."""
     comps_dict: dict[tuple[str, ...], CompUsage] = {}
-    total_self_comps = 0
     all_comp_uids.clear()
     all_comp_self_uids: set[str] = set()
+    all_comp_random_uids: set[str] = set()
+    all_comp_interknot_uids: set[str] = set()
+    all_comp_star_db_uids: set[str] = set()
+    all_comp_hoyobuddy_uids: set[str] = set()
     whale_count = 0
     f2p_count = 0
 
@@ -320,8 +339,15 @@ def used_comps(
 
         all_comp_uids.add(comp.player)
         if comp.player in self_uids:
-            total_self_comps += 1
             all_comp_self_uids.add(comp.player)
+        if comp.player in random_uids:
+            all_comp_random_uids.add(comp.player)
+        if comp.player in interknot_uids:
+            all_comp_interknot_uids.add(comp.player)
+        if comp.player in star_db_uids:
+            all_comp_star_db_uids.add(comp.player)
+        if comp.player in hoyobuddy_uids:
+            all_comp_hoyobuddy_uids.add(comp.player)
         if len(comp_tuple) < 3:
             continue
 
@@ -385,10 +411,11 @@ def used_comps(
     chamber_num = list(str(filename).split("-"))
     if len(chamber_num) > 1 and chamber_num[1] == "1" and not da_mode:
         sample_size[chamber_num[0]]["total"] = len(all_comp_uids)
-        sample_size[chamber_num[0]]["self_report"] = len(all_comp_self_uids)
-        sample_size[chamber_num[0]]["random"] = len(all_comp_uids) - len(
-            all_comp_self_uids,
-        )
+        sample_size[chamber_num[0]]["prydwen"] = len(all_comp_self_uids)
+        sample_size[chamber_num[0]]["random"] = len(all_comp_random_uids)
+        sample_size[chamber_num[0]]["interknot"] = len(all_comp_interknot_uids)
+        sample_size[chamber_num[0]]["star_db"] = len(all_comp_star_db_uids)
+        sample_size[chamber_num[0]]["hoyobuddy"] = len(all_comp_hoyobuddy_uids)
     if whale_only:
         print("Whale percentage: " + str(whale_count / len(all_comp_uids)))
     return comps_dict

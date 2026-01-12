@@ -147,8 +147,6 @@ def main() -> None:
     avg_round_stage: dict[str, list[int]] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
-    if da_mode:
-        sample_size["1"] = sample_size["all"].copy()
 
     with (
         open("../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv")

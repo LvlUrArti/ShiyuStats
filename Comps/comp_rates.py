@@ -58,9 +58,9 @@ all_comp_uids: set[str] = set()
 if isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
-        self_uids = next(iter(reader))
+        self_uids = set(next(iter(reader)))
 else:
-    self_uids = []
+    self_uids: set[str] = set()
 
 if da_mode:
     three_stages = ["1-1", "1-2", "1-3"]

@@ -62,9 +62,9 @@ def main() -> None:
     if os.path.isfile("../../uids.csv"):
         with open("../../uids.csv", encoding="UTF8") as f:
             reader = csv.reader(f, delimiter=",")
-            self_uids = next(iter(reader))
+            self_uids = set(next(iter(reader)))
     else:
-        self_uids = []
+        self_uids: set[str] = set()
 
     da_filename = "_da" if da_mode else ""
     with (
@@ -81,7 +81,6 @@ def main() -> None:
 
     # uid_freq_comp will help detect duplicate UIDs
     uid_freq_comp: dict[str, int] = {}
-    self_freq_comp: dict[str, int] = {}
     last_uid = "0"
     skip_uid = False
 
@@ -109,8 +108,6 @@ def main() -> None:
                 da_mode and int("".join(filter(str.isdigit, line[2]))) > 0
             ):
                 uid_freq_comp[line[0]] = 1
-                if line[0] in self_uids:
-                    self_freq_comp[line[0]] = 1
             else:
                 skip_uid = True
         last_uid = line[0]
@@ -150,11 +147,6 @@ def main() -> None:
     avg_round_stage: dict[str, list[int]] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
-    sample_size["all"] = {
-        "total": len(uid_freq_comp),
-        "self_report": len(self_freq_comp),
-        "random": len(uid_freq_comp) - len(self_freq_comp),
-    }
     if da_mode:
         sample_size["1"] = sample_size["all"].copy()
 
@@ -172,7 +164,7 @@ def main() -> None:
     player = PlayerPhase(last_uid)
     # uid_freq_char and last_uid will help detect duplicate UIDs
     last_uid = "0"
-    uid_freq_char: list[str] = []
+    uid_freq_char: set[str] = set()
 
     # Append lines
     for line in reader:
@@ -183,7 +175,7 @@ def main() -> None:
                 if line[0] in uid_freq_char:
                     skip_uid = True
                 else:
-                    uid_freq_char.append(line[0])
+                    uid_freq_char.add(line[0])
             if not skip_uid:
                 if line[0] != last_uid:
                     all_players[last_uid] = player

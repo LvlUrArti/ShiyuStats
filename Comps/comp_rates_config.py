@@ -45,10 +45,10 @@ with open(str(os.getenv("REPO_PATH")) + "/data/w-engine.json") as char_file:
     WENGINE = json.load(char_file)
 
 # no need to add 2.2.1"_da"
-RECENT_PHASE = "2.5.1"
+RECENT_PHASE = "2.5.2"
 
 # if no past phase, past_phase = "null"
-past_phase = "2.4.1"
+past_phase = "2.5.1"
 # if as: da_mode = True
 da_mode: bool = args.deadly_assault
 
@@ -65,8 +65,8 @@ if da_mode:
 RECENT_PHASE_PF = RECENT_PHASE + suffix
 past_phase = past_phase + suffix
 
-char_infographics = ["Zhu Yuan", "Ben", "Nicole"]
-char_infographics = char_infographics[0]
+char_infographics = {"Zhu Yuan", "Ben", "Nicole"}
+char_infographics = next(iter(char_infographics))
 
 # threshold for comps in character infographics, non-inclusive
 char_app_rate_threshold = 0.25
@@ -87,7 +87,7 @@ whale_only: bool = args.whale
 f2p_only: bool = args.f2p
 
 # Char infographics should be separated from overall comp rankings
-run_commands = [
+run_commands = {
     # "Duos check",
     "Char usages 8 - 10",
     "Char usages for each stage",
@@ -97,56 +97,56 @@ run_commands = [
     # "Character specific infographics",
     # "Char usages all stages",
     # "Comp usage all stages",
-]
+}
 
 if args.whale or args.top or args.f2p:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Comp usage 8 - 10",
-    ]
+    }
 
 elif args.chars_top:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
-    ]
+    }
 
 elif args.comps_top:
-    run_commands = [
+    run_commands = {
         "Comp usage 8 - 10",
-    ]
+    }
 
 elif args.all:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Char usages for each stage (combined)",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    ]
+    }
 
 elif args.chars_all:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
         "Char usages for each stage (combined)",
-    ]
+    }
 
 elif args.comps_all:
-    run_commands = [
+    run_commands = {
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    ]
+    }
 
 elif args.duos:
-    run_commands = [
+    run_commands = {
         "Char usages 8 - 10",
         "Duos check",
-    ]
+    }
 
-sig_weaps: list[str] = []
+sig_weaps: set[str] = set()
 for wengine in WENGINE:
     if WENGINE[wengine]["availability"] == "Limited S":
-        sig_weaps += [WENGINE[wengine]["name"]]
+        sig_weaps.add(WENGINE[wengine]["name"])
 
 alt_comps = "Character specific infographics" in run_commands
 if alt_comps and char_app_rate_threshold > app_rate_threshold:

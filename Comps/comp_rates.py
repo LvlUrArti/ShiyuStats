@@ -576,13 +576,14 @@ def comp_usages_write(
                 reverse=True,
             ),
         )
-    comps_dict = dict(
-        sorted(
-            comps_dict.items(),
-            key=lambda t: t[1].round,
-            reverse=True,
-        ),
-    )
+    else:
+        comps_dict = dict(
+            sorted(
+                comps_dict.items(),
+                key=lambda t: t[1].round,
+                reverse=True,
+            ),
+        )
     comp_names: list[str] = []
     dual_comp_names: list[str] = []
 

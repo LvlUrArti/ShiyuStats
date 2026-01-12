@@ -93,6 +93,7 @@ async def main() -> None:
             "weapon",
             "element",
             "artifacts",
+            "potential",
         ]
         writer_chars = csv.writer(
             open(filename + "_char.csv", "w", encoding="UTF8", newline=""),
@@ -276,6 +277,7 @@ async def main() -> None:
 
                         line.append(char_set)
                         line_chars.append(char_set)
+                        line_chars.append(character.potential)
 
                         writer.writerow(remove_nbsp(line))
                         writer_chars.writerow(remove_nbsp(line_chars))
@@ -294,11 +296,11 @@ async def main() -> None:
                     enka.errors.EnkaAPIError,
                 ):
                     print("timeout")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(10)
 
                 except asyncio.exceptions.TimeoutError:
                     print("timeout")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(10)
 
                 except AttributeError:
                     print(f"{uid}: {traceback.format_exc()}")

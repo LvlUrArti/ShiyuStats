@@ -9,7 +9,7 @@ char_data: dict[str, dict[str, list[str]]] = {}
 print_data: list[list[str]] = []
 
 char_data_path = "../data/raw_csvs_real/" + RECENT_PHASE + "_char.csv"
-enka_char_path = "../enka.network/results_real/" + RECENT_PHASE + "/output1_char.csv"
+enka_char_path = "../data/raw_csvs_real/" + RECENT_PHASE + "_build_char.csv"
 
 # with open("char_data.csv", 'r') as f:
 with open(enka_char_path, encoding="UTF8") as f:

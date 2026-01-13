@@ -1,3 +1,5 @@
+"""Config file for enkanetwork.py."""
+
 from __future__ import annotations
 
 import csv
@@ -59,10 +61,9 @@ for make_path in [
     if not os.path.exists(make_path):
         os.makedirs(make_path)
 
-filenum = 1
-while os.path.exists("results_real/" + phase_num + "/output" + str(filenum) + ".csv"):
-    filenum += 1
-filename = "results_real/" + phase_num + "/output" + str(filenum)
+filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build"
+char_filename = filename + "_char.csv"
+filename = filename + ".csv"
 
 
 def to_snake_case(key: str) -> str:

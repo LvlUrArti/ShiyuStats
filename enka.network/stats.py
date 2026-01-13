@@ -126,9 +126,9 @@ def transform_csv_data(file_path: str) -> dict[int, dict[str, CharacterData]]:
 
 
 if os.path.exists("../data/raw_csvs_real/"):
-    filename = "results_real/" + RECENT_PHASE + "/output1.csv"
+    filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build.csv"
 else:
-    filename = "results/" + RECENT_PHASE + "_output.csv"
+    filename = "../data/raw_csvs/" + RECENT_PHASE + "_build.csv"
 data = transform_csv_data(filename)
 
 type_hints = CharacterData.__annotations__

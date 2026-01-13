@@ -7,6 +7,7 @@ import asyncio
 import sys
 import traceback
 from datetime import datetime
+from os import stat as os_stat
 from pickle import dump as p_dump
 from pickle import load as p_load
 from typing import TYPE_CHECKING
@@ -19,6 +20,7 @@ from enka.zzz import (  # pyright: ignore[reportMissingTypeStubs]
     SkillType,
 )
 from enka_config import (
+    char_filename,
     csv,
     desired_stats_dict,
     desired_stats_keys,
@@ -73,6 +75,11 @@ def input_thread(input_list: list[bool]) -> None:
     input_list.append(True)
 
 
+def empty_file(path: str) -> bool:
+    """Check if file is empty."""
+    return os_stat(path).st_size == 0
+
+
 async def main() -> None:
     """Compile character builds."""
     async with enka.ZZZClient(enka.zzz.Language.ENGLISH) as client:
@@ -81,8 +88,9 @@ async def main() -> None:
         if is_update == "y":
             await client.update_assets()
 
-        writer = csv.writer(open(filename + ".csv", "w", encoding="UTF8", newline=""))
-        writer.writerow(output_keys)
+        writer = csv.writer(open(filename, "a", encoding="UTF8", newline=""))
+        if empty_file(filename):
+            writer.writerow(output_keys)
 
         header = [
             "uid",
@@ -95,10 +103,12 @@ async def main() -> None:
             "artifacts",
             "potential",
         ]
+
         writer_chars = csv.writer(
-            open(filename + "_char.csv", "w", encoding="UTF8", newline=""),
+            open(char_filename, "a", encoding="UTF8", newline=""),
         )
-        writer_chars.writerow(header)
+        if empty_file(char_filename):
+            writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))

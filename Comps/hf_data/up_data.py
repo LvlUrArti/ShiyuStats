@@ -6,6 +6,7 @@ from time import sleep
 
 from huggingface_hub import (
     CommitOperationAdd,
+    CommitOperationDelete,
     HfApi,
     hf_hub_download,  # pyright: ignore[reportUnknownVariableType]
 )
@@ -258,16 +259,54 @@ def update_readme(
     print("✅ Done! Check your dataset page.")
 
 
+def delete_build_files() -> None:
+    """Delete all files with the "_build_char" suffix."""
+    api = HfApi()
+
+    # 1. Get all files currently in the repository
+    print(f"🔍 Fetching file list from {REPO_ID}...")
+    all_files = api.list_repo_files(repo_id=REPO_ID, repo_type="dataset")
+
+    # 2. Filter for your target pattern (*_build_char.csv)
+    files_to_delete = [f for f in all_files if f.endswith("_build_char.csv")]
+
+    if not files_to_delete:
+        print("✨ No files matching the pattern were found.")
+        return
+
+    print(f"⚠️  Found {len(files_to_delete)} files to delete:")
+    for f in files_to_delete:
+        print(f"   - {f}")
+
+    # Safety confirmation
+    confirm = input("\nAre you sure you want to delete these files? (y/n): ")
+    if confirm.lower() != "y":
+        print("❌ Deletion cancelled.")
+        return
+
+    # 3. Create a single commit to delete all files at once
+    print("🚀 Deleting files...")
+    operations = [CommitOperationDelete(path_in_repo=f) for f in files_to_delete]
+
+    api.create_commit(
+        repo_id=REPO_ID,
+        repo_type="dataset",
+        operations=operations,
+        commit_message=f"🗑️ Remove {len(files_to_delete)} build files",
+    )
+
+    print("✅ Successfully deleted matching files.")
+
+
 if __name__ == "__main__":
     scan_upload_and_clean()
     config = generate_yaml_config()
     update_readme(config)
 
-    if __name__ == "__main__":
-        notification.notify(
-            title="Finished",
-            message="Finished uploading data",
-            # displaying time
-            timeout=2,
-        )  # pyright: ignore[reportOptionalCall]
-        sleep(0.1)
+    notification.notify(
+        title="Finished",
+        message="Finished uploading data",
+        # displaying time
+        timeout=2,
+    )  # pyright: ignore[reportOptionalCall]
+    sleep(0.1)

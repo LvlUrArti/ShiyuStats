@@ -1,6 +1,33 @@
 # ShiyuStats
+
 Compile Shiyu Defense data using Python.
 
-You can find the raw data in the data/raw_csvs folder. Feel free to analyze the data and post the findings. If you do, please credit me (LvlUrArti).
+You can find the raw data in my [Hugging Face Dataset](https://huggingface.co/datasets/LvlUrArti/ShiyuData). Feel free to analyze the data and post the findings. If you do, please credit me (LvlUrArti).
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q4IJ3P6)
+
+# How to use
+
+## Setup
+
+Run `pip install -r requirements.txt`
+
+In the `Comps/hf_data` folder, run `python fetch_data.py`
+
+Change past and recent phase in `Comps/comp_rates_config.py`
+
+## Compile for all gamemodes
+
+Run `sh compile_all.sh`
+
+Results can be found in the `char_results` and `comp_results` folders
+
+## Compile specific gamemode
+
+> By default, this compiles data for Shiyu Defense, add the argument `-da` at the end of all python commands to compile data for deadly assault. So instead of `python comp_rates.py`, run `python comp_rates.py -pf`.
+
+In `Comps` folder, run `python comp_rates.py`
+
+Still in `Comps` folder, run `python move.py`
+
+In `enka.network` folder, run `python stats.py`

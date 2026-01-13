@@ -1,0 +1,12 @@
+requests
+genshin>=1.7.6
+enka>=2.5.0
+Send2Trash
+dotenv
+pandas
+scipy
+plyer
+python-slugify
+matplotlib
+pynput
+huggingface_hub

@@ -333,8 +333,9 @@ def used_comps(
     for comp in all_comps:
         comp_tuple = tuple(comp.characters)
         cur_room = next(iter(str(comp.room).split("-")))
-        # Check if the comp is used in the rooms that are being checked
-        if comp.room not in rooms:
+        # Check if the comp is used in the rooms that are being checked, and
+        # if the clear is valid (reached 3 stars)
+        if comp.room not in rooms or not comp.valid_clear:
             continue
 
         all_comp_uids.add(comp.player)
@@ -409,7 +410,7 @@ def used_comps(
         )
 
     chamber_num = list(str(filename).split("-"))
-    if len(chamber_num) > 1 and chamber_num[1] == "1" and not da_mode:
+    if len(chamber_num) > 1 and chamber_num[1] == "1":
         sample_size[chamber_num[0]]["total"] = len(all_comp_uids)
         sample_size[chamber_num[0]]["prydwen"] = len(all_comp_self_uids)
         sample_size[chamber_num[0]]["random"] = len(all_comp_random_uids)

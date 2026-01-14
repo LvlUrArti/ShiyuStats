@@ -85,6 +85,7 @@ def main() -> None:
     skip_uid = False
 
     for line in reader:
+        score = line[3] if da_mode else line[4]
         star_num = 0
         match str(line[3]):
             case "B":
@@ -96,6 +97,8 @@ def main() -> None:
             case _:
                 if not (da_mode):
                     print("Unknown star num")
+                else:
+                    star_num = int(line[2])
         if skip_self and line[0] in self_uids:
             continue
         if skip_random and line[0] not in self_uids:
@@ -104,12 +107,8 @@ def main() -> None:
             skip_uid = False
             if line[0] in uid_freq_comp:
                 skip_uid = True
-            elif (not da_mode and star_num > 0) or (
-                da_mode and int("".join(filter(str.isdigit, line[2]))) > 0
-            ):
-                uid_freq_comp[line[0]] = 1
             else:
-                skip_uid = True
+                uid_freq_comp[line[0]] = 1
         last_uid = line[0]
         if not skip_uid:
             stage = str(line[1])
@@ -120,24 +119,14 @@ def main() -> None:
                     comp_chars_temp.append(line[i])
                     cons_chars_temp.append(int(float(line[i + 1])))
             if comp_chars_temp:
-                comp = (
-                    Composition(
-                        line[0],
-                        comp_chars_temp,
-                        line[3],
-                        "1-" + stage,
-                        line[12],
-                        cons_chars_temp,
-                    )
-                    if da_mode
-                    else Composition(
-                        line[0],
-                        comp_chars_temp,
-                        line[4],
-                        stage + "-" + str(line[2]),
-                        line[11],
-                        cons_chars_temp,
-                    )
+                comp = Composition(
+                    line[0],
+                    comp_chars_temp,
+                    score,
+                    star_num,
+                    "1-" + stage if da_mode else stage + "-" + str(line[2]),
+                    line[12] if da_mode else line[11],
+                    cons_chars_temp,
                 )
                 all_comps.append(comp)
 

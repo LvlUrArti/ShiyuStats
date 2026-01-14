@@ -28,6 +28,7 @@ class Composition:
         uid: str,
         comp_chars: list[str],
         round_num: str,
+        star_num: int,
         room: str,
         bangboo: str,
         comp_chars_cons: list[int],
@@ -36,6 +37,7 @@ class Composition:
         self.player = str(uid)
         self.room = room
         self.round_num = int(round_num)
+        self.star_num = int(star_num)
         self.char_structs(comp_chars, comp_chars_cons)
         self.bangboo = bangboo
 
@@ -160,6 +162,7 @@ class Composition:
         self.characters = self.dps + self.subdps + self.stun + self.support
 
         self.flag_cheat = self.detect_cheat(len_elem, len_role)
+        self.valid_clear = self.star_num == 3
 
         if not self.dps and not self.subdps and "Soukaku" in self.support:
             self.support.remove("Soukaku")

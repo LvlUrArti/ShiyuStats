@@ -137,6 +137,7 @@ class Composition:
                 "Yuzuha",
                 "Lucia",
                 "Zhao",
+                "Sunna",
             ]:
                 self.support.insert(0, character)
             elif character in [
@@ -216,6 +217,7 @@ class Composition:
 
         cheat_conditions: list[bool] = [
             len_role["Anomaly"] > 0 and len_role["Attack"] + len_role["Rupture"] > 0,
+            len(self.characters) < 3,
             any(sd_weak) and not da_mode,
             any(da_weak) and da_mode,
         ]

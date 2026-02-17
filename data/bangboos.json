@@ -257,5 +257,12 @@
         "id": "54021",
         "name": "Sprout",
         "availability": "S"
+    },
+    "Biggest Fan": {
+        "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole38.png",
+        "desc": "",
+        "id": "54010",
+        "name": "Biggest Fan",
+        "availability": "S"
     }
 }

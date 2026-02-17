@@ -468,5 +468,15 @@
         "availability": "Limited S",
         "specialty": "Defense",
         "role": "Support"
+    },
+    "Sunna": {
+        "element": "Physical",
+        "camp": "13",
+        "icon": "IconRole57",
+        "id": "1491",
+        "name": "Sunna",
+        "availability": "Limited S",
+        "specialty": "Support",
+        "role": "Support"
     }
 }

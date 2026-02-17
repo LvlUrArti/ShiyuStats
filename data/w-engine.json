@@ -892,11 +892,11 @@
         "name": "Cauldron of Clarity",
         "availability": "A"
     },
-    "Sunna Test W-Engine": {
+    "Thoughtbop": {
         "icon": "Weapon_S_1491",
         "desc": "Item_Weapon_S_1491_ShortDesc",
         "id": "14149",
-        "name": "Sunna Test W-Engine",
+        "name": "Thoughtbop",
         "availability": "Limited S",
         "role": "Support"
     },

@@ -33,4 +33,4 @@ send2trash(char_data_path)
 send2trash(enka_char_path)
 with open(char_data_path, "w", newline="") as f:
     csv_writer = csv.writer(f)
-csv_writer.writerows(print_data)
+    csv_writer.writerows(print_data)

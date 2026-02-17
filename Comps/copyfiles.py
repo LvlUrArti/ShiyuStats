@@ -41,21 +41,20 @@ for source_dir in source_dirs:
     mkdir(target_dir)
     for file_name in file_names:
         if "comp_results" in source_dir or (
-            file_name in ["duo_usages.json", "bangboo_all.json"]
-            or file_name == ("demographic_collect" + suffix + ".json")
+            file_name in {"duo_usages.json", "bangboo_all.json", "demographic.json"}
             or (file_name == "builds.json" and (RECENT_PHASE + "_da") in source_dir)
             or (
-                file_name == "bosses_name.csv"
+                file_name == "da_bosses_name.csv"
                 and (RECENT_PHASE + "_da") not in source_dir
             )
         ):
-            if file_name in ["builds.json", "bosses_name.csv"]:
+            if file_name in ["builds.json", "da_bosses_name.csv"]:
                 temp_target_dir: str = target_dir
                 target_dir = "../web_results"
             copyfrom = path.join(source_dir, file_name)
             copyto = path.join(target_dir, file_name)
             shutil.copyfile(copyfrom, copyto)
-            if file_name in ["builds.json", "bosses_name.csv"]:
+            if file_name in ["builds.json", "da_bosses_name.csv"]:
                 target_dir = temp_target_dir
 
 if da_mode:

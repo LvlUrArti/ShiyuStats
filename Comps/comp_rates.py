@@ -14,6 +14,7 @@ import char_usage as cu
 from comp_rates_config import (
     CHARACTERS,
     DEFAULT_ROUND,
+    PAST_PHASE,
     app_rate_threshold,
     app_rate_threshold_round,
     archetype,
@@ -24,7 +25,6 @@ from comp_rates_config import (
     f2p_only,
     json,
     json_threshold,
-    past_phase,
     run_commands,
     sig_weaps,
     whale_only,
@@ -405,7 +405,7 @@ def used_comps(
 
     for stage, round_stage in avg_round_stage.items():
         sample_size[stage]["avg_round"] = round(
-            statistics.mean(round_stage if round_stage else [0]),
+            statistics.mean(round_stage or [0]),
             2,
         )
 
@@ -574,7 +574,7 @@ def char_usages(
 ]:
     """Calculate character usage."""
     app = cu.appearances(all_players, chambers=rooms, info_char=info_char)
-    chars_dict, boos_dict = cu.usages(app, past_phase, chambers=rooms)
+    chars_dict, boos_dict = cu.usages(app, PAST_PHASE, chambers=rooms)
     char_usages_write(chars_dict, filename, archetype)
     boo_usages_write(boos_dict, "bangboo_" + filename, archetype)
     return (chars_dict, boos_dict)

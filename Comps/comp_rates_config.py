@@ -48,7 +48,7 @@ with open(str(os.getenv("REPO_PATH")) + "/data/w-engine.json") as char_file:
 RECENT_PHASE = "2.6.1"
 
 # if no past phase, past_phase = "null"
-past_phase = "2.5.3"
+PAST_PHASE = "2.5.3"
 # if as: da_mode = True
 da_mode: bool = args.deadly_assault
 
@@ -63,7 +63,7 @@ suffix = ""
 if da_mode:
     suffix = "_da"
 RECENT_PHASE_PF = RECENT_PHASE + suffix
-past_phase = past_phase + suffix
+PAST_PHASE_PF = PAST_PHASE + suffix
 
 char_infographics = {"Zhu Yuan", "Ben", "Nicole"}
 char_infographics = next(iter(char_infographics))

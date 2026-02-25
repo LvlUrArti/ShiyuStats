@@ -124,6 +124,9 @@ def appearances(
                     dps_count = 1
 
                 app[char_name].app_flat += 1
+                if whale_comp == whale_only and (not f2p_only or f2p_comp):
+                    app[char].app_flat_exclude += 1
+
                 if (
                     whale_comp == whale_only
                     and (not f2p_only or f2p_comp)
@@ -198,7 +201,10 @@ def appearances(
 
     total = len(all_uids) / 100.0
     for char, char_item in chain(app.items(), app_boos.items()):
-        char_item.app = round(char_item.app_flat / total, 2) if total > 0 else 0.00
+        if total > 0:
+            char_item.app = round(char_item.app_flat / total, 2)
+            char_item.app_exclude = round(char_item.app_flat_exclude / total, 2)
+        # TODO: Match HSR exclusion logic
         if char_item.app_flat >= 20:
             avg_round: list[float] = []
             std_dev_round: list[float] = []

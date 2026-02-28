@@ -123,11 +123,10 @@ def appearances(
                 if chambers == ONE_STAGE:
                     user_chars[char].add(user.player)
 
-                char_name = char
-                if found_duo and char_name in found_duo:
+                if found_duo and char in found_duo:
                     dps_count = 1
 
-                app[char_name].app_flat += 1
+                app[char].app_flat += 1
                 if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                     app[char].app_flat_exclude += 1
 
@@ -137,50 +136,50 @@ def appearances(
                     and dps_count == 1
                 ):
                     if CHARACTERS[char]["availability"] == "Limited S":
-                        app[char_name].cons_freq[0].round_list[cur_chamber].append(
+                        app[char].cons_freq[0].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
-                    app[char_name].round_list[cur_chamber].append(cur_user.round_num)
+                    app[char].round_list[cur_chamber].append(cur_user.round_num)
                 # In case of character in comp data missing from character data
                 if chambers != ONE_STAGE:
                     continue
                 if char not in user.owned:
                     continue
-                app[char_name].owned += 1
+                app[char].owned += 1
 
                 cons = user.owned[char].cons
-                app[char_name].cons_freq[cons].app_flat += 1
+                app[char].cons_freq[cons].app_flat += 1
                 if dps_count == 1:
                     if CHARACTERS[char]["availability"] == "Limited S":
                         if cons != 0:
-                            app[char_name].cons_freq[cons].round_list[
-                                cur_chamber
-                            ].append(cur_user.round_num)
+                            app[char].cons_freq[cons].round_list[cur_chamber].append(
+                                cur_user.round_num,
+                            )
                     elif not whale_comp:
-                        app[char_name].cons_freq[cons].round_list[cur_chamber].append(
+                        app[char].cons_freq[cons].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
-                app[char_name].cons_avg += cons
+                app[char].cons_avg += cons
 
                 weapon = user.owned[char].weapon
                 if weapon != "":
-                    if weapon not in app[char_name].weap_freq:
-                        app[char_name].weap_freq[weapon] = RoundApp()
-                    app[char_name].weap_freq[weapon].app_flat += 1
+                    if weapon not in app[char].weap_freq:
+                        app[char].weap_freq[weapon] = RoundApp()
+                    app[char].weap_freq[weapon].app_flat += 1
                     if not whale_comp and dps_count == 1:
-                        app[char_name].weap_freq[weapon].round_list[cur_chamber].append(
+                        app[char].weap_freq[weapon].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
 
                 artifact = user.owned[char].artifacts
                 if artifact != "":
-                    if artifact not in app[char_name].arti_freq:
-                        app[char_name].arti_freq[artifact] = RoundApp()
-                    app[char_name].arti_freq[artifact].app_flat += 1
+                    if artifact not in app[char].arti_freq:
+                        app[char].arti_freq[artifact] = RoundApp()
+                    app[char].arti_freq[artifact].app_flat += 1
                     if not whale_comp and dps_count == 1:
-                        app[char_name].arti_freq[artifact].round_list[
-                            cur_chamber
-                        ].append(cur_user.round_num)
+                        app[char].arti_freq[artifact].round_list[cur_chamber].append(
+                            cur_user.round_num,
+                        )
 
             boo = cur_user.bangboo
             if boo:

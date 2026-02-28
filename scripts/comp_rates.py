@@ -1,12 +1,13 @@
 """Compile all ZZZ data."""
 
+# pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
 from __future__ import annotations
 
 import csv
-import statistics
 import time
 from itertools import permutations
 from os.path import isfile
+from statistics import mean
 from sys import exit as sys_exit
 from typing import TYPE_CHECKING
 
@@ -31,7 +32,8 @@ from comp_rates_config import (
 )
 from composition import Composition
 from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
-from plyer import notification  # type: ignore[reportMissingTypeStubs]
+from plyer import notification
+from scipy.stats import skew, trim_mean
 from slugify import slugify
 
 if TYPE_CHECKING:
@@ -98,16 +100,9 @@ def main() -> None:
         print("done char: ", (cur_time - start_time), "s")
 
     if "Char usages 8 - 10" in run_commands:
-        usage, boo_usage = char_usages(
-            one_stage,
-            filename="all",
-        )
+        usage, boo_usage = char_usages(one_stage, filename="all")
         if not whale_only and not f2p_only:
-            duo_usages(
-                usage,
-                archetype,
-                one_stage,
-            )
+            duo_usages(usage, archetype, one_stage)
         cur_time = time.time()
         print("done char 8 - 10: ", (cur_time - start_time), "s")
 
@@ -188,10 +183,7 @@ def main() -> None:
     if "Comp usages for each stage" in run_commands:
         # for room in all_stages:
         for room in three_stages:
-            comp_usages(
-                [room],
-                filename=room,
-            )
+            comp_usages([room], filename=room)
 
         if not whale_only and not f2p_only:
             with open("../char_results/demographic.json", "w") as out_file:
@@ -238,27 +230,16 @@ def compile_app_round(
     """Compile appearance and round data."""
     appearances: dict[str, dict[str, cu.CharUsageData]] = {}
     rounds: dict[str, dict[str, cu.CharUsageData]] = {}
-    appearances_write: dict[
-        str,
-        dict[str, dict[str, float | str]],
-    ] = {}
+    appearances_write: dict[str, dict[str, dict[str, float | str]]] = {}
     rounds_write: dict[str, dict[str, dict[str, float | str]]] = {}
     for room, char_cham in char_chambers.items():
         appearances[room] = dict(
-            sorted(
-                char_cham.items(),
-                key=lambda t: t[1].app,
-                reverse=True,
-            ),
+            sorted(char_cham.items(), key=lambda t: t[1].app, reverse=True),
         )
         appearances_write[room] = {}
         rounds_write[room] = {}
         rounds[room] = dict(
-            sorted(
-                char_cham.items(),
-                key=lambda t: t[1].round,
-                reverse=True,
-            ),
+            sorted(char_cham.items(), key=lambda t: t[1].round, reverse=True),
         )
         for char in char_cham:
             appearances_write[room][char] = {
@@ -399,15 +380,10 @@ def used_comps(
         if whale_comp == whale_only and (not f2p_only or f2p_comp):
             comps_dict[comp_tuple].round_num[cur_room].append(comp.round_num)
             comps_dict[comp_tuple].players.add(comp)
-            avg_round_stage[cur_room].append(
-                comp.round_num,
-            )
+            avg_round_stage[cur_room].append(comp.round_num)
 
     for stage, round_stage in avg_round_stage.items():
-        sample_size[stage]["avg_round"] = round(
-            statistics.mean(round_stage or [0]),
-            2,
-        )
+        sample_size[stage]["avg_round"] = round(mean(round_stage or [0]), 2)
 
     chamber_num = list(str(filename).split("-"))
     if len(chamber_num) > 1 and chamber_num[1] == "1":
@@ -444,12 +420,8 @@ def rank_usages(
 
         for room_num in range(1, 8):
             if cur_comp.round_num[str(room_num)]:
-                uses_room[room_num] = len(
-                    cur_comp.round_num[str(room_num)],
-                )
-                comp_mean = statistics.mean(
-                    cur_comp.round_num[str(room_num)],
-                )
+                uses_room[room_num] = len(cur_comp.round_num[str(room_num)])
+                comp_mean = mean(cur_comp.round_num[str(room_num)])
                 avg_round.append(comp_mean)
 
         list_round = [
@@ -470,10 +442,7 @@ def rank_usages(
                 cur_comp.is_count_round_print = False
 
         rounded_avg_round: float
-        if avg_round:
-            rounded_avg_round = round(statistics.mean(avg_round))
-        else:
-            rounded_avg_round = DEFAULT_ROUND
+        rounded_avg_round = round(mean(avg_round)) if avg_round else DEFAULT_ROUND
         cur_comp.round = rounded_avg_round
 
         if cur_comp.boo_freq:
@@ -534,9 +503,7 @@ def used_duos(
             if is_triple_dps and "Duos check" in run_commands:
                 continue
             if not whale_comp:
-                duos_dict[duo].round_list[cur_room].append(
-                    comp.round_num,
-                )
+                duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
     sorted_duos = sorted(duos_dict.items(), key=lambda t: t[1].app_flat, reverse=True)
     duos_dict = dict(sorted_duos)
@@ -554,7 +521,7 @@ def used_duos(
                 if cur_duo.round_list[str(room_num)]:
                     avg_round += cur_duo.round_list[str(room_num)]
             if avg_round:
-                cur_duo.round = round(statistics.mean(avg_round))
+                cur_duo.round = round(mean(avg_round))
             else:
                 cur_duo.round = DEFAULT_ROUND
             if duo[0] not in return_duos:
@@ -598,19 +565,11 @@ def comp_usages_write(
 
     if sort_app:
         comps_dict = dict(
-            sorted(
-                comps_dict.items(),
-                key=lambda t: t[1].app_rate,
-                reverse=True,
-            ),
+            sorted(comps_dict.items(), key=lambda t: t[1].app_rate, reverse=True),
         )
     else:
         comps_dict = dict(
-            sorted(
-                comps_dict.items(),
-                key=lambda t: t[1].round,
-                reverse=True,
-            ),
+            sorted(comps_dict.items(), key=lambda t: t[1].round, reverse=True),
         )
     comp_names: list[str] = []
     dual_comp_names: list[str] = []
@@ -648,10 +607,7 @@ def comp_usages_write(
                     "char_1": comp[0],
                     "char_2": comp[1],
                     "char_3": comp[2],
-                    "app_rate": str(
-                        cur_comp.app_rate,
-                    )
-                    + "%",
+                    "app_rate": str(cur_comp.app_rate) + "%",
                     "avg_round": str(cur_comp.round),
                 }
 
@@ -663,12 +619,8 @@ def comp_usages_write(
                         variations[comp_name] += 1
                         out_comps_append["variation"] = variations[comp_name]
 
-                out_comps_append["whale_count"] = str(
-                    len(cur_comp.whale_count),
-                )
-                out_comps_append["uses"] = str(
-                    cur_comp.uses,
-                )
+                out_comps_append["whale_count"] = str(len(cur_comp.whale_count))
+                out_comps_append["uses"] = str(cur_comp.uses)
 
                 if info_char:
                     if comp_name not in comp_names:
@@ -826,10 +778,7 @@ def duo_write(
                     ]
                 csv_writer.writerow(temp_duos)
                 count += 1
-            temp_duos = [
-                duo_char,
-                duos["app"],
-            ]
+            temp_duos = [duo_char, duos["app"]]
             for i in range(10):
                 temp_duos += [
                     duos["char_" + str(i + 1)],
@@ -894,9 +843,7 @@ def duo_write(
                                 "char_i_app": str(out_i_j["app"]),
                                 "char_j": char_j,
                                 "char_j_app": str(out_j_i["app"]),
-                                "avg_round": str(
-                                    out_i_j["avg_round"],
-                                ),
+                                "avg_round": str(out_i_j["avg_round"]),
                             }
                         elif char_j in out_duos_exclu[char_i]:
                             out_dd[frozenset([char_i, char_j])] = {

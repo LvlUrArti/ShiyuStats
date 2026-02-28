@@ -7,7 +7,7 @@ import json
 import os.path
 import sys
 
-sys.path.append("../Comps/")
+sys.path.append("../scripts/")
 from comp_rates_config import RECENT_PHASE, da_mode
 from enka.zzz import AgentStatType  # pyright: ignore[reportMissingTypeStubs]
 

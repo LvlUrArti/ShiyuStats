@@ -33,7 +33,7 @@ from enka_config import (
     uids,
 )
 
-sys.path.append("../Comps/")
+sys.path.append("../scripts/")
 from comp_rates_config import offline_collect, save_to_file
 
 if TYPE_CHECKING:

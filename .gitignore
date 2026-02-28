@@ -294,10 +294,11 @@ data/raw_csvs_real
 data/raw_csvs
 data/repo_files_real.csv
 data/pickle
-Comps/client_secret.json
-Comps/sheets.googleapis.com-python.json
-Comps/sort.py
-Comps/compile_usage.py
+scripts/client_secret.json
+scripts/sheets.googleapis.com-python.json
+scripts/sort.py
+scripts/compile_usage.py
+scripts/unlist.py
 enka.network/results_real
 enka.network/images
 enka.network/artistats.py
@@ -312,5 +313,4 @@ rogue_results
 web_results
 web_results_da
 patch_process_real.txt
-Comps/unlist.py
 results.zip

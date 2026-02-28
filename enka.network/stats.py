@@ -22,7 +22,7 @@ from enka_config import (
 )
 from slugify import slugify
 
-with open("../Comps/prydwen-slug.json") as slug_file:
+with open("../scripts/prydwen-slug.json") as slug_file:
     slug = json.load(slug_file)
 
 with open(

@@ -4,9 +4,9 @@ set -e # Stop on error
 
 # Check for arguments, e.g. `sh compile_all.sh hello`
 if [ -n "$1" ]; then
-	cd Comps
+	cd scripts
 else
-	cd Comps
+	cd scripts
 	python combine_raw_chars.py
 	python csv_to_pickle.py &
 	python csv_to_pickle.py -da &
@@ -35,14 +35,14 @@ echo ""
 echo "SD stats"
 cd ../enka.network
 python stats.py
-cd ../Comps
+cd ../scripts
 python move.py
 
 echo ""
 echo "DA stats"
 cd ../enka.network
 python stats.py -da
-cd ../Comps
+cd ../scripts
 python move.py -da
 
 python combine_char.py

@@ -482,7 +482,12 @@ def used_duos(
     duos_dict: dict[tuple[str, str], cu.RoundApp] = {}
 
     for comp in all_comps:
-        if len(comp.characters) < 2 or comp.room not in rooms:
+        if (
+            len(comp.characters) < 2
+            or comp.room not in rooms
+            or not comp.valid_clear
+            or comp.flag_cheat
+        ):
             continue
 
         whale_comp = False

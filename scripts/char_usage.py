@@ -8,7 +8,7 @@ import warnings
 from itertools import chain
 from statistics import mean, stdev
 
-from comp_rates_config import DEFAULT_ROUND, da_mode, f2p_only, sig_weaps, whale_only
+from comp_rates_config import DEFAULT_ROUND, F2P_ONLY, WHALE_ONLY, da_mode, sig_weaps
 from percentile import calculate_percentile
 from player_phase import PlayerPhase
 from scipy.stats import skew, trim_mean
@@ -113,8 +113,8 @@ def appearances(
                 continue
 
             all_uids.add(user.player)
-            if (whale_only and not whale_comp) or (
-                f2p_only and (not f2p_comp or whale_comp)
+            if (WHALE_ONLY and not whale_comp) or (
+                F2P_ONLY and (not f2p_comp or whale_comp)
             ):
                 continue
 
@@ -128,12 +128,12 @@ def appearances(
                     dps_count = 1
 
                 app[char_name].app_flat += 1
-                if whale_comp == whale_only and (not f2p_only or f2p_comp):
+                if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                     app[char].app_flat_exclude += 1
 
                 if (
-                    whale_comp == whale_only
-                    and (not f2p_only or f2p_comp)
+                    whale_comp == WHALE_ONLY
+                    and (not F2P_ONLY or f2p_comp)
                     and dps_count == 1
                 ):
                     if CHARACTERS[char]["availability"] == "Limited S":
@@ -189,8 +189,8 @@ def appearances(
                 app_boos[boo].app_flat += 1
 
                 if (
-                    whale_comp == whale_only
-                    and (not f2p_only or f2p_comp)
+                    whale_comp == WHALE_ONLY
+                    and (not F2P_ONLY or f2p_comp)
                     and dps_count == 1
                 ):
                     app_boos[boo].round_list[cur_chamber].append(cur_user.round_num)

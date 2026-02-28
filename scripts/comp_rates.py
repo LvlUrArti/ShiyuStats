@@ -15,7 +15,9 @@ import char_usage as cu
 from comp_rates_config import (
     CHARACTERS,
     DEFAULT_ROUND,
+    F2P_ONLY,
     PAST_PHASE,
+    WHALE_ONLY,
     app_rate_threshold,
     app_rate_threshold_round,
     archetype,
@@ -23,12 +25,10 @@ from comp_rates_config import (
     char_infographics,
     da_mode,
     duo_dict_len,
-    f2p_only,
     json,
     json_threshold,
     run_commands,
     sig_weaps,
-    whale_only,
 )
 from composition import Composition
 from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
@@ -101,7 +101,7 @@ def main() -> None:
 
     if "Char usages 8 - 10" in run_commands:
         usage, boo_usage = char_usages(one_stage, filename="all")
-        if not whale_only and not f2p_only:
+        if not WHALE_ONLY and not F2P_ONLY:
             duo_usages(usage, archetype, one_stage)
         cur_time = time.time()
         print("done char 8 - 10: ", (cur_time - start_time), "s")
@@ -121,14 +121,14 @@ def main() -> None:
                 )
 
             appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not whale_only and not f2p_only:
+            if not WHALE_ONLY and not F2P_ONLY:
                 with open("../char_results/appearance.json", "w") as out_file:
                     out_file.write(json.dumps(appearances_write, indent=2))
                 with open("../char_results/rounds.json", "w") as out_file:
                     out_file.write(json.dumps(rounds_write, indent=2))
 
             appearances_write, rounds_write = compile_app_round(boo_chambers)
-            if not whale_only and not f2p_only:
+            if not WHALE_ONLY and not F2P_ONLY:
                 with open("../char_results/bangboo_appearance.json", "w") as out_file:
                     out_file.write(json.dumps(appearances_write, indent=2))
                 with open("../char_results/bangboo_rounds.json", "w") as out_file:
@@ -148,14 +148,14 @@ def main() -> None:
                 )
 
             appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not whale_only and not f2p_only:
+            if not WHALE_ONLY and not F2P_ONLY:
                 with open("../char_results/appearance_combine.json", "w") as out_file:
                     out_file.write(json.dumps(appearances_write, indent=2))
                 with open("../char_results/rounds_combine.json", "w") as out_file:
                     out_file.write(json.dumps(rounds_write, indent=2))
 
             appearances_write, rounds_write = compile_app_round(boo_chambers)
-            if not whale_only and not f2p_only:
+            if not WHALE_ONLY and not F2P_ONLY:
                 with open(
                     "../char_results/bangboo_appearance_combine.json",
                     "w",
@@ -185,7 +185,7 @@ def main() -> None:
         for room in three_stages:
             comp_usages([room], filename=room)
 
-        if not whale_only and not f2p_only:
+        if not WHALE_ONLY and not F2P_ONLY:
             with open("../char_results/demographic.json", "w") as out_file:
                 out_file.write(json.dumps(sample_size, indent=2))
         cur_time = time.time()
@@ -204,8 +204,8 @@ def main() -> None:
     if (
         "Comp usage 8 - 10" in run_commands
         and "Comp usages for each stage" in run_commands
-        and not whale_only
-        and not f2p_only
+        and not WHALE_ONLY
+        and not F2P_ONLY
     ):
         with open("../comp_results/json/all_comps.json", "w") as out_file:
             out_file.write(json.dumps(all_comps_json, indent=2))
@@ -354,11 +354,12 @@ def used_comps(
 
         if whale_comp:
             whale_count += 1
-        if whale_only and not whale_comp:
-            continue
         if f2p_comp:
             f2p_count += 1
-        if f2p_only and (not f2p_comp or whale_comp):
+        if (
+            (WHALE_ONLY and not whale_comp)
+            or (F2P_ONLY and (not f2p_comp or whale_comp))
+        ):
             continue
 
         if comp_tuple not in comps_dict:
@@ -377,7 +378,7 @@ def used_comps(
 
         if whale_comp:
             comps_dict[comp_tuple].whale_count.add(comp.player)
-        if whale_comp == whale_only and (not f2p_only or f2p_comp):
+        if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             comps_dict[comp_tuple].round_num[cur_room].append(comp.round_num)
             comps_dict[comp_tuple].players.add(comp)
             avg_round_stage[cur_room].append(comp.round_num)
@@ -393,7 +394,7 @@ def used_comps(
         sample_size[chamber_num[0]]["interknot"] = len(all_comp_interknot_uids)
         sample_size[chamber_num[0]]["star_db"] = len(all_comp_star_db_uids)
         sample_size[chamber_num[0]]["hoyobuddy"] = len(all_comp_hoyobuddy_uids)
-    if whale_only:
+    if WHALE_ONLY:
         print("Whale percentage: " + str(whale_count / len(all_comp_uids)))
     return comps_dict
 
@@ -708,9 +709,9 @@ def comp_usages_write(
     if not (sort_app):
         filename = filename + "_rounds"
 
-    if whale_only:
+    if WHALE_ONLY:
         filename = filename + "_C1"
-    elif f2p_only:
+    elif F2P_ONLY:
         filename = filename + "_E0S0"
 
     if floor:
@@ -946,9 +947,9 @@ def boo_usages_write(
 
     if archetype != "all":
         filename = filename + "_" + archetype
-    if whale_only:
+    if WHALE_ONLY:
         filename = filename + "_C1"
-    elif f2p_only:
+    elif F2P_ONLY:
         filename = filename + "_E0S0"
 
     iterate_value_app = ["app_rate", "diff"]
@@ -1101,9 +1102,9 @@ def char_usages_write(
 
     if archetype != "all":
         filename = filename + "_" + archetype
-    if whale_only:
+    if WHALE_ONLY:
         filename = filename + "_C1"
-    elif f2p_only:
+    elif F2P_ONLY:
         filename = filename + "_E0S0"
 
     iterate_value_app = ["app_rate", "app_rate_m0", "diff"]

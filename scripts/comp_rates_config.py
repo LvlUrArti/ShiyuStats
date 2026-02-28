@@ -58,6 +58,7 @@ if not da_mode:
 sd_mode: bool = not da_mode
 
 DEFAULT_ROUND = 0
+CONS_LIMIT = 2
 
 suffix = ""
 if da_mode:
@@ -83,8 +84,8 @@ duo_dict_len_print = 10
 skip_self = False
 skip_random = False
 archetype = "all"
-whale_only: bool = args.whale
-f2p_only: bool = args.f2p
+WHALE_ONLY: bool = args.whale
+F2P_ONLY: bool = args.f2p
 
 # Char infographics should be separated from overall comp rankings
 run_commands = {

@@ -419,10 +419,17 @@ def rank_usages(
         uses_room: dict[int, int] = {}
 
         for room_num in range(1, 8):
-            if cur_comp.round_num[str(room_num)]:
-                uses_room[room_num] = len(cur_comp.round_num[str(room_num)])
-                comp_mean = mean(cur_comp.round_num[str(room_num)])
-                avg_round.append(comp_mean)
+            cur_round = cur_comp.round_num[str(room_num)]
+            if cur_round:
+                uses_room[room_num] = len(cur_round)
+                if cur_comp.uses > 10:
+                    skewness = skew(cur_round, axis=0, bias=True)
+                    if abs(skewness) > 0.8:
+                        avg_round.append(trim_mean(cur_round, 0.25))
+                    else:
+                        avg_round.append(mean(cur_round))
+                else:
+                    avg_round.append(mean(cur_round))
 
         list_round = [
             item for sublist in cur_comp.round_num.values() for item in sublist
@@ -518,8 +525,17 @@ def used_duos(
             cur_duo.app_flat = 0
             avg_round: list[float] = []
             for room_num in range(1, 8):
-                if cur_duo.round_list[str(room_num)]:
-                    avg_round += cur_duo.round_list[str(room_num)]
+                duo_round = cur_duo.round_list[str(room_num)]
+                if duo_round:
+                    cur_duo.app_flat += len(duo_round)
+                    if len(duo_round) > 1:
+                        skewness = skew(duo_round, axis=0, bias=True)
+                        if abs(skewness) > 0.8:
+                            avg_round.append(trim_mean(duo_round, 0.25))
+                        else:
+                            avg_round.append(mean(duo_round))
+                    else:
+                        avg_round.append(mean(duo_round))
             if avg_round:
                 cur_duo.round = round(mean(avg_round))
             else:

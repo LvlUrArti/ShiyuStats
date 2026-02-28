@@ -6,6 +6,7 @@ import os.path
 import statistics
 import warnings
 from itertools import chain
+from statistics import mean, stdev
 
 from comp_rates_config import DEFAULT_ROUND, da_mode, f2p_only, sig_weaps, whale_only
 from percentile import calculate_percentile
@@ -136,9 +137,7 @@ def appearances(
                         app[char_name].cons_freq[0].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
-                    app[char_name].round_list[cur_chamber].append(
-                        cur_user.round_num,
-                    )
+                    app[char_name].round_list[cur_chamber].append(cur_user.round_num)
                 # In case of character in comp data missing from character data
                 if chambers != ONE_STAGE:
                     continue
@@ -153,9 +152,7 @@ def appearances(
                         if cons != 0:
                             app[char_name].cons_freq[cons].round_list[
                                 cur_chamber
-                            ].append(
-                                cur_user.round_num,
-                            )
+                            ].append(cur_user.round_num)
                     elif not whale_comp:
                         app[char_name].cons_freq[cons].round_list[cur_chamber].append(
                             cur_user.round_num,
@@ -180,9 +177,7 @@ def appearances(
                     if not whale_comp and dps_count == 1:
                         app[char_name].arti_freq[artifact].round_list[
                             cur_chamber
-                        ].append(
-                            cur_user.round_num,
-                        )
+                        ].append(cur_user.round_num)
 
             boo = cur_user.bangboo
             if boo:
@@ -195,9 +190,7 @@ def appearances(
                     and (not f2p_only or f2p_comp)
                     and dps_count == 1
                 ):
-                    app_boos[boo].round_list[cur_chamber].append(
-                        cur_user.round_num,
-                    )
+                    app_boos[boo].round_list[cur_chamber].append(cur_user.round_num)
 
     total = len(all_uids) / 100.0
     for char, char_item in chain(app.items(), app_boos.items()):
@@ -216,19 +209,13 @@ def appearances(
                 if round_list:
                     uses_room[room_num] = len(round_list)
                     if len(round_list) > 1:
-                        std_dev_round.append(
-                            statistics.stdev(round_list),
-                        )
-                        q1_round.append(
-                            calculate_percentile(round_list, 75),
-                        )
+                        std_dev_round.append(stdev(round_list))
+                        q1_round.append(calculate_percentile(round_list, 75))
                     else:
                         std_dev_round.append(0)
                         q1_round.append(0)
 
-                    avg_round.append(
-                        statistics.mean(round_list),
-                    )
+                    avg_round.append(mean(round_list))
 
             is_count_cycles = True
             if not uses_room:
@@ -242,9 +229,9 @@ def appearances(
 
             # if avg_round:
             if is_count_cycles:
-                char_item.round = round(statistics.mean(avg_round))
-                char_item.std_dev_round = round(statistics.mean(std_dev_round))
-                char_item.q1_round = round(statistics.mean(q1_round))
+                char_item.round = round(mean(avg_round))
+                char_item.std_dev_round = round(mean(std_dev_round))
+                char_item.q1_round = round(mean(q1_round))
             else:
                 char_item.round = DEFAULT_ROUND
                 char_item.q1_round = DEFAULT_ROUND
@@ -262,33 +249,21 @@ def appearances(
         app_flat = char_item.owned / 100.0
         # if owns[char.app_flat > 0:
         if char_item.owned > 0:
-            char_item.cons_avg = round(
-                char_item.cons_avg / char_item.owned,
-                2,
-            )
-        for cons in char_item.cons_freq:
-            if char_item.cons_freq[cons].app_flat > 0:
-                char_item.cons_freq[cons].app = round(
-                    char_item.cons_freq[cons].app_flat / app_flat,
-                    2,
-                )
+            char_item.cons_avg = round(char_item.cons_avg / char_item.owned, 2)
+        for cons_freq in char_item.cons_freq.values():
+            if cons_freq.app_flat > 0:
+                cons_freq.app = round(cons_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 8):
-                    if char_item.cons_freq[cons].round_list[str(room_num)]:
-                        avg_round.append(
-                            statistics.mean(
-                                char_item.cons_freq[cons].round_list[str(room_num)],
-                            ),
-                        )
+                    if cons_freq.round_list[str(room_num)]:
+                        avg_round.append(mean(cons_freq.round_list[str(room_num)]))
                 if avg_round:
-                    char_item.cons_freq[cons].round = round(
-                        statistics.mean(avg_round),
-                    )
+                    cons_freq.round = round(mean(avg_round))
                 else:
-                    char_item.cons_freq[cons].round = DEFAULT_ROUND
+                    cons_freq.round = DEFAULT_ROUND
             else:
-                char_item.cons_freq[cons].app = 0.00
-                char_item.cons_freq[cons].round = DEFAULT_ROUND
+                cons_freq.app = 0.00
+                cons_freq.round = DEFAULT_ROUND
 
         # Calculate weapons
         sorted_weapons = sorted(
@@ -297,34 +272,27 @@ def appearances(
             reverse=True,
         )
         char_item.weap_freq = dict(sorted_weapons)
-        for weapon in char_item.weap_freq:
+        for weap_freq in char_item.weap_freq.values():
             # If a gear appears >15 times, include it
             # Because there might be 1* gears
             # If it's for character infographic, include all gears
             if (
-                char_item.weap_freq[weapon].app_flat > gear_app_threshold
+                weap_freq.app_flat > gear_app_threshold
                 or info_char
-                or (char_item.weap_freq[weapon].app_flat / app_flat) > 20
+                or (weap_freq.app_flat / app_flat) > 20
             ):
-                char_item.weap_freq[weapon].app = round(
-                    char_item.weap_freq[weapon].app_flat / app_flat,
-                    2,
-                )
+                weap_freq.app = round(weap_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 8):
-                    if char_item.weap_freq[weapon].round_list[str(room_num)]:
-                        avg_round += char_item.weap_freq[weapon].round_list[
-                            str(room_num)
-                        ]
+                    if weap_freq.round_list[str(room_num)]:
+                        avg_round += weap_freq.round_list[str(room_num)]
                 if avg_round:
-                    char_item.weap_freq[weapon].round = round(
-                        statistics.mean(avg_round),
-                    )
+                    weap_freq.round = round(mean(avg_round))
                 else:
-                    char_item.weap_freq[weapon].round = DEFAULT_ROUND
+                    weap_freq.round = DEFAULT_ROUND
             else:
-                char_item.weap_freq[weapon].app = 0
-                char_item.weap_freq[weapon].round = DEFAULT_ROUND
+                weap_freq.app = 0
+                weap_freq.round = DEFAULT_ROUND
 
         # Remove flex artifacts
         if "Flex" in char_item.arti_freq:
@@ -336,30 +304,25 @@ def appearances(
             reverse=True,
         )
         char_item.arti_freq = dict(sorted_arti)
-        for arti in char_item.arti_freq:
+        for arti, arti_freq in char_item.arti_freq.items():
             # If a gear appears >15 times, include it
             # Because there might be 1* gears
             # If it's for character infographic, include all gears
             if (
-                char_item.arti_freq[arti].app_flat > gear_app_threshold or info_char
+                arti_freq.app_flat > gear_app_threshold or info_char
             ) and arti != "Flex":
-                char_item.arti_freq[arti].app = round(
-                    char_item.arti_freq[arti].app_flat / app_flat,
-                    2,
-                )
+                arti_freq.app = round(arti_freq.app_flat / app_flat, 2)
                 avg_round = []
                 for room_num in range(1, 8):
-                    if char_item.arti_freq[arti].round_list[str(room_num)]:
-                        avg_round += char_item.arti_freq[arti].round_list[str(room_num)]
+                    if arti_freq.round_list[str(room_num)]:
+                        avg_round += arti_freq.round_list[str(room_num)]
                 if avg_round:
-                    char_item.arti_freq[arti].round = round(
-                        statistics.mean(avg_round),
-                    )
+                    arti_freq.round = round(mean(avg_round))
                 else:
-                    char_item.arti_freq[arti].round = DEFAULT_ROUND
+                    arti_freq.round = DEFAULT_ROUND
             else:
-                char_item.arti_freq[arti].app = 0
-                char_item.arti_freq[arti].round = DEFAULT_ROUND
+                arti_freq.app = 0
+                arti_freq.round = DEFAULT_ROUND
     return (app, app_boos)
 
 
@@ -434,17 +397,11 @@ def usages(
             continue
         if boo in past_usage_boos[stage]:
             uses_boos[boo].diff = str(
-                round(
-                    app_boo.app - past_usage_boos[stage][boo]["app"],
-                    2,
-                ),
+                round(app_boo.app - past_usage_boos[stage][boo]["app"], 2),
             )
         if boo in past_rounds_boos[stage]:
             uses_boos[boo].diff_rounds = str(
-                round(
-                    app_boo.round - past_rounds_boos[stage][boo]["round"],
-                    2,
-                ),
+                round(app_boo.round - past_rounds_boos[stage][boo]["round"], 2),
             )
     rates_boos.sort(reverse=True)
     for uses_boo in uses_boos.values():
@@ -457,25 +414,15 @@ def usages(
 
         if stage in past_usage and char in past_usage[stage]:
             uses[char].diff = str(
-                round(
-                    app_char.app - past_usage[stage][char]["app"],
-                    2,
-                ),
+                round(app_char.app - past_usage[stage][char]["app"], 2),
             )
         if stage in past_rounds and char in past_rounds[stage]:
             uses[char].diff_rounds = str(
-                round(
-                    app_char.round - past_rounds[stage][char]["round"],
-                    2,
-                ),
+                round(app_char.round - past_rounds[stage][char]["round"], 2),
             )
 
         for i in range(7):
-            uses[char].cons_usage[i] = {
-                "app": "-",
-                "own": "-",
-                "usage": "-",
-            }
+            uses[char].cons_usage[i] = {"app": "-", "own": "-", "usage": "-"}
 
         if chambers != ONE_STAGE:
             continue
@@ -489,12 +436,8 @@ def usages(
             uses[char].artifacts[artifacts[i]] = app_char.arti_freq[artifacts[i]]
 
         for i in range(7):
-            uses[char].cons_usage[i]["app"] = str(
-                app_char.cons_freq[i].app,
-            )
-            uses[char].cons_usage[i]["round"] = str(
-                app_char.cons_freq[i].round,
-            )
+            uses[char].cons_usage[i]["app"] = str(app_char.cons_freq[i].app)
+            uses[char].cons_usage[i]["round"] = str(app_char.cons_freq[i].round)
     rates.sort(reverse=True)
     for char, char_use in uses.items():
         uses[char].rank = rates.index(char_use.app) + 1

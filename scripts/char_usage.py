@@ -8,7 +8,14 @@ import warnings
 from itertools import chain
 from statistics import mean, stdev
 
-from comp_rates_config import DEFAULT_ROUND, F2P_ONLY, WHALE_ONLY, da_mode, sig_weaps
+from comp_rates_config import (
+    CONS_LIMIT,
+    DEFAULT_ROUND,
+    F2P_ONLY,
+    WHALE_ONLY,
+    da_mode,
+    sig_weaps,
+)
 from percentile import calculate_percentile
 from player_phase import PlayerPhase
 from scipy.stats import skew, trim_mean
@@ -88,6 +95,7 @@ def appearances(
             if chamber not in chambers or not cur_user.valid_clear:
                 continue
             whale_comp = False
+            giga_whale = False
             f2p_comp = True
             dps_count = 0
             found_duo = []
@@ -97,12 +105,14 @@ def appearances(
                     break
 
             for char in cur_user.characters:
-                if CHARACTERS[char]["availability"] == "Limited S":
-                    if cur_user.char_cons:
-                        if cur_user.char_cons[char] > 0:
-                            whale_comp = True
-                    elif char in user.owned and user.owned[char].cons > 0:
-                        whale_comp = True
+                if (
+                    CHARACTERS[char]["availability"] == "Limited S"
+                    and cur_user.char_cons
+                    and cur_user.char_cons[char] > 0
+                ):
+                    whale_comp = True
+                    if cur_user.char_cons[char] > CONS_LIMIT:
+                        giga_whale = True
                 if char in user.owned and user.owned[char].weapon in sig_weaps:
                     f2p_comp = False
                 if CHARACTERS[char]["role"] == "Damage Dealer":
@@ -113,13 +123,32 @@ def appearances(
                 continue
 
             all_uids.add(user.player)
-            if (WHALE_ONLY and not whale_comp) or (
+
+            # >E2 clears should still be included to calculate
+            # characters' average score for all eidolons
+            if (WHALE_ONLY and (giga_whale or not whale_comp)) or (
                 F2P_ONLY and (not f2p_comp or whale_comp)
             ):
                 continue
 
             cur_chamber = next(iter(str(chamber).split("-")))
             for char in cur_user.characters:
+                user_round = cur_user.round_num
+
+                app[char].app_flat_all += 1
+                if cur_user.char_cons and chambers == ONE_STAGE:
+                    char_con = cur_user.char_cons[char]
+                    app[char].cons_freq[char_con].app_flat += 1
+                    app[char].cons_freq[char_con].round_list[cur_chamber].append(
+                        user_round,
+                    )
+                    app[char].cons_avg += char_con
+
+                if giga_whale:
+                    continue
+
+                # to print the amount of players using a character,
+                # for char infographics
                 if chambers == ONE_STAGE:
                     user_chars[char].add(user.player)
 
@@ -146,20 +175,6 @@ def appearances(
                 if char not in user.owned:
                     continue
                 app[char].owned += 1
-
-                cons = user.owned[char].cons
-                app[char].cons_freq[cons].app_flat += 1
-                if dps_count == 1:
-                    if CHARACTERS[char]["availability"] == "Limited S":
-                        if cons != 0:
-                            app[char].cons_freq[cons].round_list[cur_chamber].append(
-                                cur_user.round_num,
-                            )
-                    elif not whale_comp:
-                        app[char].cons_freq[cons].round_list[cur_chamber].append(
-                            cur_user.round_num,
-                        )
-                app[char].cons_avg += cons
 
                 weapon = user.owned[char].weapon
                 if weapon != "":

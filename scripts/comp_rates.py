@@ -334,21 +334,21 @@ def used_comps(
             continue
 
         whale_comp = False
+        giga_whale = False
         f2p_comp = True
         for char in range(3):
-            if CHARACTERS[comp_tuple[char]]["availability"] == "Limited S":
-                if comp.char_cons:
-                    if comp.char_cons[comp_tuple[char]] > 0:
-                        whale_comp = True
-                elif (
-                    comp_tuple[char] in all_players[comp.player].owned
-                    and all_players[comp.player].owned[comp_tuple[char]].cons > 0
-                ):
-                    whale_comp = True
+            comp_char = comp_tuple[char]
             if (
-                comp_tuple[char] in all_players[comp.player].owned
-                and all_players[comp.player].owned[comp_tuple[char]].weapon
-                not in sig_weaps
+                CHARACTERS[comp_char]["availability"] == "Limited S"
+                and comp.char_cons
+                and comp.char_cons[comp_char] > 0
+            ):
+                whale_comp = True
+                if comp.char_cons[comp_char] > 2:
+                    giga_whale = True
+            if (
+                comp_char in all_players[comp.player].owned
+                and all_players[comp.player].owned[comp_char].weapon not in sig_weaps
             ):
                 f2p_comp = False
 
@@ -359,6 +359,7 @@ def used_comps(
         if (
             (WHALE_ONLY and not whale_comp)
             or (F2P_ONLY and (not f2p_comp or whale_comp))
+            or giga_whale
         ):
             continue
 
@@ -491,17 +492,20 @@ def used_duos(
             continue
 
         whale_comp = False
+        giga_whale = False
         cur_room = next(iter(str(comp.room).split("-")))
         for char in comp.characters:
-            if CHARACTERS[char]["availability"] == "Limited S":
-                if comp.char_cons:
-                    if comp.char_cons[char] > 0:
-                        whale_comp = True
-                elif (
-                    char in all_players[comp.player].owned
-                    and all_players[comp.player].owned[char].cons > 0
-                ):
-                    whale_comp = True
+            if (
+                CHARACTERS[char]["availability"] == "Limited S"
+                and comp.char_cons
+                and comp.char_cons[char] > 0
+            ):
+                whale_comp = True
+                if comp.char_cons[char] > 2:
+                    giga_whale = True
+
+        if giga_whale:
+            continue
 
         # Permutate the duos, for example if Ganyu and Xiangling are used,
         # two duos are used, Ganyu/Xiangling and Xiangling/Ganyu

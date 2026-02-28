@@ -281,30 +281,39 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 BASE_PATH = f"../char_results/{RECENT_PHASE}"
 BASE_PREV_PATH = f"../char_results/{PAST_PHASE}"
 
+# Format: (key suffix, file suffix) - empty string means base variant
+VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
+
+# Format: {mode: [(boss number, room id), ...]}
+BOSS_ROOMS = {
+    "da": [(1, "1-1"), (2, "1-2"), (3, "1-3")],
+    "sd": [(1, "5-1"), (2, "5-2"), (3, "5-3")],
+}
+
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 
 for read_path in [BASE_PATH, BASE_PREV_PATH]:
+    # Add "_prev" suffix for previous phase data
     suf = "" if read_path == BASE_PATH else "_prev"
+
     for mode in ["sd", "da"]:
-        folder_dir = f"{read_path}_{mode}" if mode != "sd" else read_path
-        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder_dir}/all2.json")
-        raw[f"{mode}_e1{suf}"] = load_base_stats(f"{folder_dir}/all_C1.json")
-        raw[f"{mode}_s0{suf}"] = load_base_stats(f"{folder_dir}/all_E0S0.json")
+        # Determine folder path: SD uses base path, DA adds "_da" suffix
+        folder = read_path if mode == "sd" else f"{read_path}_da"
+        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder}/all2.json")
 
-    boss_configs = [(1, "1-1"), (2, "1-2"), (3, "1-3")]
-    for boss_num, boss_room in boss_configs:
-        file_name = f"{read_path}_da/{boss_room}"
-        raw[f"da_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
-        raw[f"da_boss_{boss_num}_e1{suf}"] = load_base_stats(f"{file_name}_C1.json")
-        raw[f"da_boss_{boss_num}_s0{suf}"] = load_base_stats(f"{file_name}_E0S0.json")
+        # Load variant stats (E1 and S0)
+        for var_suf, file_suf in VARIANTS[1:]:  # Skip base variant (index 0)
+            raw[f"{mode}{var_suf}{suf}"] = load_base_stats(
+                f"{folder}/all{file_suf}.json",
+            )
 
-    boss_configs = [(1, "5-1"), (2, "5-2"), (3, "5-3")]
-    for boss_num, boss_room in boss_configs:
-        file_name = f"{read_path}/{boss_room}"
-        raw[f"sd_boss_{boss_num}{suf}"] = load_base_stats(f"{file_name}.json")
-        raw[f"sd_boss_{boss_num}_e1{suf}"] = load_base_stats(f"{file_name}_C1.json")
-        raw[f"sd_boss_{boss_num}_s0{suf}"] = load_base_stats(f"{file_name}_E0S0.json")
+        # Load boss-specific stats
+        for boss_num, room in BOSS_ROOMS[mode]:
+            for var_suf, file_suf in VARIANTS:
+                raw[f"{mode}_boss_{boss_num}{var_suf}{suf}"] = load_base_stats(
+                    f"{folder}/{room}{file_suf}.json",
+                )
 
 
 # ----------------------------------------------------------------------

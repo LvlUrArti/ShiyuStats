@@ -46,7 +46,6 @@ cd ../Comps
 python move.py -da
 
 python combine_char.py
-python combine_char.py -da
 
 python copyfiles.py
 python copyfiles.py -da

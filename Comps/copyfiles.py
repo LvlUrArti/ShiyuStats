@@ -42,7 +42,7 @@ for source_dir in source_dirs:
     for file_name in file_names:
         if "comp_results" in source_dir or (
             file_name in {"duo_usages.json", "bangboo_all.json", "demographic.json"}
-            or (file_name == "builds.json" and (RECENT_PHASE + "_da") in source_dir)
+            or (file_name == "builds.json" and RECENT_PHASE_PF == RECENT_PHASE)
             or (
                 file_name == "da_bosses_name.csv"
                 and (RECENT_PHASE + "_da") not in source_dir

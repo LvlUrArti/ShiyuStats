@@ -45,6 +45,7 @@ python stats.py -da
 cd ../scripts
 python move.py -da
 
+cd compile_result
 python combine_char.py
 
 python copyfiles.py

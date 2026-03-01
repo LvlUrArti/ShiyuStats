@@ -201,19 +201,9 @@ class Composition:
         len_role: dict[RoleLit, int],
     ) -> bool:
         """Return a bool whether this comp is a cheat."""
-        cur_room = int(next(iter(str(self.room).split("-"))))
+        da_weak: list[bool] = []
 
-        da_weak: list[bool] = [
-            cur_room == 1 and len_elem["Physical"] == 0,
-            cur_room == 2 and (len_elem["Physical"] + len_elem["Ether"]) == 0,
-            cur_room == 3 and (len_elem["Fire"] + len_elem["Ice"]) == 0,
-        ]
-
-        sd_weak: list[bool] = [
-            cur_room == 1 and (len_elem["Physical"] + len_elem["Fire"]) == 0,
-            cur_room == 2 and (len_elem["Physical"] + len_elem["Electric"]) == 0,
-            cur_room == 3 and (len_elem["Ice"]) == 0,
-        ]
+        sd_weak: list[bool] = []
 
         cheat_conditions: list[bool] = [
             len_role["Anomaly"] > 0 and len_role["Attack"] + len_role["Rupture"] > 0,

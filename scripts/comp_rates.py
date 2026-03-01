@@ -405,7 +405,6 @@ def rank_usages(
     rooms: list[str],
 ) -> None:
     """Calculate the usage rate and sort the comps according to it."""
-    # Calculate the usage rate and sort the comps according to it
     total = len(all_comp_uids) / 100.0
     rates: list[float] = []
     for cur_comp in comps_dict.values():

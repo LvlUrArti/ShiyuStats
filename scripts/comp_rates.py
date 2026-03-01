@@ -371,6 +371,7 @@ def used_comps(
             continue
 
         comps_dict[comp_tuple].uses += 1
+        comps_dict[comp_tuple].players.add(comp)
 
         if comp.bangboo:
             if comp.bangboo not in comps_dict[comp_tuple].boo_freq:
@@ -381,7 +382,6 @@ def used_comps(
             comps_dict[comp_tuple].whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             comps_dict[comp_tuple].round_num[cur_room].append(comp.round_num)
-            comps_dict[comp_tuple].players.add(comp)
             avg_round_stage[cur_room].append(comp.round_num)
 
     for stage, round_stage in avg_round_stage.items():
@@ -432,9 +432,6 @@ def rank_usages(
                 else:
                     avg_round.append(mean(cur_round))
 
-        list_round = [
-            item for sublist in cur_comp.round_num.values() for item in sublist
-        ]
         cur_comp.is_count_round = True
         cur_comp.is_count_round_print = True
         if rooms == one_stage:
@@ -443,10 +440,12 @@ def rank_usages(
                     cur_comp.is_count_round = False
                 if uses_room_num < 3:
                     cur_comp.is_count_round_print = False
-        elif len(rooms) == 1:
-            if len(list_round) < 20:
+        elif len(rooms) == 1 and cur_comp.uses < 15:
+            if WHALE_ONLY and cur_comp.uses < 10:
                 cur_comp.is_count_round = False
-            if len(list_round) < 3:
+            else:
+                cur_comp.is_count_round = False
+            if cur_comp.uses < 2:
                 cur_comp.is_count_round_print = False
 
         rounded_avg_round: float

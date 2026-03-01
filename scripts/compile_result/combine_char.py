@@ -65,7 +65,7 @@ NUMERIC_STATS = [
 # ----------------------------------------------------------------------
 # Load slug mappings and character list
 # ----------------------------------------------------------------------
-with open("prydwen-slug.json") as slug_file:
+with open("../prydwen-slug.json") as slug_file:
     SLUG = json.load(slug_file)
 
 with open("../../data/characters.json") as char_file:

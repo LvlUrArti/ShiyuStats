@@ -47,6 +47,8 @@ python move.py -da
 
 cd compile_result
 python combine_char.py
+python combine_comp.py
+python combine_comp.py -da
 
 python copyfiles.py
 python copyfiles.py -da

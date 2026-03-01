@@ -42,7 +42,7 @@ for source_dir in source_dirs:
         send2trash(target_dir)
     mkdir(target_dir)
     for file_name in file_names:
-        if "comp_results" in source_dir or (
+        if ("comp_results" in source_dir and "combined" in file_name) or (
             file_name in {"duo_usages.json", "bangboo_all.json", "demographic.json"}
             or (file_name == "builds.json" and RECENT_PHASE_PF == RECENT_PHASE)
             or (

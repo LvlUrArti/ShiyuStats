@@ -214,7 +214,6 @@ def appearances(
         if total > 0:
             char_item.app = round(char_item.app_flat / total, 2)
             char_item.app_exclude = round(char_item.app_flat_exclude / total, 2)
-        # TODO: Match HSR exclusion logic
         if char_item.app_flat >= 20:
             avg_round: list[float] = []
             std_dev_round: list[float] = []
@@ -268,13 +267,14 @@ def appearances(
         if chambers != ONE_STAGE:
             continue
         # Calculate constellations
-        app_flat = char_item.owned / 100.0
-        # if owns[char.app_flat > 0:
-        if char_item.owned > 0:
-            char_item.cons_avg = round(char_item.cons_avg / char_item.owned, 2)
+        if char_item.app_flat_all > 0:
+            char_item.cons_avg = round(char_item.cons_avg / char_item.app_flat_all, 2)
         for cons_freq in char_item.cons_freq.values():
             if cons_freq.app_flat > 0:
-                cons_freq.app = round(cons_freq.app_flat / app_flat, 2)
+                cons_freq.app = round(
+                    cons_freq.app_flat / char_item.app_flat_all * 100,
+                    2,
+                )
                 avg_round = []
                 for room_num in range(1, 8):
                     if cons_freq.round_list[str(room_num)]:
@@ -305,6 +305,7 @@ def appearances(
                 cons_freq.app = 0.00
                 cons_freq.round = DEFAULT_ROUND
 
+        app_flat = char_item.owned / 100.0
         # Calculate weapons
         sorted_weapons = sorted(
             char_item.weap_freq.items(),

@@ -2,7 +2,9 @@
 
 Compile Shiyu Defense data using Python.
 
-You can find the raw data in my [Hugging Face Dataset](https://huggingface.co/datasets/LvlUrArti/ShiyuData). Feel free to analyze the data and post the findings. If you do, please credit me (LvlUrArti).
+You can find the raw data in my [Hugging Face Dataset](https://huggingface.co/datasets/LvlUrArti/ShiyuData). You can also find the results of data compilation in another [Hugging Face Dataset](https://huggingface.co/datasets/LvlUrArti/ShiyuDataProcessed).
+
+Feel free to analyze the data and post the findings. If you do, please credit me (LvlUrArti).
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q4IJ3P6)
 

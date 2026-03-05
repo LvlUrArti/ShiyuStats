@@ -22,7 +22,7 @@ Change past and recent phase in `scripts/comp_rates_config.py`
 
 Run `sh compile_all.sh`
 
-Results can be found in the `char_results` and `comp_results` folders
+Results can be found in the `results` folder
 
 ## Compile specific gamemode
 

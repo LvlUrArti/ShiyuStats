@@ -73,8 +73,8 @@ def appearances(
     user_chars: dict[str, set[str]] = {}
     app_boos: dict[str, CharApp] = {}
     user_boos: dict[str, set[str]] = {}
-    if os.path.exists("../char_results/duo_check.csv"):
-        with open("../char_results/duo_check.csv") as f:
+    if os.path.exists("../results/char_results/duo_check.csv"):
+        with open("../results/char_results/duo_check.csv") as f:
             valid_duo_dps = list(csv.reader(f, delimiter=","))
     else:
         valid_duo_dps = []
@@ -449,18 +449,22 @@ def usages(
     stage = "all" if chambers == ONE_STAGE else chambers[0]
 
     try:
-        with open("../char_results/" + past_phase + "/appearance.json") as stats:
+        with open(
+            "../results/char_results/" + past_phase + "/appearance.json",
+        ) as stats:
             past_usage = json.load(stats)
-        with open("../char_results/" + past_phase + "/rounds.json") as stats:
+        with open("../results/char_results/" + past_phase + "/rounds.json") as stats:
             past_rounds = json.load(stats)
     except FileNotFoundError:
         pass
     try:
         with open(
-            "../char_results/" + past_phase + "/bangboo_appearance.json",
+            "../results/char_results/" + past_phase + "/bangboo_appearance.json",
         ) as stats:
             past_usage = json.load(stats)
-        with open("../char_results/" + past_phase + "/bangboo_rounds.json") as stats:
+        with open(
+            "../results/char_results/" + past_phase + "/bangboo_rounds.json",
+        ) as stats:
             past_rounds = json.load(stats)
     except FileNotFoundError:
         pass

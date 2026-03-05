@@ -11,16 +11,16 @@ if da_mode:
 RECENT_PHASE_DA = RECENT_PHASE + suffix
 
 source_dirs = [
-    "../char_results",
-    "../comp_results",
-    "../comp_results/json",
+    "../results/char_results",
+    "../results/comp_results",
+    "../results/comp_results/json",
     "../enka.network",
     "../enka.network/results_real",
 ]
 
 for source_dir in source_dirs:
-    if source_dir == "../comp_results/json":
-        target_dir = "../comp_results/" + RECENT_PHASE_DA + "/json"
+    if source_dir == "../results/comp_results/json":
+        target_dir = "../results/comp_results/" + RECENT_PHASE_DA + "/json"
     elif source_dir == "../enka.network":
         target_dir = "../enka.network/results_real"
     elif source_dir == "../enka.network/results_real":

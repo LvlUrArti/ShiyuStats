@@ -38,7 +38,7 @@ with open(
     headers = next(reader)
     spiral = list(reader)
 
-with open("../char_results/" + phase_num + "/all.csv") as f:
+with open("../results/char_results/" + phase_num + "/all.csv") as f:
     reader = csv.reader(f, delimiter=",")
     headers = next(reader)
     builds = np.array(list(reader))
@@ -301,11 +301,15 @@ with (
 
 temp_stats: list[str] = []
 iter_char = 0
-with open("../char_results/" + phase_num + "/all.json") as char_file:
+with open("../results/char_results/" + phase_num + "/all.json") as char_file:
     CHARACTERS = json.load(char_file)
-with open("../char_results/" + phase_num + "/appearance_combine.json") as app_char_file:
+with open(
+    "../results/char_results/" + phase_num + "/appearance_combine.json"
+) as app_char_file:
     APP = json.load(app_char_file)
-with open("../char_results/" + phase_num + "/rounds_combine.json") as round_char_file:
+with open(
+    "../results/char_results/" + phase_num + "/rounds_combine.json"
+) as round_char_file:
     ROUND = json.load(round_char_file)
 for char, char_value in stats.items():
     iterate_value_app: list[str] = []
@@ -346,8 +350,8 @@ for char, char_value in stats.items():
     temp_stats.append((CHARACTERS[iter_char] | char_value.stats_write) | app_dict)
     iter_char += 1
 
-if not os.path.exists("../char_results/" + phase_num):
-    os.mkdir("../char_results/" + phase_num)
+if not os.path.exists("../results/char_results/" + phase_num):
+    os.mkdir("../results/char_results/" + phase_num)
 
-with open("../char_results/" + phase_num + "/all2.json", "w") as char_file:
+with open("../results/char_results/" + phase_num + "/all2.json", "w") as char_file:
     char_file.write(json.dumps(temp_stats, indent=2))

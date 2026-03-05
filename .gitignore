@@ -307,10 +307,6 @@ enka.network/data
 enka.network/data.json
 enka.network/data.pkl
 enka.network/.enka_py
-char_results
-comp_results
-rogue_results
-web_results
-web_results_da
+results
 patch_process_real.txt
 results.zip

@@ -52,3 +52,6 @@ python combine_comp.py -da
 
 python copyfiles.py
 python copyfiles.py -da
+
+cd ../hf_data
+python up_results.py

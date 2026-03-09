@@ -7,11 +7,15 @@ import re
 import requests
 
 download = requests.get(
-    "https://api.hakush.in/zzz/data/equipment.json",
+    "https://static.nanoka.cc/manifest.json",
     timeout=10,
-).content.decode(
-    "utf-8",
-)
+).content.decode("utf-8")
+live_version = json.load(io.StringIO(download))["zzz"]["live"]
+
+download = requests.get(
+    f"https://static.nanoka.cc/zzz/{live_version}/equipment.json",
+    timeout=10,
+).content.decode("utf-8")
 artifacts = json.load(io.StringIO(download))
 
 with open("../../data/drive_affixes.json") as artifact_file:
@@ -20,15 +24,15 @@ with open("../../data/drive_affixes.json") as artifact_file:
 artifacts_affixes: dict[str, list[str]] = {}
 for artifact in artifacts:
     artifacts[artifact]["id"] = artifact
-    artifacts[artifact]["name"] = artifacts[artifact]["EN"]["name"]
+    artifacts[artifact]["name"] = artifacts[artifact]["en"]["name"]
     artifacts[artifact]["desc"] = [
-        artifacts[artifact]["EN"]["desc2"],
-        artifacts[artifact]["EN"]["desc4"],
+        artifacts[artifact]["en"]["desc2"],
+        artifacts[artifact]["en"]["desc4"],
     ]
-    del artifacts[artifact]["EN"]
-    del artifacts[artifact]["KO"]
-    del artifacts[artifact]["CHS"]
-    del artifacts[artifact]["JA"]
+    del artifacts[artifact]["en"]
+    del artifacts[artifact]["ko"]
+    del artifacts[artifact]["zh"]
+    del artifacts[artifact]["ja"]
     artifacts[artifact]["desc"][0] = re.sub("<.*?>", "", artifacts[artifact]["desc"][0])
     artifacts[artifact]["desc"][1] = re.sub("<.*?>", "", artifacts[artifact]["desc"][1])
     affix = artifacts[artifact]["desc"][0]
@@ -67,7 +71,6 @@ for artifact in list(artifacts_affixes.keys()):
             artifacts2[artifact] = artifacts_affixes[artifact]
     else:
         del artifacts_affixes[artifact]
-print()
 
 with open("../../data/drive_sets.json", "w") as out_file:
     out_file.write(json.dumps(artifacts, indent=4))
@@ -78,13 +81,13 @@ with open("../../data/drive_affixes.json", "w") as out_file:
 with open("../../data/w-engine.json") as char_file:
     wengine1 = json.load(char_file)
 download = requests.get(
-    "https://api.hakush.in/zzz/data/weapon.json",
+    f"https://static.nanoka.cc/zzz/{live_version}/weapon.json",
     timeout=10,
 ).content.decode("utf-8")
 wengine2 = json.load(io.StringIO(download))
 
 for weap in wengine2:
-    weap_name = wengine2[weap]["EN"]
+    weap_name = wengine2[weap]["en"]
     if weap_name not in wengine1:
         wengine1[weap_name] = wengine2[weap].copy()
         wengine1[weap_name]["id"] = weap
@@ -113,10 +116,10 @@ for weap in wengine2:
 
         del wengine1[weap_name]["rank"]
         del wengine1[weap_name]["type"]
-        del wengine1[weap_name]["EN"]
-        del wengine1[weap_name]["KO"]
-        del wengine1[weap_name]["CHS"]
-        del wengine1[weap_name]["JA"]
+        del wengine1[weap_name]["en"]
+        del wengine1[weap_name]["ko"]
+        del wengine1[weap_name]["zh"]
+        del wengine1[weap_name]["ja"]
 
 with open("../../data/w-engine.json", "w") as out_file:
     out_file.write(json.dumps(wengine1, indent=4))
@@ -125,27 +128,30 @@ with open("../../data/w-engine.json", "w") as out_file:
 with open("../../data/characters.json") as char_file:
     chars1 = json.load(char_file)
 download = requests.get(
-    "https://api.hakush.in/zzz/data/character.json",
+    f"https://static.nanoka.cc/zzz/{live_version}/character.json",
     timeout=10,
 ).content.decode("utf-8")
 chars2 = json.load(io.StringIO(download))
 
-for char in chars2:
-    char_name = chars2[char]["EN"]
-    if char_name not in chars1 and chars2[char]["icon"] != "":
+for char, char2 in chars2.items():
+    char_name = char2["en"]
+    if char_name not in chars1 and char2["icon"] != "":
         add_char = input("Add " + char_name + "? (y/n): ")
         if add_char == "y":
-            chars1[char_name] = chars2[char].copy()
-            chars1[char_name]["id"] = char
-            chars1[char_name]["name"] = char_name
+            chars1[char_name] = {
+                "element": char2["element"],
+                "camp": char2["camp"],
+                "icon": char2["icon"],
+                "id": char,
+                "name": char_name,
+            }
 
-            if chars2[char]["rank"] == 3:
+            if char2["rank"] == 3:
                 chars1[char_name]["availability"] = "A"
-            elif chars2[char]["rank"] == 4:
-                print(char_name)
+            elif char2["rank"] == 4:
                 chars1[char_name]["availability"] = "Limited S"
 
-            match str(chars1[char_name]["type"]):
+            match str(char2["type"]):
                 case "1":
                     chars1[char_name]["specialty"] = "Attack"
                     chars1[char_name]["role"] = "Damage Dealer"
@@ -167,7 +173,7 @@ for char in chars2:
                 case _:
                     print("Unknown character type: " + chars1[char_name]["type"])
 
-            match str(chars1[char_name]["element"]):
+            match str(char2["element"]):
                 case "200":
                     chars1[char_name]["element"] = "Physical"
                 case "201":
@@ -181,7 +187,7 @@ for char in chars2:
                 case _:
                     print("Unknown element: " + chars1[char_name]["element"])
 
-            match str(chars1[char_name]["camp"]):
+            match str(char2["camp"]):
                 case "1":
                     chars1[char_name]["camp"] = "Cunning Hares"
                 case "2":
@@ -201,20 +207,6 @@ for char in chars2:
                 case _:
                     chars1[char_name]["camp"] = str(chars1[char_name]["camp"])
 
-            del chars1[char_name]["code"]
-            del chars1[char_name]["potential"]
-            del chars1[char_name]["skin"]
-            del chars1[char_name]["desc"]
-            if "spelement" in chars1[char_name]:
-                del chars1[char_name]["spelement"]
-            del chars1[char_name]["rank"]
-            del chars1[char_name]["type"]
-            del chars1[char_name]["hit"]
-            del chars1[char_name]["EN"]
-            del chars1[char_name]["KO"]
-            del chars1[char_name]["CHS"]
-            del chars1[char_name]["JA"]
-
 with open("../../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars1, indent=4))
 
@@ -222,15 +214,13 @@ with open("../../data/characters.json", "w") as out_file:
 with open("../../data/bangboos.json") as bangboo_file:
     bangboos1 = json.load(bangboo_file)
 download = requests.get(
-    "https://api.hakush.in/zzz/data/bangboo.json",
+    f"https://static.nanoka.cc/zzz/{live_version}/bangboo.json",
     timeout=10,
-).content.decode(
-    "utf-8",
-)
+).content.decode("utf-8")
 bangboos2 = json.load(io.StringIO(download))
 
 for bangboo in bangboos2:
-    bangboo_name = bangboos2[bangboo]["EN"]
+    bangboo_name = bangboos2[bangboo]["en"]
     if bangboo_name == "..." or "Bangboo_Name" in bangboo_name:
         continue
     if (
@@ -249,10 +239,10 @@ for bangboo in bangboos2:
 
         del bangboos1[bangboo_name]["codename"]
         del bangboos1[bangboo_name]["rank"]
-        del bangboos1[bangboo_name]["EN"]
-        del bangboos1[bangboo_name]["KO"]
-        del bangboos1[bangboo_name]["CHS"]
-        del bangboos1[bangboo_name]["JA"]
+        del bangboos1[bangboo_name]["en"]
+        del bangboos1[bangboo_name]["ko"]
+        del bangboos1[bangboo_name]["zh"]
+        del bangboos1[bangboo_name]["ja"]
 
 with open("../../data/bangboos.json", "w") as out_file:
     out_file.write(json.dumps(bangboos1, indent=4))

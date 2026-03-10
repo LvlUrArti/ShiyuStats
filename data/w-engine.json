@@ -900,11 +900,11 @@
         "availability": "Limited S",
         "role": "Support"
     },
-    "Aria Test W-Engine": {
+    "Angel in the Shell": {
         "icon": "Weapon_S_1501",
         "desc": "Item_Weapon_S_1501_ShortDesc",
         "id": "14150",
-        "name": "Aria Test W-Engine",
+        "name": "Angel in the Shell",
         "availability": "Limited S",
         "role": "Damage Dealer"
     }

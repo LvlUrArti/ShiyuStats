@@ -1,56 +1,11 @@
 {
-    "33500": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitWhiteWaterBallad.png",
-        "id": "33500",
-        "name": "White Water Ballad",
+    "31000": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitWoodpeckerElectro.png",
+        "id": "31000",
+        "name": "Woodpecker Electro",
         "desc": [
-            "Physical DMG +10%",
-            "When the equipper is within any Ether Veil, their CRIT Rate increases by 10%. After leaving the Ether Veil, this buff remains for 15s. If the equipper is an Attack character, activating an Ether Veil or extending an Ether Veil's duration increases their CRIT Rate by 10% and ATK by 10% for 30s. Repeated triggers reset the duration."
-        ]
-    },
-    "31900": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitProtoPunk.png",
-        "id": "31900",
-        "name": "Proto Punk",
-        "desc": [
-            "Increases Shield effect by 15%.",
-            "When any squad member triggers a Defensive Assist or Evasive Assist, all squad members deal 15% increased DMG, lasting 10s. Passive effects of the same name do not stack."
-        ]
-    },
-    "33600": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitShiningAria.png",
-        "id": "33600",
-        "name": "Shining Aria",
-        "desc": [
-            "Ether DMG +10%",
-            "When the equipper's Basic Attack hits an enemy, their Anomaly Proficiency increases by 36, lasting 8s. Repeated triggers reset the duration. When any enemy on the field is Stunned, the equipper's DMG increases by 25% for 18s. Repeated triggers reset the duration."
-        ]
-    },
-    "31300": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitFreedomBlues.png",
-        "id": "31300",
-        "name": "Freedom Blues",
-        "desc": [
-            "Anomaly Proficiency +30",
-            "When an EX Special Attack hits an enemy, reduce the target's Anomaly Buildup RES to the equipper's Attribute by 20% for 8s. This effect does not stack with others of the same attribute."
-        ]
-    },
-    "31600": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitSwingJazz.png",
-        "id": "31600",
-        "name": "Swing Jazz",
-        "desc": [
-            "Energy Regen +20%",
-            "Launching a Chain Attack or Ultimate increases all squad members' DMG by 15% for 12s. Passive effects of the same name do not stack."
-        ]
-    },
-    "32700": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitBranch&BladeSong.png",
-        "id": "32700",
-        "name": "Branch & Blade Song",
-        "desc": [
-            "CRIT DMG +16%",
-            "When Anomaly Mastery exceeds or equals 115 points, the equipper's CRIT DMG increases by 30%. When any squad member applies Freeze or triggers the Shatter effect on an enemy, the equipper's CRIT Rate increases by 12%, lasting 15s."
+            "CRIT Rate +8%",
+            "Landing a critical hit on an enemy with a Basic Attack, Dodge Counter, or EX Special Attack increases the equipper's ATK by 9% for 6s. The buff duration for different skills are calculated separately."
         ]
     },
     "31100": {
@@ -62,24 +17,6 @@
             "Ultimate DMG increases by 20%. Launching an Ultimate increases the equipper's ATK by 15% for 12s."
         ]
     },
-    "33200": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitKingoftheSummit.png",
-        "id": "33200",
-        "name": "King of the Summit",
-        "desc": [
-            "Increases Daze of attacks by 6%",
-            "When the equipper is a Stun character and uses an EX Special Attack or Chain Attack, increases CRIT DMG of all squad members by 15%, and when the equipper's CRIT Rate is more than or equal to 50%, further increases CRIT DMG by 15%, lasting 15s. Repeated triggers reset the duration. Passive effects of the same name do not stack."
-        ]
-    },
-    "33400": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitMoonlightLullaby.png",
-        "id": "33400",
-        "name": "Moonlight Lullaby",
-        "desc": [
-            "Energy Regen +20%",
-            "When the equipper is a Support character and uses an EX Special Attack or Ultimate, the DMG dealt by all squad members increases by 18% for 25s. Repeated triggers reset the duration. Passive effects of the same name do not stack."
-        ]
-    },
     "31200": {
         "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitShockstarDisco.png",
         "id": "31200",
@@ -89,49 +26,22 @@
             "Basic Attacks, Dash Attacks, and Dodge Counters inflict 20% more Daze to the main target."
         ]
     },
-    "32800": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitAstralVoice.png",
-        "id": "32800",
-        "name": "Astral Voice",
+    "31300": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitFreedomBlues.png",
+        "id": "31300",
+        "name": "Freedom Blues",
+        "desc": [
+            "Anomaly Proficiency +30",
+            "When an EX Special Attack hits an enemy, reduce the target's Anomaly Buildup RES to the equipper's Attribute by 20% for 8s. This effect does not stack with others of the same attribute."
+        ]
+    },
+    "31400": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitHormonePunk.png",
+        "id": "31400",
+        "name": "Hormone Punk",
         "desc": [
             "ATK +10%",
-            "Whenever any squad member enters the field using a Quick Assist, all squad members gain 1 stack of Astral, up to a maximum of 3 stacks, and lasting 15s. Repeated triggers reset the duration. Each stack of Astral increases the DMG dealt by the character entering the field using a Quick Assist by 8%. Passive effects of the same name do not stack."
-        ]
-    },
-    "33100": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitYunkuiTales.png",
-        "id": "33100",
-        "name": "Yunkui Tales",
-        "desc": [
-            "HP +10%",
-            "When using EX Special Attack, Chain Attack, or Ultimate, CRIT Rate increases by 4%, stacking up to 3 times and lasting 15s. Repeated triggers reset the duration. When having 3 stacks of this effect, Sheer DMG increases by 10%."
-        ]
-    },
-    "32400": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitThunderMetal.png",
-        "id": "32400",
-        "name": "Thunder Metal",
-        "desc": [
-            "Electric DMG +10%",
-            "As long as an enemy in combat is Shocked, the equipper's ATK is increased by 28%."
-        ]
-    },
-    "32900": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitShadow.png",
-        "id": "32900",
-        "name": "Shadow Harmony",
-        "desc": [
-            "The DMG of Aftershocks and Dash Attacks is increased by 15%.",
-            "Upon hitting an enemy with an Aftershock or Dash Attack, if the DMG dealt aligns with the equipper's attribute, the equipper gains 1 stack of a buff effect, at most once per use of a skill. For each stack, the equipper's ATK increases by 4%, and CRIT Rate increases by 4%. The effect can stack up to 3 times and lasts for 15s. Repeated triggers reset the duration."
-        ]
-    },
-    "33300": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitDawnsBloom.png",
-        "id": "33300",
-        "name": "Dawn's Bloom",
-        "desc": [
-            "Increases Basic Attack DMG by 15%.",
-            "Increases Basic Attack DMG by 20%. When equipped by an Attack character, using an EX Special Attack or Ultimate will further increase Basic Attack DMG by 20% for 25s. Repeated triggers reset the duration."
+            "Upon becoming the active character in combat, the equipper's ATK increases by 25% for 10s. This effect can trigger once every 20s."
         ]
     },
     "31500": {
@@ -141,6 +51,60 @@
         "desc": [
             "DEF +16%",
             "Upon receiving an enemy attack and losing HP, the equipper takes 40% less DMG for 2.5s. This effect can trigger once every 15s."
+        ]
+    },
+    "31600": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitSwingJazz.png",
+        "id": "31600",
+        "name": "Swing Jazz",
+        "desc": [
+            "Energy Regen +20%",
+            "Launching a Chain Attack or Ultimate increases all squad members' DMG by 15% for 12s. Passive effects of the same name do not stack."
+        ]
+    },
+    "31800": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitChaosJazz.png",
+        "id": "31800",
+        "name": "Chaos Jazz",
+        "desc": [
+            "Anomaly Proficiency +30",
+            "Fire DMG and Electric DMG increases by 15%. While off-field, EX Special Attack and Assist Attack DMG increases by 20%. When switching on-field, this buff continues for 5s, and this continuation effect can trigger once every 7.5s."
+        ]
+    },
+    "31900": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitProtoPunk.png",
+        "id": "31900",
+        "name": "Proto Punk",
+        "desc": [
+            "Increases Shield effect by 15%.",
+            "When any squad member triggers a Defensive Assist or Evasive Assist, all squad members deal 15% increased DMG, lasting 10s. Passive effects of the same name do not stack."
+        ]
+    },
+    "32200": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitInfernoMetal.png",
+        "id": "32200",
+        "name": "Inferno Metal",
+        "desc": [
+            "Fire DMG +10%",
+            "Upon hitting a Burning enemy, the equipper's CRIT Rate is increased by 28% for 8s."
+        ]
+    },
+    "32300": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitChaosMetal.png",
+        "id": "32300",
+        "name": "Chaotic Metal",
+        "desc": [
+            "Ether DMG +10%",
+            "The equipper's CRIT DMG increases by 20%. When any character in the squad triggers Corruption's additional DMG, this effect further increases by 5.5% for 8s, stacking up to 6 times. Repeated triggers reset the duration."
+        ]
+    },
+    "32400": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitThunderMetal.png",
+        "id": "32400",
+        "name": "Thunder Metal",
+        "desc": [
+            "Electric DMG +10%",
+            "As long as an enemy in combat is Shocked, the equipper's ATK is increased by 28%."
         ]
     },
     "32500": {
@@ -161,13 +125,31 @@
             "Whenever a squad member inflicts Assault on an enemy, the equipper deals 35% additional DMG to the target for 12s."
         ]
     },
-    "31800": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitChaosJazz.png",
-        "id": "31800",
-        "name": "Chaos Jazz",
+    "32700": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitBranch&BladeSong.png",
+        "id": "32700",
+        "name": "Branch & Blade Song",
         "desc": [
-            "Anomaly Proficiency +30",
-            "Fire DMG and Electric DMG increases by 15%. While off-field, EX Special Attack and Assist Attack DMG increases by 20%. When switching on-field, this buff continues for 5s, and this continuation effect can trigger once every 7.5s."
+            "CRIT DMG +16%",
+            "When Anomaly Mastery exceeds or equals 115 points, the equipper's CRIT DMG increases by 30%. When any squad member applies Freeze or triggers the Shatter effect on an enemy, the equipper's CRIT Rate increases by 12%, lasting 15s."
+        ]
+    },
+    "32800": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitAstralVoice.png",
+        "id": "32800",
+        "name": "Astral Voice",
+        "desc": [
+            "ATK +10%",
+            "Whenever any squad member enters the field using a Quick Assist, all squad members gain 1 stack of Astral, up to a maximum of 3 stacks, and lasting 15s. Repeated triggers reset the duration. Each stack of Astral increases the DMG dealt by the character entering the field using a Quick Assist by 8%. Passive effects of the same name do not stack."
+        ]
+    },
+    "32900": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitShadow.png",
+        "id": "32900",
+        "name": "Shadow Harmony",
+        "desc": [
+            "The DMG of Aftershocks and Dash Attacks is increased by 15%.",
+            "Upon hitting an enemy with an Aftershock or Dash Attack, if the DMG dealt aligns with the equipper's attribute, the equipper gains 1 stack of a buff effect, at most once per use of a skill. For each stack, the equipper's ATK increases by 4%, and CRIT Rate increases by 4%. The effect can stack up to 3 times and lasts for 15s. Repeated triggers reset the duration."
         ]
     },
     "33000": {
@@ -179,40 +161,58 @@
             "When any squad member uses an EX Special Attack, the equipper's Anomaly Proficiency increases by 45 for 8s. If the character using the EX Special Attack is not the equipper, the equipper's Ether DMG is increased by 25%."
         ]
     },
-    "31400": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitHormonePunk.png",
-        "id": "31400",
-        "name": "Hormone Punk",
+    "33100": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitYunkuiTales.png",
+        "id": "33100",
+        "name": "Yunkui Tales",
         "desc": [
-            "ATK +10%",
-            "Upon becoming the active character in combat, the equipper's ATK increases by 25% for 10s. This effect can trigger once every 20s."
+            "HP +10%",
+            "When using EX Special Attack, Chain Attack, or Ultimate, CRIT Rate increases by 4%, stacking up to 3 times and lasting 15s. Repeated triggers reset the duration. When having 3 stacks of this effect, Sheer DMG increases by 10%."
         ]
     },
-    "32200": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitInfernoMetal.png",
-        "id": "32200",
-        "name": "Inferno Metal",
+    "33200": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitKingoftheSummit.png",
+        "id": "33200",
+        "name": "King of the Summit",
         "desc": [
-            "Fire DMG +10%",
-            "Upon hitting a Burning enemy, the equipper's CRIT Rate is increased by 28% for 8s."
+            "Increases Daze of attacks by 6%",
+            "When the equipper is a Stun character and uses an EX Special Attack or Chain Attack, increases CRIT DMG of all squad members by 15%, and when the equipper's CRIT Rate is more than or equal to 50%, further increases CRIT DMG by 15%, lasting 15s. Repeated triggers reset the duration. Passive effects of the same name do not stack."
         ]
     },
-    "31000": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitWoodpeckerElectro.png",
-        "id": "31000",
-        "name": "Woodpecker Electro",
+    "33300": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitDawnsBloom.png",
+        "id": "33300",
+        "name": "Dawn's Bloom",
         "desc": [
-            "CRIT Rate +8%",
-            "Landing a critical hit on an enemy with a Basic Attack, Dodge Counter, or EX Special Attack increases the equipper's ATK by 9% for 6s. The buff duration for different skills are calculated separately."
+            "Increases Basic Attack DMG by 15%.",
+            "Increases Basic Attack DMG by 20%. When equipped by an Attack character, using an EX Special Attack or Ultimate will further increase Basic Attack DMG by 20% for 25s. Repeated triggers reset the duration."
         ]
     },
-    "32300": {
-        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitChaosMetal.png",
-        "id": "32300",
-        "name": "Chaotic Metal",
+    "33400": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitMoonlightLullaby.png",
+        "id": "33400",
+        "name": "Moonlight Lullaby",
+        "desc": [
+            "Energy Regen +20%",
+            "When the equipper is a Support character and uses an EX Special Attack or Ultimate, the DMG dealt by all squad members increases by 18% for 25s. Repeated triggers reset the duration. Passive effects of the same name do not stack."
+        ]
+    },
+    "33500": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitWhiteWaterBallad.png",
+        "id": "33500",
+        "name": "White Water Ballad",
+        "desc": [
+            "Physical DMG +10%",
+            "When the equipper is within any Ether Veil, their CRIT Rate increases by 10%. After leaving the Ether Veil, this buff remains for 15s. If the equipper is an Attack character, activating an Ether Veil or extending an Ether Veil's duration increases their CRIT Rate by 10% and ATK by 10% for 30s. Repeated triggers reset the duration."
+        ]
+    },
+    "33600": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitShiningAria.png",
+        "id": "33600",
+        "name": "Shining Aria",
         "desc": [
             "Ether DMG +10%",
-            "The equipper's CRIT DMG increases by 20%. When any character in the squad triggers Corruption's additional DMG, this effect further increases by 5.5% for 8s, stacking up to 6 times. Repeated triggers reset the duration."
+            "When the equipper's Basic Attack hits an enemy, their Anomaly Proficiency increases by 36, lasting 8s. Repeated triggers reset the duration. When any enemy on the field is Stunned, the equipper's DMG increases by 25% for 18s. Repeated triggers reset the duration."
         ]
     }
 }

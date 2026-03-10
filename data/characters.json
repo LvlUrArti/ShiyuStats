@@ -478,5 +478,15 @@
         "availability": "Limited S",
         "specialty": "Support",
         "role": "Support"
+    },
+    "Aria": {
+        "element": "Ether",
+        "camp": "13",
+        "icon": "IconRole57",
+        "id": "1501",
+        "name": "Aria",
+        "availability": "Limited S",
+        "specialty": "Anomaly",
+        "role": "Damage Dealer"
     }
 }

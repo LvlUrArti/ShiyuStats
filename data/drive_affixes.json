@@ -4,15 +4,19 @@
         "Chaos Jazz"
     ],
     "ATK +10%": [
-        "Astral Voice",
-        "Hormone Punk"
+        "Hormone Punk",
+        "Astral Voice"
     ],
     "Energy Regen +20%": [
         "Swing Jazz",
         "Moonlight Lullaby"
     ],
     "Ether +10%": [
-        "Shining Aria",
-        "Chaotic Metal"
+        "Chaotic Metal",
+        "Shining Aria"
+    ],
+    "Phys +10%": [
+        "Fanged Metal",
+        "White Water Ballad"
     ]
 }

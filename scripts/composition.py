@@ -90,6 +90,7 @@ class Composition:
                 "Yidhari",
                 "Banyue",
                 "Ye Shunguang",
+                "Aria",
             ]:
                 self.dps.insert(0, character)
             if character in [
@@ -154,6 +155,7 @@ class Composition:
                 "Yanagi",
                 "Miyabi",
                 "Alice",
+                "Aria",
             ]:
                 self.anomaly.append(character)
 

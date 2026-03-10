@@ -52,6 +52,7 @@ for artifact in artifacts:
 
     affix = affix.replace("CRIT Rate", "CR")
     affix = affix.replace("Anomaly Proficiency", "AP")
+    affix = affix.replace("Physical", "Phys")
 
     if affix not in artifacts_affixes:
         artifacts_affixes[affix] = []

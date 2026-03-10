@@ -39,6 +39,7 @@ for file_name in file_names:
     # Create a dictionary to store the matched teams
     matched_teams: dict[tuple[str | float, ...], dict[str, str | float]] = {}
     matched_teams_m1: dict[tuple[str | float, ...], dict[str, str | float]] = {}
+    output_teams: dict[tuple[str | float, ...], dict[str, str | float]] = {}
 
     # Iterate over the team_data and create a tuple key for each team
     for team in team_data:
@@ -64,7 +65,15 @@ for file_name in file_names:
         else:
             matched_team["avg_round_m1"] = exclude_value
 
-    team_data = list(matched_teams.values())
+        if (
+            matched_team["avg_round_m1"] == exclude_value
+            and matched_team["avg_round"] == exclude_value
+        ):
+            continue
+
+        output_teams[team_key] = matched_team.copy()
+
+    team_data = list(output_teams.values())
 
     # Write the updated data back to the json file
     with open(

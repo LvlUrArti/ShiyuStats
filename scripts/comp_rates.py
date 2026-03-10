@@ -464,6 +464,11 @@ def rank_usages(
         rounded_avg_round = round(mean(avg_round)) if avg_round else DEFAULT_ROUND
         cur_comp.round = rounded_avg_round
 
+        if (cur_comp.round >= (40000 if WHALE_ONLY else 35000)) and (
+            cur_comp.uses <= (3 if WHALE_ONLY else 10)
+        ):
+            cur_comp.round = DEFAULT_ROUND
+
         if cur_comp.boo_freq:
             # Find the bangboo with most usage
             cur_comp.bangboo = max(

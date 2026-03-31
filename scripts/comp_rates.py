@@ -1063,7 +1063,10 @@ def char_usages_write(
                     )
             for i in range(arti_len):
                 if i < len(list(cur_char.artifacts)):
-                    arti_name = list(cur_char.artifacts)[i]
+                    arti_name = list(cur_char.artifacts)[i].replace(
+                        "4p ",
+                        "",
+                    )
                     out_chars_append["artifact_" + str(i + 1)] = arti_name
                     arti_name = arti_name.split(", ")
                     out_chars_append["artifact_" + str(i + 1) + "_1"] = arti_name[0]

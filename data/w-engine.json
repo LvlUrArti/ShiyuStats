@@ -907,5 +907,29 @@
         "name": "Angel in the Shell",
         "availability": "Limited S",
         "role": "Damage Dealer"
+    },
+    "The Simmering Pot": {
+        "icon": "Weapon_A_Common_20",
+        "desc": "Whoa, that's hot! Seriously hot! But it's so good!",
+        "id": "13020",
+        "name": "The Simmering Pot",
+        "availability": "A",
+        "role": "Stun"
+    },
+    "Neon Fantasies": {
+        "icon": "Weapon_S_1511",
+        "desc": "A risky and unpredictable delusion that's impossible to refuse.",
+        "id": "14151",
+        "name": "Neon Fantasies",
+        "availability": "Limited S",
+        "role": "Stun"
+    },
+    "Serpentine Seeker": {
+        "icon": "Weapon_S_1521",
+        "desc": "Digital venom flows beneath those alloy scales.",
+        "id": "14152",
+        "name": "Serpentine Seeker",
+        "availability": "Limited S",
+        "role": "Damage Dealer"
     }
 }

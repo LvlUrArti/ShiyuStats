@@ -18,5 +18,13 @@
     "Phys +10%": [
         "Fanged Metal",
         "White Water Ballad"
+    ],
+    "Ice +10%": [
+        "Polar Metal",
+        "Notes From the Chained"
+    ],
+    "HP +10%": [
+        "Yunkui Tales",
+        "Bunny in Wonderland"
     ]
 }

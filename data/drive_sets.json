@@ -214,5 +214,23 @@
             "Ether DMG +10%",
             "When the equipper's Basic Attack hits an enemy, their Anomaly Proficiency increases by 36, lasting 8s. Repeated triggers reset the duration. When any enemy on the field is Stunned, the equipper's DMG increases by 25% for 18s. Repeated triggers reset the duration."
         ]
+    },
+    "33700": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitBunnyinWonderland.png",
+        "id": "33700",
+        "name": "Bunny in Wonderland",
+        "desc": [
+            "HP +10%",
+            "When the equipper is a Defense character: When the equipper launches an EX Special Attack or any squad member triggers a Defensive Assist or Evasive Assist, all squad members' DMG increases by 6%, stacking up to 3 times, lasting 25s. Stacks decay one at a time, and duration refreshes when gained or decayed. Passive effects of the same name do not stack."
+        ]
+    },
+    "33800": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitNotesFromtheChained.png",
+        "id": "33800",
+        "name": "Notes From the Chained",
+        "desc": [
+            "Ice DMG +10%.",
+            "When the equipper triggers Abloom, their Anomaly Proficiency increases by 48 for 30s; repeated triggers reset the duration. When the equipper triggers a Freeze effect, their All-Attribute Anomaly DMG and Disorder DMG increase by 16% for 30s; repeated triggers reset the duration."
+        ]
     }
 }

@@ -488,5 +488,15 @@
         "availability": "Limited S",
         "specialty": "Anomaly",
         "role": "Damage Dealer"
+    },
+    "Nangong Yu": {
+        "element": "Ether",
+        "camp": "13",
+        "icon": "IconRole59",
+        "id": "1511",
+        "name": "Nangong Yu",
+        "availability": "Limited S",
+        "specialty": "Stun",
+        "role": "Stun"
     }
 }

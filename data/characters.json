@@ -498,5 +498,15 @@
         "availability": "Limited S",
         "specialty": "Stun",
         "role": "Stun"
+    },
+    "Cissia": {
+        "element": "Electric",
+        "camp": "New Eridu Public Security",
+        "icon": "IconRole60",
+        "id": "1521",
+        "name": "Cissia",
+        "availability": "Limited S",
+        "specialty": "Attack",
+        "role": "Damage Dealer"
     }
 }

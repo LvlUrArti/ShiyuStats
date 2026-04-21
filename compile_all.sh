@@ -11,6 +11,8 @@ else
 	python csv_to_pickle.py &
 	python csv_to_pickle.py -da &
 	python hash.py
+	python up_data.py -y
+	python up_data.py -n
 fi
 
 echo ""
@@ -55,5 +57,3 @@ python copyfiles.py -da
 
 cd ../hf_data
 python up_results.py
-python up_data.py -y
-python up_data.py -n

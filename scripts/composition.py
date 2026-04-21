@@ -101,6 +101,7 @@ class Composition:
                 "Harumasa",
                 "Seed",
                 "Orphie & Magus",
+                "Cissia",
             ]:
                 self.dps.append(character)
             elif character in [

@@ -508,5 +508,15 @@
         "availability": "Limited S",
         "specialty": "Attack",
         "role": "Damage Dealer"
+    },
+    "Promeia": {
+        "element": "Ice",
+        "camp": "12",
+        "icon": "IconRole61",
+        "id": "1541",
+        "name": "Promeia",
+        "availability": "Limited S",
+        "specialty": "Anomaly",
+        "role": "Damage Dealer"
     }
 }

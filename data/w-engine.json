@@ -931,5 +931,25 @@
         "name": "Serpentine Seeker",
         "availability": "Limited S",
         "role": "Damage Dealer"
+    },
+    "Starlight Rider Faceplate": {
+        "icon": "Weapon_S_1531",
+        "atk": 713,
+        "desc": "The proof of being a knight is within your grasp.",
+        "sub": "HP",
+        "id": "14153",
+        "name": "Starlight Rider Faceplate",
+        "availability": "Limited S",
+        "role": "Damage Dealer"
+    },
+    "Frostfall Sickle": {
+        "icon": "Weapon_S_1541",
+        "atk": 713,
+        "desc": "Carry out judgment until the end comes.",
+        "sub": "Anomaly Mastery",
+        "id": "14154",
+        "name": "Frostfall Sickle",
+        "availability": "Limited S",
+        "role": "Damage Dealer"
     }
 }

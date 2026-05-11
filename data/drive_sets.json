@@ -95,7 +95,7 @@
         "name": "Chaotic Metal",
         "desc": [
             "Ether DMG +10%",
-            "The equipper's CRIT DMG increases by 20%. When any character in the squad triggers Corruption's additional DMG, this effect further increases by 5.5% for 8s, stacking up to 6 times. Repeated triggers reset the duration."
+            "The equipper's CRIT DMG increases by 20%. When any character in the squad triggers Corruption DMG, this effect further increases by 5.5% for 8s, stacking up to 6 times. Repeated triggers reset the duration."
         ]
     },
     "32400": {

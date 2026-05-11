@@ -264,5 +264,12 @@
         "id": "54010",
         "name": "Biggest Fan",
         "availability": "S"
+    },
+    "Booltergeist": {
+        "icon": "UI/Sprite/A1DynamicLoad/BangbooModGarage/UnPacker/BangbooRole/BangbooGarageRole45.png",
+        "desc": "Trick or play!",
+        "id": "53021",
+        "name": "Booltergeist",
+        "availability": "A"
     }
 }

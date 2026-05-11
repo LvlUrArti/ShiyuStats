@@ -112,8 +112,11 @@ for weap in wengine2:
                 wengine1[weap_name]["role"] = "Support"
             case "5":
                 wengine1[weap_name]["role"] = "Stun"
+            case "6": # Rupture
+                wengine1[weap_name]["role"] = "Damage Dealer"
             case _:
-                print("Unknown weapon type: " + wengine1[weap_name]["type"])
+                print("Unknown weapon type: " + str(wengine1[weap_name]["type"]))
+                print(weap_name)
 
         del wengine1[weap_name]["rank"]
         del wengine1[weap_name]["type"]

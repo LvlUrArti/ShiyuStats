@@ -91,6 +91,7 @@ class Composition:
                 "Banyue",
                 "Ye Shunguang",
                 "Aria",
+                "Promeia",
             ]:
                 self.dps.insert(0, character)
             if character in [

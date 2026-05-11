@@ -50,7 +50,6 @@ class Composition:
         self.subdps: list[str] = []
         self.stun: list[str] = []
         self.support: list[str] = []
-        self.anomaly: list[str] = []
         len_elem: dict[str, int] = {
             "Ice": 0,
             "Fire": 0,
@@ -149,18 +148,6 @@ class Composition:
                 "Ben",
             ]:
                 self.support.append(character)
-            if character in [
-                "Grace",
-                "Piper",
-                "Jane",
-                "Burnice",
-                "Vivian",
-                "Yanagi",
-                "Miyabi",
-                "Alice",
-                "Aria",
-            ]:
-                self.anomaly.append(character)
 
             len_elem[char_data["element"]] += 1
             len_role[char_data["specialty"]] += 1
@@ -183,9 +170,7 @@ class Composition:
         if self.comp_name == "-":
             archetype = ""
             if len(self.dps) + len(self.subdps) > 1:
-                if len(self.anomaly) >= 1:
-                    archetype = " Anomaly"
-                elif len(self.dps) + len(self.subdps) > 2:
+                if len(self.dps) + len(self.subdps) > 2:
                     archetype = " Triple Carry"
                 else:
                     archetype = " Dual Carry"

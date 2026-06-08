@@ -518,5 +518,15 @@
         "availability": "Limited S",
         "specialty": "Anomaly",
         "role": "Damage Dealer"
+    },
+    "Starlight - Billy": {
+        "element": "Physical",
+        "camp": "Cunning Hares",
+        "icon": "IconRole62",
+        "id": "1531",
+        "name": "Starlight - Billy",
+        "availability": "Limited S",
+        "specialty": "Rupture",
+        "role": "Damage Dealer"
     }
 }

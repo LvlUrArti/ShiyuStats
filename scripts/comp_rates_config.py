@@ -47,10 +47,10 @@ with open(str(os.getenv("REPO_PATH")) + "/data/characters.json") as char_file:
 with open(str(os.getenv("REPO_PATH")) + "/data/w-engine.json") as char_file:
     WENGINE = json.load(char_file)
 
-RECENT_PHASE = "2.8.1"
+RECENT_PHASE = "2.8.2"
 
 # if no past phase, past_phase = "null"
-PAST_PHASE = "2.7.2"
+PAST_PHASE = "2.8.1"
 # if as: da_mode = True
 da_mode: bool = args.deadly_assault
 

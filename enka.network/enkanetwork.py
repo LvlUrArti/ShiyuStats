@@ -1,6 +1,6 @@
 """Collects character data from Enka Network."""
 
-from __future__ import annotations
+# pyright: reportMissingTypeStubs=false
 
 import _thread
 import asyncio
@@ -13,23 +13,18 @@ from pickle import load as p_load
 from typing import TYPE_CHECKING
 
 import aiohttp
-import enka  # pyright: ignore[reportMissingTypeStubs]
-from enka.zzz import (  # pyright: ignore[reportMissingTypeStubs]
-    AgentStatType,
-    Element,
-    SkillType,
-)
+import enka
+from enka.zzz import AgentSkill, AgentStatType, Element, SkillType
 from enka_config import (
     char_filename,
     csv,
     desired_stats_dict,
     desired_stats_keys,
-    drive_data,
     filename,
     json,
     output_keys,
-    relics_data,
-    substat_keys,
+    skill_dict,
+    substat_dict,
     uids,
 )
 
@@ -37,10 +32,7 @@ sys.path.append("../scripts/")
 from comp_rates_config import offline_collect, save_to_file
 
 if TYPE_CHECKING:
-    from enka.zzz import (  # pyright: ignore[reportMissingTypeStubs]
-        AgentSkill,
-        ShowcaseResponse,  # pyright: ignore[reportMissingTypeStubs]
-    )
+    from enka.zzz import ShowcaseResponse
 
 print(len(uids))
 
@@ -123,7 +115,10 @@ async def main() -> None:
                 if i == 5:
                     print("error")
                 try:
-                    print(f"{uid_iter + 1} / {len(uids)} : {uid}, {i}")
+                    print(
+                        f"\x1b[1K\r{uid_iter + 1} / {len(uids)} : {uid}, {i}",
+                        end=" ",
+                    )
                     if offline_collect:
                         with open("data.pkl", "rb") as f:
                             data = p_load(f)
@@ -199,12 +194,8 @@ async def main() -> None:
                             )
 
                         skill_array = [
-                            find_skill(SkillType.BASIC_ATK, character.skills),
-                            find_skill(SkillType.SPECIAL_ATK, character.skills),
-                            find_skill(SkillType.DASH, character.skills),
-                            find_skill(SkillType.ULTIMATE, character.skills),
-                            find_skill(SkillType.CORE_SKILL, character.skills),
-                            find_skill(SkillType.ASSIST, character.skills),
+                            find_skill(skill_type, character.skills)
+                            for skill_type in skill_dict
                         ]
                         line.extend(skill_array)
 
@@ -230,15 +221,14 @@ async def main() -> None:
                             5: "",
                             6: "",
                         }
-                        substats: dict[str, float] = dict.fromkeys(substat_keys, 0)
+                        substats: dict[str, float] = dict.fromkeys(
+                            substat_dict.values(),
+                            0,
+                        )
 
                         artifacts: dict[str, int] = {}
                         for relic in character.discs:
-                            set_id: int = drive_data["Items"][str(relic.id)]["SuitId"]
-                            relic_name = relics_data[str(set_id)]["name"].replace(
-                                "\xa0",
-                                " ",
-                            )
+                            relic_name = relic.set_name
                             if relic.slot in mainstats:
                                 mainstats[relic.slot] = relic.main_stat.name
                             if relic_name not in artifacts:
@@ -246,9 +236,8 @@ async def main() -> None:
                             else:
                                 artifacts[relic_name] += 1
                             for stat in relic.sub_stats:
-                                stat_name = stat.name.replace("\xa0", " ")
-                                if stat_name in substats:
-                                    substats[stat_name] += (
+                                if stat.type in substat_dict:
+                                    substats[substat_dict[stat.type]] += (
                                         stat.value / 100
                                         if "%" in stat.format
                                         else stat.value

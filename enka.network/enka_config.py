@@ -1,5 +1,7 @@
 """Config file for enkanetwork.py."""
 
+# pyright: reportMissingTypeStubs=false
+
 from __future__ import annotations
 
 import csv
@@ -9,7 +11,7 @@ import sys
 
 sys.path.append("../scripts/")
 from comp_rates_config import RECENT_PHASE, da_mode
-from enka.zzz import AgentStatType  # pyright: ignore[reportMissingTypeStubs]
+from enka.zzz import AgentStatType, SkillType, StatType
 
 skip_self = False
 skip_random = False
@@ -29,12 +31,6 @@ run_chars_name = ["Miyabi"]
 phase_num = str(RECENT_PHASE)
 if da_mode:
     phase_num = phase_num + "_da"
-
-with open("../data/drive_sets.json") as f:
-    relics_data = json.load(f)
-
-with open(".enka_py/assets/zzz/equipments.json") as f:
-    drive_data = json.load(f)
 
 with open("../data/characters.json") as f:
     characters = json.load(f)
@@ -93,24 +89,24 @@ desired_stats_dict: dict[AgentStatType, str] = {
 
 desired_stats_keys: list[str] = list(dict.fromkeys(desired_stats_dict.values()))
 
-substat_keys = [
-    "Percent HP",
-    "Percent ATK",
-    "Percent DEF",
-    "CRIT Rate",
-    "CRIT DMG",
-    "PEN",
-    "Anomaly Proficiency",
-]
+substat_dict = {
+    StatType.HP_PERCENT: "Percent HP",
+    StatType.ATK_PERCENT: "Percent ATK",
+    StatType.DEF_PERCENT: "Percent DEF",
+    StatType.CRIT_RATE_FLAT: "CRIT Rate",
+    StatType.CRIT_DMG_FLAT: "CRIT DMG",
+    StatType.PEN_RATIO_FLAT: "PEN",
+    StatType.ANOMALY_PRO_FLAT: "Anomaly Proficiency",
+}
 
-skill_keys = [
-    "BASIC_ATK",
-    "SPECIAL_ATK",
-    "DASH",
-    "ULTIMATE",
-    "CORE_SKILL",
-    "ASSIST",
-]
+skill_dict = {
+    SkillType.BASIC_ATK: "BASIC_ATK",
+    SkillType.SPECIAL_ATK: "SPECIAL_ATK",
+    SkillType.DASH: "DASH",
+    SkillType.ULTIMATE: "ULTIMATE",
+    SkillType.CORE_SKILL: "CORE_SKILL",
+    SkillType.ASSIST: "ASSIST",
+}
 
 output_keys = [
     "uid",
@@ -120,9 +116,9 @@ output_keys = [
     "element",
     "w_engine",
     "w_engine_level",
-    *[to_snake_case(key) for key in skill_keys],
+    *[to_snake_case(key) for key in skill_dict.values()],
     *[to_snake_case(key) for key in desired_stats_keys],
-    *[f"{to_snake_case(key)}_sub" for key in substat_keys],
+    *[f"{to_snake_case(key)}_sub" for key in substat_dict.values()],
     "drive_slot_4",
     "drive_slot_5",
     "drive_slot_6",

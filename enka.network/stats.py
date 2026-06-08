@@ -17,7 +17,7 @@ from enka_config import (
     phase_num,
     skip_random,
     skip_self,
-    substat_keys,
+    substat_dict,
     to_snake_case,
 )
 from slugify import slugify
@@ -182,7 +182,7 @@ for char in chars:
 
 count = 0
 mainstatkeys: list[str] = list(mainstats[chars[0]].keys())
-substatkeys: list[str] = [f"{to_snake_case(key)}_sub" for key in substat_keys]
+substatkeys: list[str] = [f"{to_snake_case(key)}_sub" for key in substat_dict.values()]
 
 if os.path.isfile("../../uids.csv"):
     with open("../../uids.csv", encoding="UTF8") as f:

@@ -1,48 +1,49 @@
 """Update data from hakushin."""
 
-import io
+# ruff: noqa: N815, ANN401, D101
+
 import json
 import re
+from io import StringIO
+from typing import Any
 
 import requests
+from pydantic import BaseModel
 
-download = requests.get(
+
+def load_from_url(url: str) -> Any:
+    """Load data from URL."""
+    download = requests.get(url, timeout=10).content.decode("utf-8")
+    return json.load(StringIO(download))
+
+
+live_version: str = load_from_url(
     "https://static.nanoka.cc/manifest.json",
-    timeout=10,
-).content.decode("utf-8")
-live_version = json.load(io.StringIO(download))["zzz"]["live"]
+)["zzz"]["live"]
 
-download = requests.get(
+raw_drives: dict[str, dict[str, dict[str, str]]] = load_from_url(
     f"https://static.nanoka.cc/zzz/{live_version}/equipment.json",
-    timeout=10,
-).content.decode("utf-8")
-artifacts = json.load(io.StringIO(download))
+)
+drive_sets: dict[str, dict[str, str | list[str]]] = {}
 
-with open("../../data/drive_affixes.json") as artifact_file:
-    artifacts2 = json.load(artifact_file)
+with open("../../data/drive_affixes.json") as file:
+    drive_affixes_data = json.load(file)
 
-artifacts_affixes: dict[str, list[str]] = {}
-for artifact in artifacts:
-    artifacts[artifact]["id"] = artifact
-    artifacts[artifact]["name"] = artifacts[artifact]["en"]["name"]
-    artifacts[artifact]["desc"] = [
-        artifacts[artifact]["en"]["desc2"],
-        artifacts[artifact]["en"]["desc4"],
+drive_affixes: dict[str, list[str]] = {}
+for drive_id, drive in raw_drives.items():
+    drive_sets[drive_id] = {}
+    drive_sets[drive_id]["icon"] = str(drive["icon"])
+    drive_sets[drive_id]["id"] = drive_id
+    drive_sets[drive_id]["name"] = drive["en"]["name"]
+    drive_sets[drive_id]["desc"] = [
+        re.sub("<.*?>", "", drive["en"]["desc2"]),
+        re.sub("<.*?>", "", drive["en"]["desc4"]),
     ]
-    del artifacts[artifact]["en"]
-    del artifacts[artifact]["ko"]
-    del artifacts[artifact]["zh"]
-    del artifacts[artifact]["ja"]
-    artifacts[artifact]["desc"][0] = re.sub("<.*?>", "", artifacts[artifact]["desc"][0])
-    artifacts[artifact]["desc"][1] = re.sub("<.*?>", "", artifacts[artifact]["desc"][1])
-    affix = artifacts[artifact]["desc"][0]
+    affix = drive_sets[drive_id]["desc"][0]
 
     if affix[-1] == ".":
         affix = affix[:-1]
-    for i in ["DMG "]:
-        affix = affix.replace(i, "")
 
-    affix = affix.replace("increases by ", "+")
     if "Increases " in affix:
         affix = affix.replace("Increases ", "")
         affix = affix.replace("by ", "+")
@@ -50,206 +51,157 @@ for artifact in artifacts:
         affix = affix.replace("Reduces ", "")
         affix = affix.replace("by ", "-")
 
-    affix = affix.replace("CRIT Rate", "CR")
-    affix = affix.replace("Anomaly Proficiency", "AP")
-    affix = affix.replace("Physical", "Phys")
+    replacements = {
+        "increases by ": "+",
+        "DMG ": "",
+        "CRIT Rate": "CR",
+        "Anomaly Proficiency": "AP",
+        "Physical": "Phys",
+    }
+    for old, new in replacements.items():
+        affix = affix.replace(old, new)
 
-    if affix not in artifacts_affixes:
-        artifacts_affixes[affix] = []
-    artifacts_affixes[affix].append(artifacts[artifact]["name"])
+    if affix not in drive_affixes:
+        drive_affixes[affix] = []
+    drive_affixes[affix].append(str(drive_sets[drive_id]["name"]))
 
-for artifact in list(artifacts_affixes.keys()):
-    if len(artifacts_affixes[artifact]) > 1:
-        add_arti = "n"
-        if artifact not in artifacts2:
-            if len(artifact) > 12:
-                print("Set name too long: " + artifact)
+for affix in list(drive_affixes.keys()):
+    if len(drive_affixes[affix]) > 1:
+        add_drive = "n"
+        if affix not in drive_affixes_data:
+            if len(affix) > 12:
+                print("Set name too long: " + affix)
             else:
-                add_arti = input("Add " + artifact + "? (y/n): ")
+                add_drive = input("Add " + affix + "? (y/n): ")
         else:
-            add_arti = "y"
-        if add_arti == "y":
-            artifacts2[artifact] = artifacts_affixes[artifact]
+            add_drive = "y"
+        if add_drive == "y":
+            drive_affixes_data[affix] = drive_affixes[affix]
     else:
-        del artifacts_affixes[artifact]
+        del drive_affixes[affix]
 
 with open("../../data/drive_sets.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts, indent=4))
+    out_file.write(json.dumps(drive_sets, indent=4))
 
 with open("../../data/drive_affixes.json", "w") as out_file:
-    out_file.write(json.dumps(artifacts2, indent=4))
+    out_file.write(json.dumps(drive_affixes_data, indent=4))
 
-with open("../../data/w-engine.json") as char_file:
-    wengine1 = json.load(char_file)
-download = requests.get(
+with open("../../data/w-engine.json") as file:
+    wengine = json.load(file)
+raw_wengine: dict[str, dict[str, int | str]] = load_from_url(
     f"https://static.nanoka.cc/zzz/{live_version}/weapon.json",
-    timeout=10,
-).content.decode("utf-8")
-wengine2 = json.load(io.StringIO(download))
+)
 
-for weap in wengine2:
-    weap_name = wengine2[weap]["en"]
-    if weap_name not in wengine1:
-        wengine1[weap_name] = wengine2[weap].copy()
-        wengine1[weap_name]["id"] = weap
-        wengine1[weap_name]["name"] = weap_name
+for weap_id, weap in raw_wengine.items():
+    weap_name = weap["en"]
+    if weap_name not in wengine:
+        wengine[weap_name] = {
+            "id": weap_id,
+            "name": weap_name,
+        }
 
-        if wengine2[weap]["rank"] == 2:
-            wengine1[weap_name]["availability"] = "B"
-        elif wengine2[weap]["rank"] == 3:
-            wengine1[weap_name]["availability"] = "A"
-        elif wengine2[weap]["rank"] == 4:
-            wengine1[weap_name]["availability"] = "Limited S"
-
-        match str(wengine1[weap_name]["type"]):
-            case "1":
-                wengine1[weap_name]["role"] = "Damage Dealer"
-            case "2":
-                wengine1[weap_name]["role"] = "Stun"
-            case "3":
-                wengine1[weap_name]["role"] = "Damage Dealer"
-            case "4":
-                wengine1[weap_name]["role"] = "Support"
-            case "5":
-                wengine1[weap_name]["role"] = "Stun"
-            case "6": # Rupture
-                wengine1[weap_name]["role"] = "Damage Dealer"
-            case _:
-                print("Unknown weapon type: " + str(wengine1[weap_name]["type"]))
-                print(weap_name)
-
-        del wengine1[weap_name]["rank"]
-        del wengine1[weap_name]["type"]
-        del wengine1[weap_name]["en"]
-        del wengine1[weap_name]["ko"]
-        del wengine1[weap_name]["zh"]
-        del wengine1[weap_name]["ja"]
+        if weap["rank"] == 2:
+            wengine[weap_name]["availability"] = "B"
+        elif weap["rank"] == 3:
+            wengine[weap_name]["availability"] = "A"
+        elif weap["rank"] == 4:
+            wengine[weap_name]["availability"] = "Limited S"
 
 with open("../../data/w-engine.json", "w") as out_file:
-    out_file.write(json.dumps(wengine1, indent=4))
+    out_file.write(json.dumps(wengine, indent=4))
 
 
-with open("../../data/characters.json") as char_file:
-    chars1 = json.load(char_file)
-download = requests.get(
+with open("../../data/characters.json") as file:
+    chars = json.load(file)
+raw_chars: dict[str, dict[str, int | str]] = load_from_url(
     f"https://static.nanoka.cc/zzz/{live_version}/character.json",
-    timeout=10,
-).content.decode("utf-8")
-chars2 = json.load(io.StringIO(download))
+)
 
-for char, char2 in chars2.items():
-    char_name = char2["en"]
-    if char_name not in chars1 and char2["icon"] != "":
-        add_char = input("Add " + char_name + "? (y/n): ")
+for char_id, char in raw_chars.items():
+    char_name = char["en"]
+    if char_name not in chars and char["icon"] != "":
+        add_char = input(f"Add {char_name}? (y/n): ")
         if add_char == "y":
-            chars1[char_name] = {
-                "element": char2["element"],
-                "camp": char2["camp"],
-                "icon": char2["icon"],
-                "id": char,
+            chars[char_name] = {
+                "element": char["element"],
+                "camp": char["camp"],
+                "icon": char["icon"],
+                "id": char_id,
                 "name": char_name,
             }
 
-            if char2["rank"] == 3:
-                chars1[char_name]["availability"] = "A"
-            elif char2["rank"] == 4:
-                chars1[char_name]["availability"] = "Limited S"
+            if char["rank"] == 3:
+                chars[char_name]["availability"] = "A"
+            elif char["rank"] == 4:
+                chars[char_name]["availability"] = "Limited S"
 
-            match str(char2["type"]):
+            match str(char["type"]):
                 case "1":
-                    chars1[char_name]["specialty"] = "Attack"
-                    chars1[char_name]["role"] = "Damage Dealer"
+                    chars[char_name]["specialty"] = "Attack"
+                    chars[char_name]["role"] = "Damage Dealer"
                 case "2":
-                    chars1[char_name]["specialty"] = "Stun"
-                    chars1[char_name]["role"] = "Stun"
+                    chars[char_name]["specialty"] = "Stun"
+                    chars[char_name]["role"] = "Stun"
                 case "3":
-                    chars1[char_name]["specialty"] = "Anomaly"
-                    chars1[char_name]["role"] = "Damage Dealer"
+                    chars[char_name]["specialty"] = "Anomaly"
+                    chars[char_name]["role"] = "Damage Dealer"
                 case "4":
-                    chars1[char_name]["specialty"] = "Support"
-                    chars1[char_name]["role"] = "Support"
+                    chars[char_name]["specialty"] = "Support"
+                    chars[char_name]["role"] = "Support"
                 case "5":
-                    chars1[char_name]["specialty"] = "Defense"
-                    chars1[char_name]["role"] = "Support"
+                    chars[char_name]["specialty"] = "Defense"
+                    chars[char_name]["role"] = "Support"
                 case "6":
-                    chars1[char_name]["specialty"] = "Rupture"
-                    chars1[char_name]["role"] = "Damage Dealer"
+                    chars[char_name]["specialty"] = "Rupture"
+                    chars[char_name]["role"] = "Damage Dealer"
                 case _:
-                    print("Unknown character type: " + chars1[char_name]["type"])
+                    print("Unknown character type: " + chars[char_name]["type"])
 
-            match str(char2["element"]):
+            match str(char["element"]):
                 case "200":
-                    chars1[char_name]["element"] = "Physical"
+                    chars[char_name]["element"] = "Physical"
                 case "201":
-                    chars1[char_name]["element"] = "Fire"
+                    chars[char_name]["element"] = "Fire"
                 case "202":
-                    chars1[char_name]["element"] = "Ice"
+                    chars[char_name]["element"] = "Ice"
                 case "203":
-                    chars1[char_name]["element"] = "Electric"
+                    chars[char_name]["element"] = "Electric"
                 case "205":
-                    chars1[char_name]["element"] = "Ether"
+                    chars[char_name]["element"] = "Ether"
                 case _:
-                    print("Unknown element: " + chars1[char_name]["element"])
-
-            match str(char2["camp"]):
-                case "1":
-                    chars1[char_name]["camp"] = "Cunning Hares"
-                case "2":
-                    chars1[char_name]["camp"] = "Victoria Housekeeping Co."
-                case "3":
-                    chars1[char_name]["camp"] = "Belobog Heavy Industries"
-                case "4":
-                    chars1[char_name]["camp"] = "Sons of Calydon"
-                case "5":
-                    chars1[char_name]["camp"] = "Obol Squad"
-                case "6":
-                    chars1[char_name]["camp"] = "Hollow Special Operations Section 6"
-                case "7":
-                    chars1[char_name]["camp"] = "New Eridu Public Security"
-                case "8":
-                    chars1[char_name]["camp"] = "Stars of Lyra"
-                case _:
-                    chars1[char_name]["camp"] = str(chars1[char_name]["camp"])
+                    print("Unknown element: " + chars[char_name]["element"])
 
 with open("../../data/characters.json", "w") as out_file:
-    out_file.write(json.dumps(chars1, indent=4))
+    out_file.write(json.dumps(chars, indent=4))
 
 
-with open("../../data/bangboos.json") as bangboo_file:
-    bangboos1 = json.load(bangboo_file)
-download = requests.get(
+with open("../../data/bangboos.json") as file:
+    bangboos = json.load(file)
+raw_bangboos: dict[str, dict[str, int | str]] = load_from_url(
     f"https://static.nanoka.cc/zzz/{live_version}/bangboo.json",
-    timeout=10,
-).content.decode("utf-8")
-bangboos2 = json.load(io.StringIO(download))
+)
 
-for bangboo in bangboos2:
-    bangboo_name = bangboos2[bangboo]["en"]
-    if bangboo_name == "..." or "Bangboo_Name" in bangboo_name:
+for bangboo_id, bangboo in raw_bangboos.items():
+    bangboo_name = bangboo["en"]
+    if bangboo_name == "..." or "Bangboo_Name" in str(bangboo_name):
         continue
     if (
-        bangboo_name not in bangboos1
-        and bangboos2[bangboo]["icon"] != ""
-        and "Bangboo_Name_" not in bangboos2[bangboo]["icon"]
+        bangboo_name not in bangboos
+        and bangboo["icon"] != ""
+        and "Bangboo_Name_" not in str(bangboo["icon"])
     ):
-        bangboos1[bangboo_name] = bangboos2[bangboo].copy()
-        bangboos1[bangboo_name]["id"] = bangboo
-        bangboos1[bangboo_name]["name"] = bangboo_name
+        bangboos[bangboo_name] = {
+            "id": bangboo_id,
+            "name": bangboo_name,
+        }
 
-        if bangboos2[bangboo]["rank"] == 3:
-            bangboos1[bangboo_name]["availability"] = "A"
-        elif bangboos2[bangboo]["rank"] == 4:
-            bangboos1[bangboo_name]["availability"] = "S"
-
-        del bangboos1[bangboo_name]["codename"]
-        del bangboos1[bangboo_name]["rank"]
-        del bangboos1[bangboo_name]["en"]
-        del bangboos1[bangboo_name]["ko"]
-        del bangboos1[bangboo_name]["zh"]
-        del bangboos1[bangboo_name]["ja"]
+        if bangboo["rank"] == 3:
+            bangboos[bangboo_name]["availability"] = "A"
+        elif bangboo["rank"] == 4:
+            bangboos[bangboo_name]["availability"] = "S"
 
 with open("../../data/bangboos.json", "w") as out_file:
-    out_file.write(json.dumps(bangboos1, indent=4))
+    out_file.write(json.dumps(bangboos, indent=4))
 
 
 class EndgameConfig(BaseModel):

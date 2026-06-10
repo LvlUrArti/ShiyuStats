@@ -1,12 +1,12 @@
 """Config file for comp_rates.py."""
 
 import argparse
-import json
-import os
+from datetime import datetime
+from json import load
+from os.path import dirname as path_dirname
+from os.path import join as path_join
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from pydantic import BaseModel, field_validator
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-off", "--offline_collect", action="store_true")
@@ -37,17 +37,45 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+RECENT_PHASE = "2.8.2"
+
+
+def relative_path(relative_path: str) -> str:
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    script_dir = path_dirname(__file__)
+    return path_join(script_dir, relative_path)
+
+
+class EndgameConfig(BaseModel):
+    """Endgame collect date and version info."""
+
+    collect_date: datetime
+    sd_ver: str | None
+    da_ver: str | None
+
+    @field_validator("collect_date", mode="before")
+    @classmethod
+    def parse_collect_date(cls, value: str) -> datetime:
+        """Convert string to datetime."""
+        return datetime.strptime(value, "%d/%m/%Y")
+
+
+with open(relative_path("../data/versions/config.json")) as f:
+    raw_config = load(f)
+    ENDGAME_INFOS: dict[str, EndgameConfig] = {
+        char_name: EndgameConfig(**item) for char_name, item in raw_config.items()
+    }
+    ENDGAME_INFO: EndgameConfig | None = ENDGAME_INFOS.get(RECENT_PHASE)
+
 # For enka.network
 offline_collect: bool = args.offline_collect
 save_to_file: bool = args.save_to_file
 
-with open(str(os.getenv("REPO_PATH")) + "/data/characters.json") as char_file:
-    CHARACTERS = json.load(char_file)
+with open(relative_path("../data/characters.json")) as char_file:
+    CHARACTERS = load(char_file)
 
-with open(str(os.getenv("REPO_PATH")) + "/data/w-engine.json") as char_file:
-    WENGINE = json.load(char_file)
-
-RECENT_PHASE = "2.8.2"
+with open(relative_path("../data/w-engine.json")) as char_file:
+    WENGINE = load(char_file)
 
 # if no past phase, past_phase = "null"
 PAST_PHASE = "2.8.1"

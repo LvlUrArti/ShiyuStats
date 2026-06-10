@@ -1,0 +1,32 @@
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "T201",     # print
+  "PTH",      # Use of os.path
+  "BLE001",   # Use of assert
+  "ASYNC230", # Use await in sync context
+  "ASYNC250", # Use "input" in async context
+  "S301",     # Use of unsafe cryptographically weak random number
+  "FBT",      # Boolean test
+  "INP001",   # Unused import
+  "TD002",    # Missing TODO author
+  "TD003",    # Missing TODO link
+  "DTZ001",   # Use of naive datetime
+  "DTZ005",   # Use of naive datetime
+  "DTZ006",   # Use of naive datetime
+  "DTZ007",   # Use of naive datetime
+  # Rules below should be enabled again
+  "PLW0603", # Using the global statement
+  "PLR2004", # Magic value used in comparison
+  "C901",    # Complexity
+  "PLR0912", # Too many branches
+  "PLR0915", # Too many statements
+]
+# Enforce typing-related rules
+[tool.pyright]
+typeCheckingMode = "strict"
+extraPaths = ["./ShiyuStats/scripts"]
+[tool.ruff.lint.flake8-builtins]
+strict-checking = true
+[tool.ruff.lint.flake8-type-checking]
+strict = true

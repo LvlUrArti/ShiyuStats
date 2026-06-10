@@ -250,3 +250,41 @@ for bangboo in bangboos2:
 
 with open("../../data/bangboos.json", "w") as out_file:
     out_file.write(json.dumps(bangboos1, indent=4))
+
+
+class EndgameConfig(BaseModel):
+    versionTime: str
+
+
+def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str, str]]:
+    """Add endgame versions."""
+    versions: dict[str, dict[str, Any]] = {}
+    for version, version_item in versions_dict.items():
+        config = EndgameConfig(**version_item)
+        version_time = config.versionTime
+        if version_time != "xx/xx/20xx - xx/xx/20xx":
+            versions[version] = {
+                "time_start": version_time.split(" - ")[0],
+                "time_end": version_time.split(" - ")[1],
+            }
+    return versions
+
+
+# Endgame versions update
+save_entries: dict[str, dict[str, dict[str, str]]] = {}
+
+sd_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
+    "https://www.buhflipexplode.org/zzz/sd/sd-versions.json",
+)
+for entry in sd_data:
+    name = str(entry["name"])
+    if name == "Critical Node":
+        save_entries["Shiyu Defense"] = add_endgame(entry["versions"])
+
+da_data: dict[str, dict[str, str]] = load_from_url(
+    "https://www.buhflipexplode.org/zzz/da/da-versions.json",
+)
+save_entries["Deadly Assault"] = add_endgame(da_data)
+
+with open("../../data/versions/endgame_versions.json", "w") as out_file:
+    out_file.write(json.dumps(save_entries, indent=2))

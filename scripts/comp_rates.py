@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import json
 import time
 from itertools import permutations
 from os.path import isfile
@@ -25,7 +26,6 @@ from comp_rates_config import (
     char_infographics,
     da_mode,
     duo_dict_len,
-    json,
     json_threshold,
     run_commands,
     sig_weaps,

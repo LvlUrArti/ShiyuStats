@@ -87,6 +87,10 @@ def copy_results() -> None:
     try:
         # Use copytree to copy entire folder
         shutil.copytree("../../results/web_results", destination)
+        shutil.copy(
+            "../../data/versions/config.json",
+            "../../results/final_results/config.json",
+        )
 
         print("✅ Folder copied successfully!")
         print(f"   Destination: {destination}")

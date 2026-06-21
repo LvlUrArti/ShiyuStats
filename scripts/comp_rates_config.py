@@ -46,12 +46,26 @@ def relative_path(relative_path: str) -> str:
     return path_join(script_dir, relative_path)
 
 
+class EndgameMode(BaseModel):
+    """Endgame mode version info."""
+
+    ver: str
+    start: datetime
+    end: datetime
+
+    @field_validator("start", "end", mode="before")
+    @classmethod
+    def parse_date(cls, value: str) -> datetime:
+        """Convert string to datetime."""
+        return datetime.strptime(value, "%d/%m/%Y")
+
+
 class EndgameConfig(BaseModel):
     """Endgame collect date and version info."""
 
     collect_date: datetime
-    sd_ver: str | None
-    da_ver: str | None
+    sd: EndgameMode | None = None
+    da: EndgameMode | None = None
 
     @field_validator("collect_date", mode="before")
     @classmethod

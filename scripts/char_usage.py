@@ -1,9 +1,7 @@
 """Compile all HSR character data."""
 
 # pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
-import csv
 import json
-import os.path
 import warnings
 from itertools import chain
 from statistics import mean, stdev
@@ -73,11 +71,6 @@ def appearances(
     user_chars: dict[str, set[str]] = {}
     app_boos: dict[str, CharApp] = {}
     user_boos: dict[str, set[str]] = {}
-    if os.path.exists("../results/char_results/duo_check.csv"):
-        with open("../results/char_results/duo_check.csv") as f:
-            valid_duo_dps = list(csv.reader(f, delimiter=","))
-    else:
-        valid_duo_dps = []
 
     all_uids = set[str]()
     cheated_uids = set[str]()
@@ -97,12 +90,6 @@ def appearances(
             whale_comp = False
             giga_whale = False
             f2p_comp = True
-            dps_count = 0
-            found_duo = []
-            for duo_dps in valid_duo_dps:
-                if set(duo_dps).issubset(cur_user.characters):
-                    found_duo = duo_dps
-                    break
 
             for char in cur_user.characters:
                 if (
@@ -115,9 +102,6 @@ def appearances(
                         giga_whale = True
                 if char in user.owned and user.owned[char].weapon in sig_weaps:
                     f2p_comp = False
-                if CHARACTERS[char]["role"] == "Damage Dealer":
-                    dps_count += 1
-            dps_count = 1
             if cur_user.flag_cheat:
                 cheated_uids.add(user.player)
                 continue
@@ -152,18 +136,11 @@ def appearances(
                 if chambers == ONE_STAGE:
                     user_chars[char].add(user.player)
 
-                if found_duo and char in found_duo:
-                    dps_count = 1
-
                 app[char].app_flat += 1
                 if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                     app[char].app_flat_exclude += 1
 
-                if (
-                    whale_comp == WHALE_ONLY
-                    and (not F2P_ONLY or f2p_comp)
-                    and dps_count == 1
-                ):
+                if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                     if CHARACTERS[char]["availability"] == "Limited S":
                         app[char].cons_freq[0].round_list[cur_chamber].append(
                             cur_user.round_num,
@@ -181,7 +158,7 @@ def appearances(
                     if weapon not in app[char].weap_freq:
                         app[char].weap_freq[weapon] = RoundApp()
                     app[char].weap_freq[weapon].app_flat += 1
-                    if not whale_comp and dps_count == 1:
+                    if not whale_comp:
                         app[char].weap_freq[weapon].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
@@ -191,7 +168,7 @@ def appearances(
                     if artifact not in app[char].arti_freq:
                         app[char].arti_freq[artifact] = RoundApp()
                     app[char].arti_freq[artifact].app_flat += 1
-                    if not whale_comp and dps_count == 1:
+                    if not whale_comp:
                         app[char].arti_freq[artifact].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
@@ -202,11 +179,7 @@ def appearances(
                     user_boos[boo].add(user.player)
                 app_boos[boo].app_flat += 1
 
-                if (
-                    whale_comp == WHALE_ONLY
-                    and (not F2P_ONLY or f2p_comp)
-                    and dps_count == 1
-                ):
+                if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
                     app_boos[boo].round_list[cur_chamber].append(cur_user.round_num)
 
     total = len(all_uids) / 100.0

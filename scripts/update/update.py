@@ -8,6 +8,8 @@ from io import StringIO
 from typing import Any
 
 import requests
+from agent_scraper import scrape_wiki_chars
+from merge_characters import merge_characters
 from pydantic import BaseModel
 
 
@@ -174,6 +176,8 @@ for char_id, char in raw_chars.items():
 with open("../../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars, indent=4))
 
+wiki_characters = scrape_wiki_chars()
+merge_characters(wiki_characters)
 
 with open("../../data/bangboos.json") as file:
     bangboos = json.load(file)

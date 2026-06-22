@@ -528,5 +528,25 @@
         "availability": "Limited S",
         "specialty": "Rupture",
         "role": "Damage Dealer"
+    },
+    "Pyrois": {
+        "element": "Ether",
+        "camp": 15,
+        "icon": "IconRole63",
+        "id": "1551",
+        "name": "Pyrois",
+        "availability": "Limited S",
+        "specialty": "Attack",
+        "role": "Damage Dealer"
+    },
+    "Velina": {
+        "element": "Wind",
+        "camp": 16,
+        "icon": "IconRole64",
+        "id": "1561",
+        "name": "Velina",
+        "availability": "Limited S",
+        "specialty": "Anomaly",
+        "role": "Damage Dealer"
     }
 }

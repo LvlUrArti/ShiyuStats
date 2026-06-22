@@ -232,5 +232,23 @@
             "Ice DMG +10%.",
             "When the equipper triggers Abloom, their Anomaly Proficiency increases by 48 for 30s; repeated triggers reset the duration. When the equipper triggers a Freeze effect, their All-Attribute Anomaly DMG and Disorder DMG increase by 16% for 30s; repeated triggers reset the duration."
         ]
+    },
+    "33900": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitWutheringSalon.png",
+        "id": "33900",
+        "name": "Wuthering Salon",
+        "desc": [
+            "Wind DMG +10%.",
+            "When the equipper uses an EX Special Attack, their Anomaly Proficiency increases by 25, stacking up to 2 times, and lasting 40s; repeated triggers reset the duration. When the equipper triggers Windswept, their DMG increases by 18% for 40s. Repeated triggers reset the duration."
+        ]
+    },
+    "34000": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitTheSkyAblaze.png",
+        "id": "34000",
+        "name": "The Sky Ablaze",
+        "desc": [
+            "Ether DMG +10%.",
+            "When the equipper is an Ether attribute Agent, their CRIT DMG increases by 30%. When the equipper uses an EX Special Attack or Ultimate, their ATK increases by 10% for 30s. Repeated triggers reset the duration."
+        ]
     }
 }

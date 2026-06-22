@@ -91,6 +91,7 @@ class Composition:
                 "Ye Shunguang",
                 "Aria",
                 "Promeia",
+                "Pyrois",
             ]:
                 self.dps.insert(0, character)
             if character in [
@@ -114,6 +115,7 @@ class Composition:
                 "Grace",
                 "Burnice",
                 "Vivian",
+                "Velina",
             ]:
                 self.subdps.append(character)
             elif character in [

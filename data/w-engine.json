@@ -951,5 +951,25 @@
         "name": "Frostfall Sickle",
         "availability": "Limited S",
         "role": "Damage Dealer"
+    },
+    "Boisterous Echoes": {
+        "id": "13018",
+        "name": "Boisterous Echoes",
+        "availability": "A"
+    },
+    "Sol Exuvia": {
+        "id": "14155",
+        "name": "Sol Exuvia",
+        "availability": "Limited S"
+    },
+    "Joyau Dore": {
+        "id": "14156",
+        "name": "Joyau Dore",
+        "availability": "Limited S"
+    },
+    "Chief Sidekick": {
+        "id": "14157",
+        "name": "Chief Sidekick",
+        "availability": "Limited S"
     }
 }

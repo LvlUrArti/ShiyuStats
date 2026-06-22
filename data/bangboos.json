@@ -271,5 +271,10 @@
         "id": "53021",
         "name": "Booltergeist",
         "availability": "A"
+    },
+    "Ultra Jake": {
+        "id": "54022",
+        "name": "Ultra Jake",
+        "availability": "S"
     }
 }

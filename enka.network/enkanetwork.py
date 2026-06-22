@@ -29,6 +29,8 @@ from enka_config import (
     uids,
 )
 
+from ShiyuStats.scripts.utils.notif import send_notification
+
 sys.path.append("../scripts/")
 from comp_rates_config import offline_collect, save_to_file
 
@@ -324,6 +326,7 @@ async def main() -> None:
                         break
 
         print("\nFinished")
+        send_notification("Data Collect Done", "Data Collect Done")
         await client.close()
 
 

@@ -24,6 +24,7 @@ from enka_config import (
     json,
     output_keys,
     skill_dict,
+    start_index,
     substat_dict,
     uids,
 )
@@ -104,7 +105,7 @@ async def main() -> None:
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))
-        uid_iter = -1
+        uid_iter = -1 + start_index
         while not input_list and uid_iter < len(uids) - 1:
             uid_iter += 1
             uid = uids[uid_iter]

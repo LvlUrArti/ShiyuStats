@@ -957,7 +957,9 @@ def boo_usages_write(
     """Write bangboos usage."""
     out_chars: list[dict[str, str | int | float]] = []
     out_chars_csv: list[dict[str, str | int | float]] = []
-    chars_dict = dict(sorted(chars_dict.items(), key=lambda t: t[1].app, reverse=True))
+    chars_dict = dict(
+        sorted(chars_dict.items(), key=lambda t: t[1].round, reverse=da_mode),
+    )
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
             "char": char,

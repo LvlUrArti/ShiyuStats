@@ -56,6 +56,7 @@ class Composition:
             "Ether": 0,
             "Electric": 0,
             "Physical": 0,
+            "Wind": 0,
         }
         len_role: dict[RoleLit, int] = {
             "Attack": 0,

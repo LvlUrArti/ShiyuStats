@@ -140,6 +140,8 @@ async def main() -> None:
                         element_name = character.elements[-1]
                         dmg_bonus: AgentStatType = AgentStatType.PHYSICAL_DMG_BONUS
                         match element_name:
+                            case Element.WIND:
+                                dmg_bonus = AgentStatType.WIND_DMG_BONUS
                             case Element.PHYSICAL:
                                 dmg_bonus = AgentStatType.PHYSICAL_DMG_BONUS
                             case Element.FIRE:

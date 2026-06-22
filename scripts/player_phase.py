@@ -19,6 +19,7 @@ ElemLit = Literal[
     "Ether",
     "Electric",
     "Physical",
+    "Wind",
 ]
 
 

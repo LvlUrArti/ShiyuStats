@@ -85,6 +85,7 @@ desired_stats_dict: dict[AgentStatType, str] = {
     AgentStatType.ETHER_DMG_BONUS: "DMG Bonus",
     AgentStatType.ELECTRIC_DMG_BONUS: "DMG Bonus",
     AgentStatType.PHYSICAL_DMG_BONUS: "DMG Bonus",
+    AgentStatType.WIND_DMG_BONUS: "DMG Bonus",
 }
 
 desired_stats_keys: list[str] = list(dict.fromkeys(desired_stats_dict.values()))

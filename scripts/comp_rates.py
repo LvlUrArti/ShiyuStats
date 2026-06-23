@@ -523,14 +523,9 @@ def used_duos(
         # two duos are used, Ganyu/Xiangling and Xiangling/Ganyu
         duos = list(permutations(comp.characters, 2))
         for duo in duos:
-            is_triple_dps = False
-
             if duo not in duos_dict:
                 duos_dict[duo] = cu.RoundApp()
             duos_dict[duo].app_flat += 1
-
-            if is_triple_dps and "Duos check" in run_commands:
-                continue
             if not whale_comp:
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
@@ -801,15 +796,12 @@ def duo_write(
     if archetype != "all":
         filename = filename + "_" + archetype
     count = 0
-    out_duos_check: dict[str, dict[str, dict[str, str | float]]] = {}
-    out_duos_exclu: dict[str, dict[str, dict[str, str | float]]] = {}
+    out_duos_check: dict[tuple[str, str], dict[str, str | float]] = {}
 
     with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
         for duos in out_duos:
             duo_char = str(duos["char"])
-            out_duos_check[duo_char] = {}
-            out_duos_exclu[duo_char] = {}
             if count == 0:
                 temp_duos = ["char", "app"]
                 for i in range(10):
@@ -843,7 +835,7 @@ def duo_write(
                     and usage[duo_j].round != 1
                     and usage[duo_j].round != 0
                 ):
-                    out_duos_check[duo_char][duo_j] = {
+                    out_duos_check[(duo_char, duo_j)] = {
                         "app": duo_app_j,
                         "avg_round": duo_round_j,
                     }
@@ -856,35 +848,16 @@ def duo_write(
             for char_j in char_names:
                 is_char_i_dps = CHARS_INFO[char_i].role == "dps"
                 is_char_j_dps = CHARS_INFO[char_j].role == "dps"
-                if is_char_i_dps and is_char_j_dps:
-                    if char_j not in out_duos_check:
-                        continue
-                    if char_i not in out_duos_check:
-                        continue
-                    if char_i in out_duos_check[char_j]:
-                        out_dd_list.append([char_j, char_i])
-                        out_i_j = out_duos_check[char_i][char_j]
-                        out_j_i = out_duos_check[char_j][char_i]
-                        if char_j in out_duos_check[char_i]:
-                            out_dd[frozenset([char_i, char_j])] = {
-                                "char_i": char_i,
-                                "char_i_app": str(out_i_j["app"]),
-                                "char_j": char_j,
-                                "char_j_app": str(out_j_i["app"]),
-                                "avg_round": str(out_i_j["avg_round"]),
-                            }
-                        elif char_j in out_duos_exclu[char_i]:
-                            out_dd[frozenset([char_i, char_j])] = {
-                                "char_i": char_i,
-                                "char_i_app": str(
-                                    out_duos_exclu[char_i][char_j]["app"],
-                                ),
-                                "char_j": char_j,
-                                "char_j_app": str(out_j_i["app"]),
-                                "avg_round": str(
-                                    out_duos_exclu[char_i][char_j]["avg_round"],
-                                ),
-                            }
+                tuple_duo = (char_i, char_j)
+                if is_char_i_dps and is_char_j_dps and tuple_duo in out_duos_check:
+                    out_dd_list.append([char_j, char_i])
+                    out_i_j = out_duos_check[tuple_duo]
+                    out_dd[frozenset([char_i, char_j])] = {
+                        "char_i": char_i,
+                        "char_i_app": str(out_i_j["app"]),
+                        "char_j": char_j,
+                        "avg_round": str(out_i_j["avg_round"]),
+                    }
 
         sorted_out_dd = sorted(
             out_dd.items(),
@@ -897,18 +870,6 @@ def duo_write(
             csv_writer = csv.writer(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
-        for out_dd_print in out_dd:
-            print(
-                str(out_dd[out_dd_print]["char_i"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_i_app"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_j"])
-                + ", "
-                + str(out_dd[out_dd_print]["char_j_app"])
-                + ", "
-                + str(out_dd[out_dd_print]["avg_round"]),
-            )
         if __name__ == "__main__" and notification.notify:
             notification.notify(
                 title="Finished",

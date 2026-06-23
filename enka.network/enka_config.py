@@ -16,12 +16,6 @@ skip_self = False
 skip_random = False
 print_chart = False
 
-# stats.py
-comp_stats = []
-check_char = True
-check_char_name = "Yanqing"
-check_stats: list[str] = []
-
 # stat.py
 run_all_chars = True
 run_chars_name = ["Miyabi"]
@@ -86,6 +80,16 @@ def to_snake_case(key: str) -> str:
     return key.replace(" ", "_").lower()
 
 
+dmg_bonus_dict: dict[AgentStatType, str] = {
+    AgentStatType.ICE_DMG_BONUS: "DMG Bonus",
+    AgentStatType.FIRE_DMG_BONUS: "DMG Bonus",
+    AgentStatType.ETHER_DMG_BONUS: "DMG Bonus",
+    AgentStatType.ELECTRIC_DMG_BONUS: "DMG Bonus",
+    AgentStatType.PHYSICAL_DMG_BONUS: "DMG Bonus",
+    AgentStatType.WIND_DMG_BONUS: "DMG Bonus",
+}
+
+
 desired_stats_dict: dict[AgentStatType, str] = {
     AgentStatType.MAX_HP: "Base HP",
     AgentStatType.ATK: "Base ATK",
@@ -99,12 +103,7 @@ desired_stats_dict: dict[AgentStatType, str] = {
     AgentStatType.PEN: "PEN",
     AgentStatType.ENERGY_REGEN: "Base Energy Regen",
     AgentStatType.SHEER_FORCE: "Sheer Force",
-    AgentStatType.ICE_DMG_BONUS: "DMG Bonus",
-    AgentStatType.FIRE_DMG_BONUS: "DMG Bonus",
-    AgentStatType.ETHER_DMG_BONUS: "DMG Bonus",
-    AgentStatType.ELECTRIC_DMG_BONUS: "DMG Bonus",
-    AgentStatType.PHYSICAL_DMG_BONUS: "DMG Bonus",
-    AgentStatType.WIND_DMG_BONUS: "DMG Bonus",
+    **dmg_bonus_dict,
 }
 
 desired_stats_keys: list[str] = list(dict.fromkeys(desired_stats_dict.values()))

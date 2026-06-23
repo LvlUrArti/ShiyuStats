@@ -20,10 +20,8 @@ from enka_config import (
     substat_dict,
     to_snake_case,
 )
-from slugify import slugify
 
-with open("../scripts/prydwen-slug.json") as slug_file:
-    slug = json.load(slug_file)
+from scripts.comp_rates_config import CHARS_INFO
 
 with open(
     (
@@ -325,9 +323,7 @@ for iter_char, char_value in enumerate(stats.values()):
         else:
             char_value.stats_write[value] = 0.00
 
-    char_value.name = slugify(char_value.name)
-    if char_value.name in slug:
-        char_value.name = slug[char_value.name]
+    char_value.name = CHARS_INFO[char_value.name].slug
     if char_value.name == CHARACTERS[iter_char]["char"]:
         del char_value.name
     else:

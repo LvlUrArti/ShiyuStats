@@ -6,7 +6,6 @@ from sys import path as sys_path
 sys_path.append("../")
 from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
-from slugify import slugify
 
 # ----------------------------------------------------------------------
 # Constants
@@ -59,12 +58,6 @@ NUMERIC_STATS = [
     "pen_sub",
     "anomaly_proficiency_sub",
 ]
-
-# ----------------------------------------------------------------------
-# Load slug mappings and character list
-# ----------------------------------------------------------------------
-with open("../prydwen-slug.json") as slug_file:
-    SLUG = json.load(slug_file)
 
 
 # ----------------------------------------------------------------------
@@ -396,14 +389,9 @@ sd_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["sd"])
 da_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["da"])
 
 # ----------------------------------------------------------------------
-# Build list of all character keys (including solo/support variants)
+# Build list of all character keys
 # ----------------------------------------------------------------------
-character_keys: list[str] = []
-for char_iter in CHARS_INFO:
-    slugged = slugify(char_iter)
-    if slugged in SLUG:
-        slugged = SLUG[slugged]
-    character_keys.append(slugged)
+character_keys: list[str] = [char_iter.slug for char_iter in CHARS_INFO.values()]
 
 
 def process_chars() -> None:

@@ -14,6 +14,7 @@ from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
+    BOOS_INFO,
     CHARS_INFO,
     DEFAULT_ROUND,
     F2P_ONLY,
@@ -34,13 +35,9 @@ from composition import Composition
 from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
 from plyer import notification
 from scipy.stats import skew, trim_mean
-from slugify import slugify
 
 if TYPE_CHECKING:
     from player_phase import PlayerPhase
-
-with open("prydwen-slug.json") as slug_file:
-    slug = json.load(slug_file)
 
 
 start_time = time.time()
@@ -694,15 +691,13 @@ def comp_usages_write(
         ):
             out = name_filter(list(comp), mode="out")
             for i in range(3):
-                out[i] = slugify(out[i])
-                if out[i] in slug:
-                    out[i] = slug[out[i]]
+                out[i] = CHARS_INFO[out[i]].slug
             out_json_dict: dict[str, str | float] = {
                 "char_one": out[0],
                 "char_two": out[1],
                 "char_three": out[2],
             }
-            out_json_dict["bangboo"] = slugify(cur_comp.bangboo)
+            out_json_dict["bangboo"] = BOOS_INFO[cur_comp.bangboo].slug
             out_json_dict["app_rate"] = cur_comp.app_rate
             out_json_dict["rank"] = cur_comp.app_rank
             out_json_dict["avg_round"] = cur_comp.round
@@ -928,9 +923,7 @@ def duo_write(
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value]:
-                out_duos[i][duo_value] = slugify(str(out_duos[i][duo_value]))
-                if out_duos[i][duo_value] in slug:
-                    out_duos[i][duo_value] = slug[out_duos[i][duo_value]]
+                out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
     with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(json.dumps(out_duos, indent=2))
 
@@ -974,9 +967,7 @@ def boo_usages_write(
     iterate_value_round = ["avg_round", "diff_rounds"]
 
     for i in range(len(out_chars)):
-        out_chars[i]["char"] = slugify(str(out_chars[i]["char"]))
-        if out_chars[i]["char"] in slug:
-            out_chars[i]["char"] = slug[out_chars[i]["char"]]
+        out_chars[i]["char"] = BOOS_INFO[str(out_chars[i]["char"])].slug
         for value in iterate_value_app:
             if (
                 str(out_chars[i][value])[:-1]
@@ -1143,9 +1134,7 @@ def char_usages_write(
 
     for i in range(len(out_chars)):
         # for i in range(7):
-        out_chars[i]["char"] = slugify(str(out_chars[i]["char"]))
-        if out_chars[i]["char"] in slug:
-            out_chars[i]["char"] = slug[out_chars[i]["char"]]
+        out_chars[i]["char"] = CHARS_INFO[str(out_chars[i]["char"])].slug
         for value in iterate_value_app:
             if (
                 str(out_chars[i][value])[:-1]

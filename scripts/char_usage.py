@@ -7,6 +7,7 @@ from itertools import chain
 from statistics import mean, stdev
 
 from comp_rates_config import (
+    CHARACTERS,
     CONS_LIMIT,
     DEFAULT_ROUND,
     F2P_ONLY,
@@ -24,8 +25,6 @@ ROOMS = ONE_STAGE if da_mode else ["5-1", "5-2", "5-3"]
 SKEW_LIMIT = 0.8
 SKEW_APP_LIMIT = 10
 gear_app_threshold = 0
-with open("../data/characters.json") as char_file:
-    CHARACTERS = json.load(char_file)
 with open("../data/bangboos.json") as char_file:
     BANGBOOS = json.load(char_file)
 

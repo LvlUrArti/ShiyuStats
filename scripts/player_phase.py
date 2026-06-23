@@ -6,9 +6,6 @@ from typing import Literal, cast
 from composition import Composition
 
 # Set class constants in initialization
-# Load the list of characters from their file
-with open("../data/characters.json") as char_file:
-    CHARACTERS = json.load(char_file)
 with open("../data/drive_affixes.json") as relic_file:
     articombinations = json.load(relic_file)
 

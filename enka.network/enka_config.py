@@ -5,7 +5,6 @@
 from __future__ import annotations
 
 import csv
-import json
 import os.path
 import sys
 from pathlib import Path
@@ -32,16 +31,6 @@ run_chars_name = ["Miyabi"]
 phase_num = str(RECENT_PHASE)
 if da_mode:
     phase_num = phase_num + "_da"
-
-with open("../data/characters.json") as f:
-    characters = json.load(f)
-
-trailblazer_ids: list[str] = []
-for char in characters.values():
-    if "trailblazer_ids" in char:
-        trailblazer_ids.extend(
-            trailblazer_id for trailblazer_id in char["trailblazer_ids"]
-        )
 
 if os.path.exists("../results/char_results/uids.csv"):
     with open("../results/char_results/uids.csv", encoding="UTF8") as f:

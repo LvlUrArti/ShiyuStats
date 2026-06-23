@@ -4,7 +4,7 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import PAST_PHASE, RECENT_PHASE
+from comp_rates_config import CHARACTERS, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
 from slugify import slugify
 
@@ -65,9 +65,6 @@ NUMERIC_STATS = [
 # ----------------------------------------------------------------------
 with open("../prydwen-slug.json") as slug_file:
     SLUG = json.load(slug_file)
-
-with open("../../data/characters.json") as char_file:
-    CHARACTERS: dict[str, dict[str, str | int | None]] = json.load(char_file)
 
 
 # ----------------------------------------------------------------------

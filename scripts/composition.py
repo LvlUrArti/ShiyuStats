@@ -1,14 +1,10 @@
 """An object that stores information about a particular composition."""
 
-import json
 from typing import Literal
 
-from comp_rates_config import da_mode
+from comp_rates_config import CHARACTERS, da_mode
 
 # Set class constants in initialization
-# Load the list of characters from their file
-with open("../data/characters.json") as char_file:
-    CHARACTERS = json.load(char_file)
 
 RoleLit = Literal[
     "Attack",

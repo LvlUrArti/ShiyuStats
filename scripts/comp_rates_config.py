@@ -108,10 +108,10 @@ class CharInfo(BaseModel):
     specialty: RoleLit
     attack_type: str
     faction: str
-    release_date: int
+    release_date: datetime
     role: str
 
-    @field_validator("release", mode="before")
+    @field_validator("release_date", mode="before")
     @classmethod
     def parse_epoch(cls, value: int) -> datetime:
         """Convert epoch timestamp to datetime."""
@@ -125,7 +125,9 @@ with open(relative_path("../data/characters.json")) as char_file:
         for char_name, item in raw_characters.items()
         if (
             not ENDGAME_INFO
-            or (datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date)
+            or (
+                datetime.fromtimestamp(item["release_date"]) < ENDGAME_INFO.collect_date
+            )
         )
     }
 

@@ -300,18 +300,17 @@ with (
         csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
 
 temp_stats: list[str] = []
-iter_char = 0
 with open("../results/char_results/" + phase_num + "/all.json") as char_file:
     CHARACTERS = json.load(char_file)
 with open(
-    "../results/char_results/" + phase_num + "/appearance_combine.json"
+    "../results/char_results/" + phase_num + "/appearance_combine.json",
 ) as app_char_file:
     APP = json.load(app_char_file)
 with open(
-    "../results/char_results/" + phase_num + "/rounds_combine.json"
+    "../results/char_results/" + phase_num + "/rounds_combine.json",
 ) as round_char_file:
     ROUND = json.load(round_char_file)
-for char, char_value in stats.items():
+for iter_char, char_value in enumerate(stats.values()):
     iterate_value_app: list[str] = []
     for i in range(3):
         iterate_value_app.append("drive_slot_4_" + str(i + 1) + "_app")
@@ -319,36 +318,24 @@ for char, char_value in stats.items():
         iterate_value_app.append("drive_slot_6_" + str(i + 1) + "_app")
     for value in iterate_value_app:
         if isinstance(char_value.stats_write[value], float):
-            stats[char].stats_write[value] = round(
+            char_value.stats_write[value] = round(
                 float(char_value.stats_write[value]) * 100,
                 2,
             )
         else:
-            stats[char].stats_write[value] = 0.00
+            char_value.stats_write[value] = 0.00
 
-    stats[char].name = slugify(char_value.name)
+    char_value.name = slugify(char_value.name)
     if char_value.name in slug:
-        stats[char].name = slug[char_value.name]
+        char_value.name = slug[char_value.name]
     if char_value.name == CHARACTERS[iter_char]["char"]:
-        del stats[char].name
+        del char_value.name
     else:
         print(char_value.name)
         print(CHARACTERS[iter_char]["char"])
         sys_exit()
 
-    app_dict: dict[str, float] = {}
-    if not (da_mode):
-        app_dict = {
-            "5_app": APP["5-1"][char]["app"] if char in APP["5-1"] else 0,
-            "5_round": ROUND["5-1"][char]["round"] if char in ROUND["5-1"] else 600,
-        }
-    else:
-        app_dict = {
-            "1_app": APP["1-1"][char]["app"] if char in APP["1-1"] else 0,
-            "1_round": ROUND["1-1"][char]["round"] if char in ROUND["1-1"] else 0,
-        }
-    temp_stats.append((CHARACTERS[iter_char] | char_value.stats_write) | app_dict)
-    iter_char += 1
+    temp_stats.append(CHARACTERS[iter_char] | char_value.stats_write)
 
 if not os.path.exists("../results/char_results/" + phase_num):
     os.mkdir("../results/char_results/" + phase_num)

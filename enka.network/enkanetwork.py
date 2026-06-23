@@ -4,7 +4,7 @@
 
 import _thread
 import asyncio
-import sys
+import json
 import traceback
 from datetime import datetime
 from os import stat as os_stat
@@ -21,7 +21,6 @@ from enka_config import (
     desired_stats_dict,
     desired_stats_keys,
     filename,
-    json,
     output_keys,
     skill_dict,
     start_index,
@@ -29,10 +28,8 @@ from enka_config import (
     uids,
 )
 
-from ShiyuStats.scripts.utils.notif import send_notification
-
-sys.path.append("../scripts/")
-from comp_rates_config import offline_collect, save_to_file
+from scripts.comp_rates_config import offline_collect, save_to_file
+from scripts.utils.notif import send_notification
 
 if TYPE_CHECKING:
     from enka.zzz import ShowcaseResponse

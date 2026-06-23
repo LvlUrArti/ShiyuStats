@@ -96,15 +96,20 @@ RoleLit = Literal[
 ]
 
 
-class CharInfo(BaseModel):
-    """Character info from characters.json."""
+class BaseCharInfo(BaseModel):
+    """Base character info."""
 
     id: str
     name: str
-    full_name: str
     slug: str
-    element: str
     availability: str
+
+
+class CharInfo(BaseCharInfo):
+    """Character info from characters.json."""
+
+    full_name: str
+    element: str
     specialty: RoleLit
     attack_type: str
     faction: str
@@ -129,6 +134,12 @@ with open(relative_path("../data/characters.json")) as char_file:
                 datetime.fromtimestamp(item["release_date"]) < ENDGAME_INFO.collect_date
             )
         )
+    }
+
+with open(relative_path("../data/bangboos.json")) as char_file:
+    raw_bangboos = load(char_file)
+    BOOS_INFO: dict[str, BaseCharInfo] = {
+        char_name: BaseCharInfo(**item) for char_name, item in raw_bangboos.items()
     }
 
 with open(relative_path("../data/w-engine.json")) as char_file:

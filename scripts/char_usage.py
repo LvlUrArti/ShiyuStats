@@ -7,6 +7,7 @@ from itertools import chain
 from statistics import mean, stdev
 
 from comp_rates_config import (
+    BOOS_INFO,
     CHARS_INFO,
     CONS_LIMIT,
     DEFAULT_ROUND,
@@ -25,8 +26,6 @@ ROOMS = ONE_STAGE if da_mode else ["5-1", "5-2", "5-3"]
 SKEW_LIMIT = 0.8
 SKEW_APP_LIMIT = 10
 gear_app_threshold = 0
-with open("../data/bangboos.json") as char_file:
-    BANGBOOS = json.load(char_file)
 
 
 class RoundApp:
@@ -77,7 +76,7 @@ def appearances(
     for character in CHARS_INFO:
         user_chars[character] = set()
         app[character] = CharApp()
-    for boo in BANGBOOS:
+    for boo in BOOS_INFO:
         user_boos[boo] = set()
         app_boos[boo] = CharApp()
 
@@ -393,7 +392,7 @@ class CharUsageData(CharApp):
         self.rarity = str(
             CHARS_INFO[char].availability
             if char in CHARS_INFO
-            else BANGBOOS[char]["availability"],
+            else BOOS_INFO[char].availability,
         )
         self.weapons: dict[str, RoundApp] = {}
         self.weapons_round: dict[str, RoundApp] = {}

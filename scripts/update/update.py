@@ -186,7 +186,7 @@ raw_bangboos: dict[str, dict[str, int | str]] = load_from_url(
 )
 
 for bangboo_id, bangboo in raw_bangboos.items():
-    bangboo_name = bangboo["en"]
+    bangboo_name = str(bangboo["en"])
     if bangboo_name == "..." or "Bangboo_Name" in str(bangboo_name):
         continue
     if (
@@ -197,6 +197,7 @@ for bangboo_id, bangboo in raw_bangboos.items():
         bangboos[bangboo_name] = {
             "id": bangboo_id,
             "name": bangboo_name,
+            "slug": bangboo_name.lower().replace(" ", "-"),
         }
 
         if bangboo["rank"] == 3:

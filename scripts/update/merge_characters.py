@@ -36,6 +36,7 @@ def build_entry(existing_val: dict[str, Any], agent: dict[str, Any]) -> dict[str
         "id": existing_val["id"],
         "name": existing_val.get("name", ""),
         "full_name": agent["name"],
+        "slug": existing_val.get("slug", ""),
         "element": existing_val.get("element", agent["attribute"]),
         "availability": existing_val.get("availability", ""),
         "specialty": existing_val.get("specialty", agent["specialty"]),

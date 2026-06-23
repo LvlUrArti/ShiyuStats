@@ -3,660 +3,715 @@
         "id": "1061",
         "name": "Corin",
         "full_name": "Corin Wickes",
+        "slug": "corin",
         "element": "Physical",
         "availability": "A",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Victoria Housekeeping Co.",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Soukaku": {
         "id": "1131",
         "name": "Soukaku",
         "full_name": "Soukaku",
+        "slug": "soukaku",
         "element": "Ice",
         "availability": "A",
         "specialty": "Support",
         "attack_type": "Slash",
         "faction": "Hollow Special Operations Section 6",
         "release_date": 1720051200,
-        "role": "Support"
+        "role": "support"
     },
     "Billy": {
         "id": "1081",
         "name": "Billy",
         "full_name": "Billy Kid",
+        "slug": "billy-kid",
         "element": "Physical",
         "availability": "A",
         "specialty": "Attack",
         "attack_type": "Pierce",
         "faction": "Cunning Hares",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Grace": {
         "id": "1181",
         "name": "Grace",
         "full_name": "Grace Howard",
+        "slug": "grace-howard",
         "element": "Electric",
         "availability": "Standard S",
         "specialty": "Anomaly",
         "attack_type": "Pierce",
         "faction": "Belobog Heavy Industries",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "subdps"
     },
     "Anby": {
         "id": "1011",
         "name": "Anby",
         "full_name": "Anby Demara",
+        "slug": "anby-demara",
         "element": "Electric",
         "availability": "A",
         "specialty": "Stun",
         "attack_type": "Slash",
         "faction": "Cunning Hares",
         "release_date": 1720051200,
-        "role": "Stun"
+        "role": "support"
     },
     "Nicole": {
         "id": "1031",
         "name": "Nicole",
         "full_name": "Nicole Demara",
+        "slug": "nicole-demara",
         "element": "Ether",
         "availability": "A",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Cunning Hares",
         "release_date": 1720051200,
-        "role": "Support"
+        "role": "support"
     },
     "Piper": {
         "id": "1281",
         "name": "Piper",
         "full_name": "Piper Wheel",
+        "slug": "piper",
         "element": "Physical",
         "availability": "A",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Sons of Calydon",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Nekomata": {
         "id": "1021",
         "name": "Nekomata",
         "full_name": "Nekomiya Mana",
+        "slug": "nekomata",
         "element": "Physical",
         "availability": "Standard S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Cunning Hares",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Zhu Yuan": {
         "id": "1241",
         "name": "Zhu Yuan",
         "full_name": "Zhu Yuan",
+        "slug": "zhu-yuan",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Pierce",
         "faction": "Criminal Investigation Special Response Team",
         "release_date": 1721779200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Lycaon": {
         "id": "1141",
         "name": "Lycaon",
         "full_name": "Von Lycaon",
+        "slug": "lycaon",
         "element": "Ice",
         "availability": "Standard S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Victoria Housekeeping Co.",
         "release_date": 1720051200,
-        "role": "Stun"
+        "role": "support"
     },
     "Anton": {
         "id": "1111",
         "name": "Anton",
         "full_name": "Anton Ivanov",
+        "slug": "anton",
         "element": "Electric",
         "availability": "A",
         "specialty": "Attack",
         "attack_type": "Pierce",
         "faction": "Belobog Heavy Industries",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Soldier 11": {
         "id": "1041",
         "name": "Soldier 11",
         "full_name": "Soldier 11",
+        "slug": "soldier-11",
         "element": "Fire",
         "availability": "Standard S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Obol Squad",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Ben": {
         "id": "1121",
         "name": "Ben",
         "full_name": "Ben Bigger",
+        "slug": "ben",
         "element": "Fire",
         "availability": "A",
         "specialty": "Defense",
         "attack_type": "Strike",
         "faction": "Belobog Heavy Industries",
         "release_date": 1720051200,
-        "role": "Support"
+        "role": "support"
     },
     "Rina": {
         "id": "1211",
         "name": "Rina",
         "full_name": "Alexandrina Sebastiane",
+        "slug": "rina",
         "element": "Electric",
         "availability": "Standard S",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Victoria Housekeeping Co.",
         "release_date": 1720051200,
-        "role": "Support"
+        "role": "support"
     },
     "Lucy": {
         "id": "1151",
         "name": "Lucy",
         "full_name": "Luciana de Montefio",
+        "slug": "lucy",
         "element": "Fire",
         "availability": "A",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Sons of Calydon",
         "release_date": 1720051200,
-        "role": "Support"
+        "role": "support"
     },
     "Koleda": {
         "id": "1101",
         "name": "Koleda",
         "full_name": "Koleda Belobog",
+        "slug": "koleda",
         "element": "Fire",
         "availability": "Standard S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Belobog Heavy Industries",
         "release_date": 1720051200,
-        "role": "Stun"
+        "role": "support"
     },
     "Ellen": {
         "id": "1191",
         "name": "Ellen",
         "full_name": "Ellen Joe",
+        "slug": "ellen",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Victoria Housekeeping Co.",
         "release_date": 1720051200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Qingyi": {
         "id": "1251",
         "name": "Qingyi",
         "full_name": "Qingyi",
+        "slug": "qingyi",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Criminal Investigation Special Response Team",
         "release_date": 1723593600,
-        "role": "Stun"
+        "role": "support"
     },
     "Jane": {
         "id": "1261",
         "name": "Jane",
         "full_name": "Jane Doe",
+        "slug": "jane-doe",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Criminal Investigation Special Response Team",
         "release_date": 1725408000,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Seth": {
         "id": "1271",
         "name": "Seth",
         "full_name": "Seth Lowell",
+        "slug": "seth",
         "element": "Electric",
         "availability": "A",
         "specialty": "Defense",
         "attack_type": "Slash",
         "faction": "Criminal Investigation Special Response Team",
         "release_date": 1725408000,
-        "role": "Support"
+        "role": "support"
     },
     "Caesar": {
         "id": "1071",
         "name": "Caesar",
         "full_name": "Caesar King",
+        "slug": "caesar",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Defense",
         "attack_type": "Slash, Strike",
         "faction": "Sons of Calydon",
         "release_date": 1727222400,
-        "role": "Support"
+        "role": "support"
     },
     "Burnice": {
         "id": "1171",
         "name": "Burnice",
         "full_name": "Burnice White",
+        "slug": "burnice",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Pierce",
         "faction": "Sons of Calydon",
         "release_date": 1729036800,
-        "role": "Damage Dealer"
+        "role": "subdps"
     },
     "Yanagi": {
         "id": "1221",
         "name": "Yanagi",
         "full_name": "Tsukishiro Yanagi",
+        "slug": "yanagi",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Hollow Special Operations Section 6",
         "release_date": 1730851200,
-        "role": "Damage Dealer"
+        "role": "subdps"
     },
     "Lighter": {
         "id": "1161",
         "name": "Lighter",
         "full_name": "Lighter",
+        "slug": "lighter",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Sons of Calydon",
         "release_date": 1732665600,
-        "role": "Stun"
+        "role": "support"
     },
     "Harumasa": {
         "id": "1201",
         "name": "Harumasa",
         "full_name": "Asaba Harumasa",
+        "slug": "harumasa",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Pierce, Slash",
         "faction": "Hollow Special Operations Section 6",
         "release_date": 1734480000,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Miyabi": {
         "id": "1091",
         "name": "Miyabi",
         "full_name": "Hoshimi Miyabi",
+        "slug": "miyabi",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Hollow Special Operations Section 6",
         "release_date": 1734480000,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Astra Yao": {
         "id": "1311",
         "name": "Astra Yao",
         "full_name": "Astra Yao",
+        "slug": "astra-yao",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Stars of Lyra",
         "release_date": 1737504000,
-        "role": "Support"
+        "role": "support"
     },
     "Evelyn": {
         "id": "1321",
         "name": "Evelyn",
         "full_name": "Evelyn Chevalier",
+        "slug": "evelyn",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Stars of Lyra",
         "release_date": 1739318400,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Pulchra": {
         "id": "1351",
         "name": "Pulchra",
         "full_name": "Pulchra Fellini",
+        "slug": "pulchra",
         "element": "Physical",
         "availability": "A",
         "specialty": "Stun",
         "attack_type": "Slash",
         "faction": "Sons of Calydon",
         "release_date": 1741737600,
-        "role": "Stun"
+        "role": "support"
     },
     "Soldier 0 - Anby": {
         "id": "1381",
         "name": "Soldier 0 - Anby",
         "full_name": "Soldier 0 - Anby",
+        "slug": "anby-demara-soldier-0",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Defense Force - Silver Squad",
         "release_date": 1741737600,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Trigger": {
         "id": "1361",
         "name": "Trigger",
         "full_name": "Trigger",
+        "slug": "trigger",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Pierce",
         "faction": "Obol Squad",
         "release_date": 1743552000,
-        "role": "Stun"
+        "role": "support"
     },
     "Vivian": {
         "id": "1331",
         "name": "Vivian",
         "full_name": "Vivian Banshee",
+        "slug": "vivian",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Mockingbird",
         "release_date": 1745366400,
-        "role": "Damage Dealer"
+        "role": "subdps"
     },
     "Hugo": {
         "id": "1291",
         "name": "Hugo",
         "full_name": "Hugo Vlad",
+        "slug": "hugo",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Mockingbird",
         "release_date": 1747180800,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Pan Yinhu": {
         "id": "1421",
         "name": "Pan Yinhu",
         "full_name": "Pan Yinhu",
+        "slug": "pan-yinhu",
         "element": "Physical",
         "availability": "A",
         "specialty": "Defense",
         "attack_type": "Strike",
         "faction": "Yunkui Summit",
         "release_date": 1749168000,
-        "role": "Support"
+        "role": "support"
     },
     "Yixuan": {
         "id": "1371",
         "name": "Yixuan",
         "full_name": "Yixuan",
+        "slug": "yixuan",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Rupture",
         "attack_type": "Strike",
         "faction": "Yunkui Summit",
         "release_date": 1749168000,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Ju Fufu": {
         "id": "1391",
         "name": "Ju Fufu",
         "full_name": "Ju Fufu",
+        "slug": "ju-fufu",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Yunkui Summit",
         "release_date": 1750809600,
-        "role": "Stun"
+        "role": "support"
     },
     "Yuzuha": {
         "id": "1411",
         "name": "Yuzuha",
         "full_name": "Ukinami Yuzuha",
+        "slug": "ukinami-yuzuha",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Spook Shack",
         "release_date": 1752624000,
-        "role": "Support"
+        "role": "support"
     },
     "Alice": {
         "id": "1401",
         "name": "Alice",
         "full_name": "Alice Thymefield",
+        "slug": "alice",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Spook Shack",
         "release_date": 1754438400,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Seed": {
         "id": "1461",
         "name": "Seed",
         "full_name": "Seed",
+        "slug": "seed",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash, Strike",
         "faction": "Obol Squad",
         "release_date": 1756951200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Orphie & Magus": {
         "id": "1301",
         "name": "Orphie & Magus",
         "full_name": "Orphie Magnusson & Magus",
+        "slug": "orphie-and-magus",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Pierce, Slash",
         "faction": "Obol Squad",
         "release_date": 1758672000,
-        "role": "Damage Dealer"
+        "role": "subdps"
     },
     "Lucia": {
         "id": "1451",
         "name": "Lucia",
         "full_name": "Lucia Elowen",
+        "slug": "lucia",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Spook Shack",
         "release_date": 1760486400,
-        "role": "Support"
+        "role": "support"
     },
     "Manato": {
         "id": "1441",
         "name": "Manato",
         "full_name": "Komano Manato",
+        "slug": "manato",
         "element": "Fire",
         "availability": "A",
         "specialty": "Rupture",
         "attack_type": "Slash",
         "faction": "Spook Shack",
         "release_date": 1760486400,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Yidhari": {
         "id": "1051",
         "name": "Yidhari",
         "full_name": "Yidhari Murphy",
+        "slug": "yidhari",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Rupture",
         "attack_type": "Strike",
         "faction": "Spook Shack",
         "release_date": 1762300800,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Dialyn": {
         "id": "1481",
         "name": "Dialyn",
         "full_name": "Dialyn",
+        "slug": "dialyn",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Slash",
         "faction": "Krampus Compliance Authority",
         "release_date": 1764115200,
-        "role": "Stun"
+        "role": "support"
     },
     "Banyue": {
         "id": "1471",
         "name": "Banyue",
         "full_name": "Banyue",
+        "slug": "banyue",
         "element": "Fire",
         "availability": "Limited S",
         "specialty": "Rupture",
         "attack_type": "Strike",
         "faction": "Krampus Compliance Authority",
         "release_date": 1765929600,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Ye Shunguang": {
         "id": "1431",
         "name": "Ye Shunguang",
         "full_name": "Ye Shunguang",
+        "slug": "ye-shunguang",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Yunkui Summit",
         "release_date": 1767052800,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Zhao": {
         "id": "1341",
         "name": "Zhao",
         "full_name": "Zhao",
+        "slug": "zhao",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Defense",
         "attack_type": "Slash",
         "faction": "Krampus Compliance Authority",
         "release_date": 1767052800,
-        "role": "Support"
+        "role": "support"
     },
     "Sunna": {
         "id": "1491",
         "name": "Sunna",
         "full_name": "Sunna",
+        "slug": "sunna",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Support",
         "attack_type": "Strike",
         "faction": "Angels of Delusion",
         "release_date": 1770336000,
-        "role": "Support"
+        "role": "support"
     },
     "Aria": {
         "id": "1501",
         "name": "Aria",
         "full_name": "Aria",
+        "slug": "aria",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Strike",
         "faction": "Angels of Delusion",
         "release_date": 1772582400,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Nangong Yu": {
         "id": "1511",
         "name": "Nangong Yu",
         "full_name": "Nangong Yu",
+        "slug": "nangong-yu",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Stun",
         "attack_type": "Strike",
         "faction": "Angels of Delusion",
         "release_date": 1774310400,
-        "role": "Stun"
+        "role": "support"
     },
     "Cissia": {
         "id": "1521",
         "name": "Cissia",
         "full_name": "Cissia",
+        "slug": "cissia",
         "element": "Electric",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Metropolitan Order Division",
         "release_date": 1776211200,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Promeia": {
         "id": "1541",
         "name": "Promeia",
         "full_name": "Promeia",
+        "slug": "promeia",
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "Krampus Compliance Authority",
         "release_date": 1778025600,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Starlight - Billy": {
         "id": "1531",
         "name": "Starlight - Billy",
         "full_name": "Starlight - Billy Kid",
+        "slug": "billy-starlight",
         "element": "Physical",
         "availability": "Limited S",
         "specialty": "Rupture",
         "attack_type": "Slash",
         "faction": "Cunning Hares",
         "release_date": 1779840000,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Pyrois": {
         "id": "1551",
         "name": "Pyrois",
         "full_name": "Pyrois",
+        "slug": "pyrois",
         "element": "Ether",
         "availability": "Limited S",
         "specialty": "Attack",
         "attack_type": "Slash",
         "faction": "Phaethon",
         "release_date": 1781654400,
-        "role": "Damage Dealer"
+        "role": "dps"
     },
     "Velina": {
         "id": "1561",
         "name": "Velina",
         "full_name": "Velina Airgid",
+        "slug": "velina",
         "element": "Wind",
         "availability": "Limited S",
         "specialty": "Anomaly",
         "attack_type": "Slash",
         "faction": "External Strategy Department",
         "release_date": 1781654400,
-        "role": "Damage Dealer"
+        "role": "subdps"
     }
 }

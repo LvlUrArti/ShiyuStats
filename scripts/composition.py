@@ -76,80 +76,15 @@ class Composition:
             if char_data["availability"] in ["Limited S", "Standard S"]:
                 fives.append(character)
 
-            if character in [
-                "Miyabi",
-                "Zhu Yuan",
-                "Ellen",
-                "Soldier 11",
-                "Evelyn",
-                "Soldier 0 - Anby",
-                "Hugo",
-                "Yixuan",
-                "Alice",
-                "Manato",
-                "Yidhari",
-                "Banyue",
-                "Ye Shunguang",
-                "Aria",
-                "Promeia",
-                "Pyrois",
-            ]:
-                self.dps.insert(0, character)
-            if character in [
-                "Corin",
-                "Billy",
-                "Nekomata",
-                "Anton",
-                "Harumasa",
-                "Seed",
-                "Orphie & Magus",
-                "Cissia",
-            ]:
+            if char_data["role"] == "dps":
                 self.dps.append(character)
-            elif character in [
-                "Piper",
-                "Jane",
-                "Yanagi",
-            ]:
-                self.subdps.insert(0, character)
-            elif character in [
-                "Grace",
-                "Burnice",
-                "Vivian",
-                "Velina",
-            ]:
+            elif char_data["role"] == "subdps":
                 self.subdps.append(character)
-            elif character in [
-                "Anby",
-                "Lycaon",
-                "Koleda",
-                "Qingyi",
-                "Lighter",
-                "Pulchra",
-                "Trigger",
-                "Ju Fufu",
-                "Dialyn",
-                "Nangong Yu",
-            ]:
-                self.stun.insert(0, character)
-            elif character in [
-                "Soukaku",
-                "Nicole",
-                "Rina",
-                "Lucy",
-                "Seth",
-                "Astra Yao",
-                "Pan Yinhu",
-                "Yuzuha",
-                "Lucia",
-                "Zhao",
-                "Sunna",
-            ]:
+            elif char_data["specialty"] == "Stun":
+                self.stun.append(character)
+            elif char_data["specialty"] == "Support":
                 self.support.insert(0, character)
-            elif character in [
-                "Caesar",
-                "Ben",
-            ]:
+            elif char_data["specialty"] == "Defense":
                 self.support.append(character)
 
             len_elem[char_data["element"]] += 1

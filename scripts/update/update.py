@@ -113,65 +113,65 @@ with open("../../data/w-engine.json", "w") as out_file:
     out_file.write(json.dumps(wengine, indent=4))
 
 
+class RawCharInfo(BaseModel):
+    """Character info from characters.json."""
+
+    en: str
+    rank: int
+    type: int
+    element: int
+    camp: int
+    icon: str
+
+
+ELEMENT_MAP: dict[int, str] = {
+    200: "Physical",
+    201: "Fire",
+    202: "Ice",
+    203: "Electric",
+    204: "Wind",
+    205: "Ether",
+}
+
+SPECIALTY_MAP: dict[int, str] = {
+    1: "Attack",
+    2: "Stun",
+    3: "Anomaly",
+    4: "Support",
+    5: "Defense",
+    6: "Rupture",
+}
+
+
 with open("../../data/characters.json") as file:
-    chars = json.load(file)
-raw_chars: dict[str, dict[str, int | str]] = load_from_url(
-    f"https://static.nanoka.cc/zzz/{live_version}/character.json",
-)
+    chars: dict[str, dict[str, int | str]] = json.load(file)
+download = load_from_url(f"https://static.nanoka.cc/zzz/{live_version}/character.json")
+raw_chars = {char_id: RawCharInfo(**item) for char_id, item in download.items()}
 
 for char_id, char in raw_chars.items():
-    char_name = char["en"]
-    if char_name not in chars and char["icon"] != "":
+    if char.element not in ELEMENT_MAP:
+        print(f"Unknown element: {char.element}")
+
+    if char.type not in SPECIALTY_MAP:
+        print(f"Unknown character type: {char.type}")
+
+    char_name = char.en
+    if char_name not in chars and char.icon != "":
         add_char = input(f"Add {char_name}? (y/n): ")
         if add_char == "y":
             chars[char_name] = {
-                "element": char["element"],
-                "camp": char["camp"],
-                "icon": char["icon"],
                 "id": char_id,
                 "name": char_name,
+                "slug": char_name.lower().replace(" ", "-"),
+                "element": ELEMENT_MAP[char.element],
+                "availability": "A" if char.rank == 3 else "Limited S",
+                "specialty": SPECIALTY_MAP[char.type],
+                "role": "support",
             }
 
-            if char["rank"] == 3:
-                chars[char_name]["availability"] = "A"
-            elif char["rank"] == 4:
-                chars[char_name]["availability"] = "Limited S"
-
-            match str(char["type"]):
-                case "1":
-                    chars[char_name]["specialty"] = "Attack"
-                    chars[char_name]["role"] = "Damage Dealer"
-                case "2":
-                    chars[char_name]["specialty"] = "Stun"
-                    chars[char_name]["role"] = "Stun"
-                case "3":
-                    chars[char_name]["specialty"] = "Anomaly"
-                    chars[char_name]["role"] = "Damage Dealer"
-                case "4":
-                    chars[char_name]["specialty"] = "Support"
-                    chars[char_name]["role"] = "Support"
-                case "5":
-                    chars[char_name]["specialty"] = "Defense"
-                    chars[char_name]["role"] = "Support"
-                case "6":
-                    chars[char_name]["specialty"] = "Rupture"
-                    chars[char_name]["role"] = "Damage Dealer"
-                case _:
-                    print("Unknown character type: " + chars[char_name]["type"])
-
-            match str(char["element"]):
-                case "200":
-                    chars[char_name]["element"] = "Physical"
-                case "201":
-                    chars[char_name]["element"] = "Fire"
-                case "202":
-                    chars[char_name]["element"] = "Ice"
-                case "203":
-                    chars[char_name]["element"] = "Electric"
-                case "205":
-                    chars[char_name]["element"] = "Ether"
-                case _:
-                    print("Unknown element: " + chars[char_name]["element"])
+            if char.type in {1, 3, 6}:
+                is_sub_dps = input(f"Is {char_name} a sub-DPS? (y/n): ")
+                chars[char_name]["role"] = "subdps" if is_sub_dps == "y" else "dps"
 
 with open("../../data/characters.json", "w") as out_file:
     out_file.write(json.dumps(chars, indent=4))

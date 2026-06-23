@@ -859,22 +859,8 @@ def duo_write(
         out_dd_list: list[list[str]] = []
         for char_i in char_names:
             for char_j in char_names:
-                is_char_i_dps = CHARACTERS[char_i][
-                    "role"
-                ] == "Damage Dealer" or char_i in [
-                    "Sampo",
-                    "Black Swan",
-                    "Luka",
-                    "Guinaifen",
-                ]
-                is_char_j_dps = CHARACTERS[char_j][
-                    "role"
-                ] == "Damage Dealer" or char_j in [
-                    "Sampo",
-                    "Black Swan",
-                    "Luka",
-                    "Guinaifen",
-                ]
+                is_char_i_dps = CHARACTERS[char_i]["role"] == "dps"
+                is_char_j_dps = CHARACTERS[char_j]["role"] == "dps"
                 if is_char_i_dps and is_char_j_dps:
                     if char_j not in out_duos_check:
                         continue

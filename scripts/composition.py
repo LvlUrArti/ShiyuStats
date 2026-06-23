@@ -1,19 +1,8 @@
 """An object that stores information about a particular composition."""
 
-from typing import Literal
-
-from comp_rates_config import CHARACTERS, da_mode
+from comp_rates_config import CHARS_INFO, RoleLit, da_mode
 
 # Set class constants in initialization
-
-RoleLit = Literal[
-    "Attack",
-    "Stun",
-    "Anomaly",
-    "Support",
-    "Defense",
-    "Rupture",
-]
 
 
 class Composition:
@@ -67,24 +56,24 @@ class Composition:
                 self.char_cons[comp_chars[char_iter]] = int(comp_chars_cons[char_iter])
         comp_chars.sort()
         for character in comp_chars:
-            char_data = CHARACTERS[character]
+            char_data = CHARS_INFO[character]
             self.char_presence[character] = True
-            if char_data["availability"] in ["Limited S", "Standard S"]:
+            if char_data.availability in ["Limited S", "Standard S"]:
                 fives.append(character)
 
-            if char_data["role"] == "dps":
+            if char_data.role == "dps":
                 self.dps.append(character)
-            elif char_data["role"] == "subdps":
+            elif char_data.role == "subdps":
                 self.subdps.append(character)
-            elif char_data["specialty"] == "Stun":
+            elif char_data.specialty == "Stun":
                 self.stun.append(character)
-            elif char_data["specialty"] == "Support":
+            elif char_data.specialty == "Support":
                 self.support.insert(0, character)
-            elif char_data["specialty"] == "Defense":
+            elif char_data.specialty == "Defense":
                 self.support.append(character)
 
-            len_elem[char_data["element"]] += 1
-            len_role[char_data["specialty"]] += 1
+            len_elem[char_data.element] += 1
+            len_role[char_data.specialty] += 1
         self.fivecount = len(fives)
         self.characters = self.dps + self.subdps + self.stun + self.support
 

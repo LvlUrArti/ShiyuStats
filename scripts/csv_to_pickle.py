@@ -10,7 +10,7 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
-    CHARACTERS,
+    CHARS_INFO,
     RECENT_PHASE,
     da_mode,
     skip_random,
@@ -115,7 +115,7 @@ def main() -> None:
             comp_chars_temp: list[str] = []
             cons_chars_temp: list[int] = []
             for i in [6, 8, 10] if da_mode else [5, 7, 9]:
-                if line[i] != "" and line[i] in CHARACTERS:
+                if line[i] != "" and line[i] in CHARS_INFO:
                     comp_chars_temp.append(line[i])
                     cons_chars_temp.append(int(float(line[i + 1])))
             if comp_chars_temp:

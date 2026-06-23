@@ -4,7 +4,7 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import CHARACTERS, PAST_PHASE, RECENT_PHASE
+from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
 from pydantic import BaseModel
 from slugify import slugify
 
@@ -399,7 +399,7 @@ da_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["da"])
 # Build list of all character keys (including solo/support variants)
 # ----------------------------------------------------------------------
 character_keys: list[str] = []
-for char_iter in CHARACTERS:
+for char_iter in CHARS_INFO:
     slugged = slugify(char_iter)
     if slugged in SLUG:
         slugged = SLUG[slugged]

@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
-    CHARACTERS,
+    CHARS_INFO,
     DEFAULT_ROUND,
     F2P_ONLY,
     PAST_PHASE,
@@ -351,7 +351,7 @@ def used_comps(
         for char in range(3):
             comp_char = comp_tuple[char]
             if (
-                CHARACTERS[comp_char]["availability"] == "Limited S"
+                CHARS_INFO[comp_char].availability == "Limited S"
                 and comp.char_cons
                 and comp.char_cons[comp_char] > 0
             ):
@@ -511,7 +511,7 @@ def used_duos(
         cur_room = next(iter(str(comp.room).split("-")))
         for char in comp.characters:
             if (
-                CHARACTERS[char]["availability"] == "Limited S"
+                CHARS_INFO[char].availability == "Limited S"
                 and comp.char_cons
                 and comp.char_cons[char] > 0
             ):
@@ -854,13 +854,13 @@ def duo_write(
                     }
 
     if "Duos check" in run_commands:
-        char_names = list(CHARACTERS.keys())
+        char_names = list(CHARS_INFO.keys())
         out_dd: dict[frozenset[str], dict[str, str | float]] = {}
         out_dd_list: list[list[str]] = []
         for char_i in char_names:
             for char_j in char_names:
-                is_char_i_dps = CHARACTERS[char_i]["role"] == "dps"
-                is_char_j_dps = CHARACTERS[char_j]["role"] == "dps"
+                is_char_i_dps = CHARS_INFO[char_i].role == "dps"
+                is_char_j_dps = CHARS_INFO[char_j].role == "dps"
                 if is_char_i_dps and is_char_j_dps:
                     if char_j not in out_duos_check:
                         continue

@@ -5,6 +5,7 @@ from datetime import datetime
 from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
+from typing import Literal
 
 from pydantic import BaseModel, field_validator
 
@@ -85,8 +86,48 @@ with open(relative_path("../data/versions/config.json")) as f:
 offline_collect: bool = args.offline_collect
 save_to_file: bool = args.save_to_file
 
+RoleLit = Literal[
+    "Attack",
+    "Stun",
+    "Anomaly",
+    "Support",
+    "Defense",
+    "Rupture",
+]
+
+
+class CharInfo(BaseModel):
+    """Character info from characters.json."""
+
+    id: str
+    name: str
+    full_name: str
+    slug: str
+    element: str
+    availability: str
+    specialty: RoleLit
+    attack_type: str
+    faction: str
+    release_date: int
+    role: str
+
+    @field_validator("release", mode="before")
+    @classmethod
+    def parse_epoch(cls, value: int) -> datetime:
+        """Convert epoch timestamp to datetime."""
+        return datetime.fromtimestamp(value)
+
+
 with open(relative_path("../data/characters.json")) as char_file:
-    CHARACTERS = load(char_file)
+    raw_characters = load(char_file)
+    CHARS_INFO: dict[str, CharInfo] = {
+        char_name: CharInfo(**item)
+        for char_name, item in raw_characters.items()
+        if (
+            not ENDGAME_INFO
+            or (datetime.fromtimestamp(item["release"]) < ENDGAME_INFO.collect_date)
+        )
+    }
 
 with open(relative_path("../data/w-engine.json")) as char_file:
     WENGINE = load(char_file)

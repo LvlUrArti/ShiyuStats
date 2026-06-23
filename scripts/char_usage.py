@@ -7,7 +7,7 @@ from itertools import chain
 from statistics import mean, stdev
 
 from comp_rates_config import (
-    CHARACTERS,
+    CHARS_INFO,
     CONS_LIMIT,
     DEFAULT_ROUND,
     F2P_ONLY,
@@ -74,7 +74,7 @@ def appearances(
     all_uids = set[str]()
     cheated_uids = set[str]()
 
-    for character in CHARACTERS:
+    for character in CHARS_INFO:
         user_chars[character] = set()
         app[character] = CharApp()
     for boo in BANGBOOS:
@@ -92,7 +92,7 @@ def appearances(
 
             for char in cur_user.characters:
                 if (
-                    CHARACTERS[char]["availability"] == "Limited S"
+                    CHARS_INFO[char].availability == "Limited S"
                     and cur_user.char_cons
                     and cur_user.char_cons[char] > 0
                 ):
@@ -140,7 +140,7 @@ def appearances(
                     app[char].app_flat_exclude += 1
 
                 if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
-                    if CHARACTERS[char]["availability"] == "Limited S":
+                    if CHARS_INFO[char].availability == "Limited S":
                         app[char].cons_freq[0].round_list[cur_chamber].append(
                             cur_user.round_num,
                         )
@@ -389,10 +389,10 @@ class CharUsageData(CharApp):
         self.usage = 0
         self.diff: str | int = "-"
         self.diff_rounds = "-"
-        self.role = str(CHARACTERS[char]["role"] if char in CHARACTERS else "")
+        self.role = str(CHARS_INFO[char].role if char in CHARS_INFO else "")
         self.rarity = str(
-            CHARACTERS[char]["availability"]
-            if char in CHARACTERS
+            CHARS_INFO[char].availability
+            if char in CHARS_INFO
             else BANGBOOS[char]["availability"],
         )
         self.weapons: dict[str, RoundApp] = {}

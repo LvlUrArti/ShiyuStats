@@ -9,11 +9,11 @@ import os
 import statistics
 from dataclasses import dataclass
 from sys import exit as sys_exit
+from typing import TYPE_CHECKING
 
 import numpy as np
 from enka_config import (
     RECENT_PHASE,
-    da_mode,
     phase_num,
     skip_random,
     skip_self,
@@ -21,20 +21,13 @@ from enka_config import (
     to_snake_case,
 )
 
-from scripts.comp_rates_config import CHARS_INFO
+from scripts.comp_rates_config import CHARS_INFO, da_filename
+from scripts.csv_to_pickle import load_pickle_data
 
-with open(
-    (
-        "../data/raw_csvs_real/"
-        if os.path.exists("../data/raw_csvs_real/")
-        else "../data/raw_csvs/"
-    )
-    + phase_num
-    + ".csv",
-) as f:
-    reader = csv.reader(f, delimiter=",")
-    headers = next(reader)
-    spiral = list(reader)
+if TYPE_CHECKING:
+    from scripts.csv_to_pickle import PickleData
+    from scripts.player_phase import PlayerPhase
+
 
 with open("../results/char_results/" + phase_num + "/all.csv") as f:
     reader = csv.reader(f, delimiter=",")
@@ -90,16 +83,16 @@ class CharacterData:
         return cls(**data)  # pyright: ignore[reportArgumentType]
 
 
-def transform_csv_data(file_path: str) -> dict[int, dict[str, CharacterData]]:
+def transform_csv_data(file_path: str) -> dict[str, dict[str, CharacterData]]:
     """Transform the CSV data into a dictionary of UID → {character: CharacterData}."""
-    result: dict[int, dict[str, CharacterData]] = {}
+    result: dict[str, dict[str, CharacterData]] = {}
 
     with open(file_path) as csv_file:
         reader = csv.DictReader(csv_file)
 
         for row in reader:
             # Get the character name (third column)
-            uid = int(row.pop("uid"))
+            uid = str(row.pop("uid"))
             character = row.pop("character")
 
             # Create a copy of the row without the character key
@@ -151,17 +144,14 @@ median: dict[str, dict[str, float]] = {}
 mean: dict[str, dict[str, float]] = {}
 mainstats: dict[str, dict[str, dict[str, float]]] = {}
 
-spiral_rows: dict[int, dict[str, int]] = {}
-for spiral_row in spiral:
-    room_num = int(spiral_row[1])
-    if (room_num > 4 or da_mode) and (
-        spiral_row[3] == "S" or (da_mode and spiral_row[2] == "3")
-    ):
-        cur_uid = int(spiral_row[0])
-        if int(cur_uid) not in spiral_rows:
-            spiral_rows[int(cur_uid)] = {}
-        for i in range(5 + (1 if da_mode else 0), 11, 2):
-            char = spiral_row[i]
+loaded_data: PickleData = load_pickle_data("../data/pickle/data" + da_filename + ".pkl")
+
+all_players: dict[str, PlayerPhase] = loaded_data.all_players
+spiral_rows: dict[str, dict[str, int]] = {}
+for cur_uid, cur_player in all_players.items():
+    spiral_rows[cur_uid] = {}
+    for player_comp in cur_player.chambers.values():
+        for char in player_comp.characters:
             if char not in spiral_rows[cur_uid]:
                 spiral_rows[cur_uid][char] = 0
             spiral_rows[cur_uid][char] += 1

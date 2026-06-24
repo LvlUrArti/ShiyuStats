@@ -161,6 +161,7 @@ CONS_LIMIT = 2
 suffix = ""
 if da_mode:
     suffix = "_da"
+da_filename = "_da" if da_mode else ""
 RECENT_PHASE_PF = RECENT_PHASE + suffix
 PAST_PHASE_PF = PAST_PHASE + suffix
 

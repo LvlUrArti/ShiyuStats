@@ -679,7 +679,11 @@ def comp_usages_write(
                 "char_two": out[1],
                 "char_three": out[2],
             }
-            out_json_dict["bangboo"] = BOOS_INFO[cur_comp.bangboo].slug
+            out_json_dict["bangboo"] = (
+                BOOS_INFO[cur_comp.bangboo].slug
+                if cur_comp.bangboo in BOOS_INFO
+                else cur_comp.bangboo
+            )
             out_json_dict["app_rate"] = cur_comp.app_rate
             out_json_dict["rank"] = cur_comp.app_rank
             out_json_dict["avg_round"] = cur_comp.round
@@ -870,7 +874,7 @@ def duo_write(
 
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
-            if out_duos[i][duo_value]:
+            if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
     with open("../results/char_results/" + filename + ".json", "w") as out_file:
         out_file.write(json.dumps(out_duos, indent=2))

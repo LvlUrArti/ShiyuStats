@@ -12,26 +12,23 @@ Feel free to analyze the data and post the findings. If you do, please credit me
 
 ## Setup
 
-Run `pip install -r requirements.txt`
-
-Run `pip install -e .`
-
-In the `scripts/hf_data` folder, run `python fetch_data.py`
-
-Change past and recent phase in `scripts/comp_rates_config.py`
+1. Run `python -m venv .venv`
+2. Run `.venv\Scripts\Activate.ps1`
+3. Run `.venv\Scripts\pip.exe install -r requirements.txt`
+4. Run `pip install -e .`
+5. In the `scripts/hf_data` folder, run `python fetch_data.py`
+6. Change `past_phase` and `recent_phase` in `scripts/comp_rates_config.py`
 
 ## Compile for all gamemodes
 
 Run `sh compile_all.sh`
 
-Results can be found in the `results` folder
+Results can be found in the `results` folder.
 
-## Compile specific gamemode
+## Compile for a specific gamemode
 
-> By default, this compiles data for Shiyu Defense, add the argument `-da` at the end of all python commands to compile data for deadly assault. So instead of `python comp_rates.py`, run `python comp_rates.py -pf`.
+> By default, this compiles data for Shiyu Defense. Add the argument `-da` at the end of all python commands to compile data for Deadly Assault. For example, instead of `python comp_rates.py`, run `python comp_rates.py -da`.
 
-In `scripts` folder, run `python comp_rates.py`
-
-Still in `scripts` folder, run `python move.py`
-
-In `enka.network` folder, run `python stats.py`
+1. In the `scripts` folder, run `python comp_rates.py`
+2. Still in the `scripts` folder, run `python move.py`
+3. In the `enka.network` folder, run `python stats.py`

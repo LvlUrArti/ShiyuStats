@@ -15,7 +15,7 @@ Feel free to analyze the data and post the findings. If you do, please credit me
 1. Run `python -m venv .venv`
 2. Run `.venv\Scripts\Activate.ps1`
 3. Run `.venv\Scripts\pip.exe install -r requirements.txt`
-4. Run `pip install -e .`
+4. Run `.venv\Scripts\pip.exe install -e .`
 5. In the `scripts/hf_data` folder, run `python fetch_data.py`
 6. Change `past_phase` and `recent_phase` in `scripts/comp_rates_config.py`
 

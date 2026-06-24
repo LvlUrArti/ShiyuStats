@@ -11,7 +11,6 @@ from dataclasses import dataclass
 from sys import exit as sys_exit
 from typing import TYPE_CHECKING
 
-import numpy as np
 from enka_config import (
     RECENT_PHASE,
     phase_num,
@@ -30,9 +29,7 @@ if TYPE_CHECKING:
 
 
 with open("../results/char_results/" + phase_num + "/all.csv") as f:
-    reader = csv.reader(f, delimiter=",")
-    headers = next(reader)
-    builds = np.array(list(reader))
+    builds = list(csv.DictReader(f, delimiter=","))
 
 
 @dataclass
@@ -156,7 +153,7 @@ for cur_uid, cur_player in all_players.items():
                 spiral_rows[cur_uid][char] = 0
             spiral_rows[cur_uid][char] += 1
 
-chars.extend(build[0] for build in builds)
+chars.extend(build["char"] for build in builds)
 
 for char in chars:
     stats[char] = StatsChar(char)

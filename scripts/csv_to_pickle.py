@@ -10,8 +10,8 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
-    CHARS_INFO,
     RECENT_PHASE,
+    da_filename,
     da_mode,
     skip_random,
     skip_self,
@@ -66,16 +66,12 @@ def main() -> None:
     else:
         self_uids: set[str] = set()
 
-    da_filename = "_da" if da_mode else ""
     with (
         open("../data/raw_csvs_real/" + RECENT_PHASE + da_filename + ".csv")
         if os.path.exists("../data/raw_csvs_real/")
         else open("../data/raw_csvs/" + RECENT_PHASE + da_filename + ".csv")
     ) as f:
-        stats = f
-        reader = csv.reader(stats)
-        next(reader)
-        reader = list(reader)
+        reader = list(csv.DictReader(f))
     all_comps: list[Composition] = []
     all_chambers = ["1"] if da_mode else ["1", "2", "3", "4", "5", "6", "7"]
 
@@ -83,49 +79,44 @@ def main() -> None:
     uid_freq_comp: dict[str, int] = {}
     last_uid = "0"
     skip_uid = False
+    sd_star_num = {
+        "B": 1,
+        "A": 2,
+        "S": 3,
+    }
 
     for line in reader:
-        score = line[3] if da_mode else line[4]
-        star_num = 0
-        match str(line[3]):
-            case "B":
-                star_num = 1
-            case "A":
-                star_num = 2
-            case "S":
-                star_num = 3
-            case _:
-                if not (da_mode):
-                    print("Unknown star num")
-                else:
-                    star_num = int(line[2])
-        if skip_self and line[0] in self_uids:
+        player = line["uid"]
+        star_num = int(line["star"]) if da_mode else sd_star_num[line["rating"]]
+        if skip_self and player in self_uids:
             continue
-        if skip_random and line[0] not in self_uids:
+        if skip_random and player not in self_uids:
             continue
-        if line[0] != last_uid:
+        if player != last_uid:
             skip_uid = False
-            if line[0] in uid_freq_comp:
+            if player in uid_freq_comp:
                 skip_uid = True
             else:
-                uid_freq_comp[line[0]] = 1
-        last_uid = line[0]
+                uid_freq_comp[player] = 1
+        last_uid = player
         if not skip_uid:
-            stage = str(line[1])
+            stage = str(line["floor"])
+
             comp_chars_temp: list[str] = []
             cons_chars_temp: list[int] = []
-            for i in [6, 8, 10] if da_mode else [5, 7, 9]:
-                if line[i] != "" and line[i] in CHARS_INFO:
-                    comp_chars_temp.append(line[i])
-                    cons_chars_temp.append(int(float(line[i + 1])))
+            for i in range(1, 4):
+                if line[f"ch{i}"] != "":
+                    comp_chars_temp.append(line[f"ch{i}"])
+                    if "ch1_rank" in line:
+                        cons_chars_temp.append(int(line[f"ch{i}_rank"]))
             if comp_chars_temp:
                 comp = Composition(
-                    line[0],
+                    player,
                     comp_chars_temp,
-                    score,
+                    line["score"],
                     star_num,
-                    "1-" + stage if da_mode else stage + "-" + str(line[2]),
-                    line[12] if da_mode else line[11],
+                    "1-" + stage if da_mode else stage + "-" + str(line["node"]),
+                    line.get("bangboo", line["ch4"]),
                     cons_chars_temp,
                 )
                 all_comps.append(comp)
@@ -142,10 +133,7 @@ def main() -> None:
         if os.path.exists("../data/raw_csvs_real/")
         else open("../data/raw_csvs/" + RECENT_PHASE + "_char.csv")
     ) as f:
-        stats = f
-        reader = csv.reader(stats)
-        next(reader)
-        reader = list(reader)
+        reader = list(csv.DictReader(f))
 
     all_players: dict[str, PlayerPhase] = {}
     player = PlayerPhase(last_uid)
@@ -155,26 +143,25 @@ def main() -> None:
 
     # Append lines
     for line in reader:
-        line[1] = RECENT_PHASE
-        if line[0] in uid_freq_comp:
-            if line[0] != last_uid:
+        if line["uid"] in uid_freq_comp:
+            if line["uid"] != last_uid:
                 skip_uid = False
-                if line[0] in uid_freq_char:
+                if line["uid"] in uid_freq_char:
                     skip_uid = True
                 else:
-                    uid_freq_char.add(line[0])
+                    uid_freq_char.add(line["uid"])
             if not skip_uid:
-                if line[0] != last_uid:
+                if line["uid"] != last_uid:
                     all_players[last_uid] = player
-                    last_uid = line[0]
+                    last_uid = line["uid"]
                     player = PlayerPhase(last_uid)
                 player.add_character(
-                    line[2],
-                    line[3],
-                    line[4],
-                    line[5],
-                    line[6],
-                    line[7],
+                    line["name"],
+                    line["level"],
+                    line["cons"],
+                    line["weapon"],
+                    line["element"],
+                    line["artifacts"],
                 )
     all_players[last_uid] = player
 

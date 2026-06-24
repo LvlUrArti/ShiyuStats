@@ -1,12 +1,13 @@
-requests
 enka>=2.5.0
 Send2Trash
-pandas
 scipy
 plyer
 huggingface_hub
 pydantic
 numpy
-beautifulsoup4
-cloudscraper
-aiohttp
+
+# Packages below aren't needed during data compilation
+# requests
+# pandas
+# beautifulsoup4
+# cloudscraper

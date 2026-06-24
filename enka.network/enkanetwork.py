@@ -12,7 +12,6 @@ from pickle import dump as p_dump
 from pickle import load as p_load
 from typing import TYPE_CHECKING
 
-import aiohttp
 import enka
 from enka.zzz import AgentSkill, AgentStatType, Element, SkillType
 from enka_config import (
@@ -289,10 +288,6 @@ async def main() -> None:
                     break
 
                 except (
-                    aiohttp.ClientConnectorError,
-                    aiohttp.ClientConnectorDNSError,
-                    aiohttp.ClientOSError,
-                    aiohttp.ServerDisconnectedError,
                     enka.errors.APIRequestTimeoutError,
                     enka.errors.EnkaAPIError,
                 ):

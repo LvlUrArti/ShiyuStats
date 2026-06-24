@@ -220,19 +220,15 @@ for uid in data:
                     else:
                         mainstats[char][i][getattr(cur_char, i)] = 1
 
-copy_chars = chars.copy()
-for char in copy_chars:
-    if stats[char].sample_size > 0:
-        for stat in stats[char].stats_count:
-            if not stats[char].stats_count[stat]:
-                stats[char].stats_write[stat] = 0
+for char, stat_char in stats.items():
+    if stat_char.sample_size > 0:
+        for stat, stat_count in stat_char.stats_count.items():
+            if not stat_count:
+                stat_char.stats_write[stat] = 0
             else:
-                stats[char].stats_write[stat] = round(
-                    statistics.mean(stats[char].stats_count[stat]),
-                    2,
-                )
+                stat_char.stats_write[stat] = round(statistics.mean(stat_count), 2)
 
-        stats[char].stats_write["sample_size_players"] = stats[char].sample_size_players
+        stat_char.stats_write["sample_size_players"] = stat_char.sample_size_players
 
         for stat in mainstats[char]:
             sorted_stats = sorted(
@@ -243,35 +239,35 @@ for char in copy_chars:
             mainstats[char][stat] = dict(sorted_stats)
             for mainstat in mainstats[char][stat]:
                 mainstats[char][stat][mainstat] = round(
-                    mainstats[char][stat][mainstat] / stats[char].sample_size,
+                    mainstats[char][stat][mainstat] / stat_char.sample_size,
                     4,
                 )
             mainstatlist = list(mainstats[char][stat])
             i = 0
             while i < 3:
                 if i >= len(mainstatlist):
-                    stats[char].stats_write[stat + "_" + str(i + 1)] = "-"
-                    stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
+                    stat_char.stats_write[stat + "_" + str(i + 1)] = "-"
+                    stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 else:
-                    stats[char].stats_write[stat + "_" + str(i + 1)] = mainstatlist[i]
-                    stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = (
-                        mainstats[char][stat][mainstatlist[i]]
-                    )
+                    stat_char.stats_write[stat + "_" + str(i + 1)] = mainstatlist[i]
+                    stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = mainstats[
+                        char
+                    ][stat][mainstatlist[i]]
                 i += 1
 
     else:
-        for stat in stats[char].stats_count:
-            if not stats[char].stats_count[stat]:
-                stats[char].stats_write[stat] = 0
+        for stat, stat_count in stat_char.stats_count.items():
+            if not stat_count:
+                stat_char.stats_write[stat] = 0
             else:
-                stats[char].stats_write[stat] = 0
+                stat_char.stats_write[stat] = 0
 
-        stats[char].stats_write["sample_size_players"] = 0
+        stat_char.stats_write["sample_size_players"] = 0
         for stat in mainstats[char]:
             i = 0
             while i < 3:
-                stats[char].stats_write[stat + "_" + str(i + 1)] = "-"
-                stats[char].stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
+                stat_char.stats_write[stat + "_" + str(i + 1)] = "-"
+                stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 i += 1
 
 exist_real = os.path.exists("results_real")

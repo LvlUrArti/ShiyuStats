@@ -33,7 +33,6 @@ from comp_rates_config import (
 )
 from composition import Composition
 from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
-from plyer import notification
 from scipy.stats import skew, trim_mean
 
 if TYPE_CHECKING:
@@ -218,16 +217,6 @@ def main() -> None:
     ):
         with open("../results/comp_results/json/all_comps.json", "w") as out_file:
             out_file.write(json.dumps(all_comps_json, indent=2))
-
-    if __name__ == "__main__" and notification.notify:
-        notification.notify(
-            title="Finished",
-            message="Finished executing comp_rates",
-            # displaying time
-            timeout=2,
-        )
-        # waiting time
-        time.sleep(2)
 
 
 def compile_app_round(
@@ -861,15 +850,6 @@ def duo_write(
             csv_writer = csv.writer(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
-        if __name__ == "__main__" and notification.notify:
-            notification.notify(
-                title="Finished",
-                message="Finished executing comp_rates",
-                # displaying time
-                timeout=2,
-            )
-            # waiting time
-            time.sleep(1)
         sys_exit()
 
     for i in range(len(out_duos)):

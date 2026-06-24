@@ -87,8 +87,6 @@ class Composition:
         """Name structure creator.
         """
         self.comp_name = "-"
-        self.alt_comp_name = "-"
-        self.dual_comp_name = "-"
 
         if self.comp_name == "-":
             archetype = ""
@@ -97,7 +95,6 @@ class Composition:
                     archetype = " Triple Carry"
                 else:
                     archetype = " Dual Carry"
-                self.dual_comp_name = self.characters[1] + archetype
             elif len(self.support) > 1:
                 archetype = " Dual Support"
             elif len(self.stun) > 0:

@@ -123,7 +123,7 @@ def main() -> None:
                     line["score"],
                     star_num,
                     "1-" + stage if da_mode else stage + "-" + str(line["node"]),
-                    line.get("bangboo", line["ch4"]),
+                    line.get("bangboo", line.get("ch4")),
                     cons_chars_temp,
                 )
                 all_comps.append(comp)

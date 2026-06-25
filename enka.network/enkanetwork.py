@@ -5,6 +5,7 @@
 import _thread
 import asyncio
 import json
+import sys
 import traceback
 from datetime import datetime
 from os import stat as os_stat
@@ -27,8 +28,9 @@ from enka_config import (
     uids,
 )
 
-from scripts.comp_rates_config import offline_collect, save_to_file
-from scripts.utils.notif import send_notification
+sys.path.append("../scripts/")
+from comp_rates_config import offline_collect, save_to_file
+from utils.notif import send_notification
 
 if TYPE_CHECKING:
     from enka.zzz import ShowcaseResponse

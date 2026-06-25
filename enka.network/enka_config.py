@@ -6,11 +6,12 @@ from __future__ import annotations
 
 import csv
 import os.path
+import sys
 from pathlib import Path
 
+sys.path.append("../scripts/")
+from comp_rates_config import BASE_RESULT_PATH, RECENT_PHASE
 from enka.zzz import AgentStatType, SkillType, StatType
-
-from scripts.comp_rates_config import BASE_RESULT_PATH, RECENT_PHASE
 
 skip_self = False
 skip_random = False

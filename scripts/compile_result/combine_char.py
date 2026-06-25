@@ -286,8 +286,7 @@ for read_path in [BASE_PATH, BASE_PREV_PATH]:
     suf = "" if read_path == BASE_PATH else "_prev"
 
     for mode in ["sd", "da"]:
-        # Determine folder path: SD uses base path, DA adds "_da" suffix
-        folder = read_path if mode == "sd" else f"{read_path}_da"
+        folder = f"{read_path}_{mode}"
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder}/all2.json")
 
         # Load variant stats (E1 and S0)

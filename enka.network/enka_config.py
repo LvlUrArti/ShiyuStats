@@ -10,7 +10,7 @@ from pathlib import Path
 
 from enka.zzz import AgentStatType, SkillType, StatType
 
-from scripts.comp_rates_config import RECENT_PHASE, da_mode
+from scripts.comp_rates_config import RECENT_PHASE
 
 skip_self = False
 skip_random = False
@@ -21,10 +21,6 @@ run_all_chars = True
 run_chars_name = ["Miyabi"]
 
 
-phase_num = str(RECENT_PHASE)
-if da_mode:
-    phase_num = phase_num + "_da"
-
 if os.path.exists("../results/char_results/uids.csv"):
     with open("../results/char_results/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
@@ -34,11 +30,9 @@ if os.path.exists("../results/char_results/uids.csv"):
 else:
     uids = [1301113181]
 
-for make_path in [
-    "results_real/" + phase_num,
-]:
-    if not os.path.exists(make_path):
-        os.makedirs(make_path)
+make_path = "results_real/" + RECENT_PHASE
+if not os.path.exists(make_path):
+    os.makedirs(make_path)
 
 filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build"
 char_filename = filename + "_char.csv"

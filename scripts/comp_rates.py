@@ -28,6 +28,7 @@ from comp_rates_config import (
     da_mode,
     duo_dict_len,
     json_threshold,
+    mode_sfx,
     run_commands,
     sig_weaps,
 )
@@ -42,9 +43,7 @@ if TYPE_CHECKING:
 start_time = time.time()
 print("start")
 
-da_filename = "_da" if da_mode else ""
-
-loaded_data: PickleData = load_pickle_data("../data/pickle/data" + da_filename + ".pkl")
+loaded_data: PickleData = load_pickle_data("../data/pickle/data" + mode_sfx + ".pkl")
 
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps

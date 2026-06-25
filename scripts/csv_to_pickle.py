@@ -11,8 +11,9 @@ from time import time
 
 from comp_rates_config import (
     RECENT_PHASE,
-    da_filename,
+    RECENT_PHASE_SFX,
     da_mode,
+    mode_sfx,
     skip_random,
     skip_self,
 )
@@ -66,10 +67,11 @@ def main() -> None:
     else:
         self_uids: set[str] = set()
 
+    filename = RECENT_PHASE_SFX.replace("_sd", "")
     with (
-        open("../data/raw_csvs_real/" + RECENT_PHASE + da_filename + ".csv")
+        open(f"../data/raw_csvs_real/{filename}.csv")
         if os.path.exists("../data/raw_csvs_real/")
-        else open("../data/raw_csvs/" + RECENT_PHASE + da_filename + ".csv")
+        else open(f"../data/raw_csvs/{filename}.csv")
     ) as f:
         reader = list(csv.DictReader(f))
     all_comps: list[Composition] = []
@@ -182,7 +184,7 @@ def main() -> None:
         sample_size=sample_size,
     )
 
-    save_pickle_data("../data/pickle/data" + da_filename + ".pkl", data)
+    save_pickle_data("../data/pickle/data" + mode_sfx + ".pkl", data)
 
     cur_time = time()
     print("done csv: ", (cur_time - start_time), "s")

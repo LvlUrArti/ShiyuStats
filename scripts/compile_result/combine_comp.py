@@ -6,7 +6,7 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import RECENT_PHASE, da_mode
+from comp_rates_config import RECENT_PHASE_SFX, da_mode
 
 file_names = ["top"]
 da_names = ["1-1", "1-2", "1-3"]
@@ -18,21 +18,15 @@ if da_mode:
 else:
     file_names.extend(sd_names)
 
-suffix = ""
-if da_mode:
-    suffix = "_da"
-
-RECENT_PHASE_DA = RECENT_PHASE + suffix
-
 for file_name in file_names:
     # Load the JSON files
     with open(
-        f"../../results/comp_results/{RECENT_PHASE_DA}/json/{file_name}.json",
+        f"../../results/comp_results/{RECENT_PHASE_SFX}/json/{file_name}.json",
     ) as f:
         team_data: list[dict[str, str | float]] = json.load(f)
 
     with open(
-        f"../../results/comp_results/{RECENT_PHASE_DA}/json/{file_name}_C1.json",
+        f"../../results/comp_results/{RECENT_PHASE_SFX}/json/{file_name}_C1.json",
     ) as f:
         team_m1_data = json.load(f)
 
@@ -77,7 +71,7 @@ for file_name in file_names:
 
     # Write the updated data back to the json file
     with open(
-        f"../../results/comp_results/{RECENT_PHASE_DA}/json/{file_name}_combined.json",
+        f"../../results/comp_results/{RECENT_PHASE_SFX}/json/{file_name}_combined.json",
         "w",
     ) as f:
         json.dump(team_data, f, indent=2)

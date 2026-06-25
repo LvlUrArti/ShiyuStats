@@ -13,14 +13,13 @@ from typing import TYPE_CHECKING
 
 from enka_config import (
     RECENT_PHASE,
-    phase_num,
     skip_random,
     skip_self,
     substat_dict,
     to_snake_case,
 )
 
-from scripts.comp_rates_config import CHARS_INFO, da_filename
+from scripts.comp_rates_config import CHARS_INFO, mode_sfx
 from scripts.csv_to_pickle import load_pickle_data
 
 if TYPE_CHECKING:
@@ -28,7 +27,7 @@ if TYPE_CHECKING:
     from scripts.player_phase import PlayerPhase
 
 
-with open("../results/char_results/" + phase_num + "/all.csv") as f:
+with open("../results/char_results/" + RECENT_PHASE + "/all.csv") as f:
     builds = list(csv.DictReader(f, delimiter=","))
 
 
@@ -141,7 +140,7 @@ median: dict[str, dict[str, float]] = {}
 mean: dict[str, dict[str, float]] = {}
 mainstats: dict[str, dict[str, dict[str, float]]] = {}
 
-loaded_data: PickleData = load_pickle_data("../data/pickle/data" + da_filename + ".pkl")
+loaded_data: PickleData = load_pickle_data("../data/pickle/data" + mode_sfx + ".pkl")
 
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 spiral_rows: dict[str, dict[str, int]] = {}
@@ -281,7 +280,7 @@ with (
         csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
 
 temp_stats: list[str] = []
-with open("../results/char_results/" + phase_num + "/all.json") as char_file:
+with open("../results/char_results/" + RECENT_PHASE + "/all.json") as char_file:
     CHARACTERS = json.load(char_file)
 for iter_char, char_value in enumerate(stats.values()):
     iterate_value_app: list[str] = []
@@ -308,8 +307,8 @@ for iter_char, char_value in enumerate(stats.values()):
 
     temp_stats.append(CHARACTERS[iter_char] | char_value.stats_write)
 
-if not os.path.exists("../results/char_results/" + phase_num):
-    os.mkdir("../results/char_results/" + phase_num)
+if not os.path.exists("../results/char_results/" + RECENT_PHASE):
+    os.mkdir("../results/char_results/" + RECENT_PHASE)
 
-with open("../results/char_results/" + phase_num + "/all2.json", "w") as char_file:
+with open("../results/char_results/" + RECENT_PHASE + "/all2.json", "w") as char_file:
     char_file.write(json.dumps(temp_stats, indent=2))

@@ -39,6 +39,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 RECENT_PHASE = "3.0.1"
+PAST_PHASE = "2.8.1"
 
 
 def relative_path(relative_path: str) -> str:
@@ -145,11 +146,7 @@ with open(relative_path("../data/bangboos.json")) as char_file:
 with open(relative_path("../data/w-engine.json")) as char_file:
     WENGINE = load(char_file)
 
-# if no past phase, past_phase = "null"
-PAST_PHASE = "2.8.1"
-# if as: da_mode = True
 da_mode: bool = args.deadly_assault
-
 if not da_mode:
     da_mode = False
 
@@ -158,12 +155,9 @@ sd_mode: bool = not da_mode
 DEFAULT_ROUND = 0
 CONS_LIMIT = 2
 
-suffix = ""
-if da_mode:
-    suffix = "_da"
-da_filename = "_da" if da_mode else ""
-RECENT_PHASE_PF = RECENT_PHASE + suffix
-PAST_PHASE_PF = PAST_PHASE + suffix
+mode_sfx = "_da" if da_mode else "_sd"
+
+RECENT_PHASE_SFX = RECENT_PHASE + mode_sfx
 
 char_infographics = {"Zhu Yuan", "Ben", "Nicole"}
 char_infographics = next(iter(char_infographics))

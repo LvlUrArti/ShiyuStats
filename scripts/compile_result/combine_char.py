@@ -1,11 +1,22 @@
 """Combine JSON results from different game modes into a unified build dataset."""
 
 import json
+from os.path import exists
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import CHARS_INFO, PAST_PHASE, RECENT_PHASE
+from typing import TYPE_CHECKING
+
+from comp_rates_config import (
+    CHARS_INFO,
+    ENDGAME_INFO,
+    ENDGAME_INFOS,
+    RECENT_PHASE,
+)
 from pydantic import BaseModel
+
+if TYPE_CHECKING:
+    from comp_rates_config import EndgameMode
 
 # ----------------------------------------------------------------------
 # Constants
@@ -257,7 +268,7 @@ def load_base_stats(file_path: str) -> dict[str, BaseCharacterStats]:
 
 
 def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
-    """Load full stats (all2.json files with extended info)."""
+    """Load full stats (all.json files with extended info)."""
     with open(file_path) as file:
         data = json.load(file)
     return {item["char"]: FullCharacterStats(**item) for item in data}
@@ -266,8 +277,28 @@ def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
 # ----------------------------------------------------------------------
 # Load all input data for each game mode
 # ----------------------------------------------------------------------
-BASE_PATH = f"../../results/char_results/{RECENT_PHASE}"
-BASE_PREV_PATH = f"../../results/char_results/{PAST_PHASE}"
+def get_read_path(ver: str, mode: str) -> str:
+    """Get the path to read data from."""
+    return f"../../results/all_results/{ver}/{ver}_{mode}/chars"
+
+
+def get_previous_mode_phase(mode: str) -> str:
+    """Get the previous phase of a mode."""
+    prev_phase = RECENT_PHASE
+    check_obj = getattr(ENDGAME_INFO, mode)
+    check_ver = check_obj.ver if check_obj else None
+
+    for phase, inner in ENDGAME_INFOS.items():
+        cur_obj: EndgameMode | None = getattr(inner, mode)
+        cur_ver = cur_obj.ver if cur_obj else None
+        if cur_ver == check_ver:
+            break
+        prev_phase = phase
+
+    if exists(get_read_path(prev_phase, mode)):
+        return prev_phase
+    return RECENT_PHASE
+
 
 # Format: (key suffix, file suffix) - empty string means base variant
 VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
@@ -280,14 +311,15 @@ BOSS_ROOMS = {
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
+modes = ["sd", "da"]
 
-for read_path in [BASE_PATH, BASE_PREV_PATH]:
-    # Add "_prev" suffix for previous phase data
-    suf = "" if read_path == BASE_PATH else "_prev"
-
-    for mode in ["sd", "da"]:
-        folder = f"{read_path}_{mode}"
-        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder}/all2.json")
+for suf in ["", "_prev"]:
+    phases = {
+        mode: get_previous_mode_phase(mode) if suf else RECENT_PHASE for mode in modes
+    }
+    for mode in modes:
+        folder = get_read_path(phases[mode], mode)
+        raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder}/all.json")
 
         # Load variant stats (E1 and S0)
         for var_suf, file_suf in VARIANTS[1:]:  # Skip base variant (index 0)
@@ -656,7 +688,7 @@ def process_chars() -> None:
     # ----------------------------------------------------------------------
     # Write final JSON
     # ----------------------------------------------------------------------
-    output_path = f"../../results/char_results/{RECENT_PHASE}/builds.json"
+    output_path = f"../../results/all_results/{RECENT_PHASE}/builds.json"
     with open(output_path, "w") as out_file:
         json.dump(output_data, out_file, indent=2)
 

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from enka.zzz import AgentStatType, SkillType, StatType
 
-from scripts.comp_rates_config import RECENT_PHASE
+from scripts.comp_rates_config import BASE_RESULT_PATH, RECENT_PHASE
 
 skip_self = False
 skip_random = False
@@ -21,8 +21,8 @@ run_all_chars = True
 run_chars_name = ["Miyabi"]
 
 
-if os.path.exists("../results/char_results/uids.csv"):
-    with open("../results/char_results/uids.csv", encoding="UTF8") as f:
+if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
+    with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)
         uids = [int(uid[0]) for uid in uids]

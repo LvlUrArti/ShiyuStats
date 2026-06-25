@@ -18,8 +18,14 @@ from enka_config import (
     substat_dict,
     to_snake_case,
 )
+from send2trash import send2trash
 
-from scripts.comp_rates_config import CHARS_INFO, mode_sfx
+from scripts.comp_rates_config import (
+    BUILD_RESULT_PATH,
+    CHAR_RESULT_PATH,
+    CHARS_INFO,
+    mode_sfx,
+)
 from scripts.csv_to_pickle import load_pickle_data
 
 if TYPE_CHECKING:
@@ -27,7 +33,7 @@ if TYPE_CHECKING:
     from scripts.player_phase import PlayerPhase
 
 
-with open("../results/char_results/" + RECENT_PHASE + "/all.csv") as f:
+with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
     builds = list(csv.DictReader(f, delimiter=","))
 
 
@@ -256,15 +262,14 @@ for char, stat_char in stats.items():
                 stat_char.stats_write[stat + "_" + str(i + 1) + "_app"] = "-"
                 i += 1
 
-exist_real = os.path.exists("results_real")
 with (
     open(
-        "results_real/chars.csv" if exist_real else "results/chars.csv",
+        f"../{BUILD_RESULT_PATH}/chars.csv",
         "w",
         newline="",
     ) as file1,
     open(
-        "results_real/demographic.csv" if exist_real else "results/demographic.csv",
+        f"../{BUILD_RESULT_PATH}/demographic.csv",
         "w",
         newline="",
     ) as file2,
@@ -280,7 +285,7 @@ with (
         csv_writer2.writerow([char + ": " + str(stats[char].sample_size_players)])
 
 temp_stats: list[str] = []
-with open("../results/char_results/" + RECENT_PHASE + "/all.json") as char_file:
+with open(f"../{CHAR_RESULT_PATH}/all.json") as char_file:
     CHARACTERS = json.load(char_file)
 for iter_char, char_value in enumerate(stats.values()):
     iterate_value_app: list[str] = []
@@ -307,8 +312,6 @@ for iter_char, char_value in enumerate(stats.values()):
 
     temp_stats.append(CHARACTERS[iter_char] | char_value.stats_write)
 
-if not os.path.exists("../results/char_results/" + RECENT_PHASE):
-    os.mkdir("../results/char_results/" + RECENT_PHASE)
-
-with open("../results/char_results/" + RECENT_PHASE + "/all2.json", "w") as char_file:
+send2trash(f"../{CHAR_RESULT_PATH}/all.json")
+with open(f"../{CHAR_RESULT_PATH}/all.json", "w") as char_file:
     char_file.write(json.dumps(temp_stats, indent=2))

@@ -14,11 +14,15 @@ from typing import TYPE_CHECKING
 
 import char_usage as cu
 from comp_rates_config import (
+    BASE_RESULT_PATH,
     BOOS_INFO,
+    BOOS_RESULT_PATH,
+    CHAR_RESULT_PATH,
     CHARS_INFO,
+    COMP_RESULT_PATH,
     DEFAULT_ROUND,
+    DUOS_RESULT_PATH,
     F2P_ONLY,
-    PAST_PHASE,
     WHALE_ONLY,
     app_rate_threshold,
     app_rate_threshold_round,
@@ -49,7 +53,6 @@ all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps
 avg_round_stage: dict[str, list[int]] = loaded_data.avg_round_stage
 sample_size: dict[int | str, dict[str, int | float]] = loaded_data.sample_size
-all_comps_json: dict[str, list[dict[str, str | float]]] = {}
 all_comp_uids: set[str] = set()
 
 if isfile("../../uids.csv"):
@@ -115,26 +118,6 @@ def main() -> None:
                     filename=room,
                 )
 
-            appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open("../results/char_results/appearance.json", "w") as out_file:
-                    out_file.write(json.dumps(appearances_write, indent=2))
-                with open("../results/char_results/rounds.json", "w") as out_file:
-                    out_file.write(json.dumps(rounds_write, indent=2))
-
-            appearances_write, rounds_write = compile_app_round(boo_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open(
-                    "../results/char_results/bangboo_appearance.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(appearances_write, indent=2))
-                with open(
-                    "../results/char_results/bangboo_rounds.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(rounds_write, indent=2))
-
             cur_time = time.time()
             print("done char stage: ", (cur_time - start_time), "s")
 
@@ -147,32 +130,6 @@ def main() -> None:
                     room,
                     filename=room[0].split("-")[0],
                 )
-
-            appearances_write, rounds_write = compile_app_round(char_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open(
-                    "../results/char_results/appearance_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(appearances_write, indent=2))
-                with open(
-                    "../results/char_results/rounds_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(rounds_write, indent=2))
-
-            appearances_write, rounds_write = compile_app_round(boo_chambers)
-            if not WHALE_ONLY and not F2P_ONLY:
-                with open(
-                    "../results/char_results/bangboo_appearance_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(appearances_write, indent=2))
-                with open(
-                    "../results/char_results/bangboo_rounds_combine.json",
-                    "w",
-                ) as out_file:
-                    out_file.write(json.dumps(rounds_write, indent=2))
 
             cur_time = time.time()
             print("done char stage (combine): ", (cur_time - start_time), "s")
@@ -193,7 +150,7 @@ def main() -> None:
             comp_usages([room], filename=room)
 
         if not WHALE_ONLY and not F2P_ONLY:
-            with open("../results/char_results/demographic.json", "w") as out_file:
+            with open(f"../{BASE_RESULT_PATH}/demographic.json", "w") as out_file:
                 out_file.write(json.dumps(sample_size, indent=2))
         cur_time = time.time()
         print("done comp stage: ", (cur_time - start_time), "s")
@@ -207,51 +164,6 @@ def main() -> None:
         )
         cur_time = time.time()
         print("done char infographics: ", (cur_time - start_time), "s")
-
-    if (
-        "Comp usage 8 - 10" in run_commands
-        and "Comp usages for each stage" in run_commands
-        and not WHALE_ONLY
-        and not F2P_ONLY
-    ):
-        with open("../results/comp_results/json/all_comps.json", "w") as out_file:
-            out_file.write(json.dumps(all_comps_json, indent=2))
-
-
-def compile_app_round(
-    char_chambers: dict[str, dict[str, cu.CharUsageData]],
-) -> tuple[
-    dict[str, dict[str, dict[str, float | str]]],
-    dict[str, dict[str, dict[str, float | str]]],
-]:
-    """Compile appearance and round data."""
-    appearances: dict[str, dict[str, cu.CharUsageData]] = {}
-    rounds: dict[str, dict[str, cu.CharUsageData]] = {}
-    appearances_write: dict[str, dict[str, dict[str, float | str]]] = {}
-    rounds_write: dict[str, dict[str, dict[str, float | str]]] = {}
-    for room, char_cham in char_chambers.items():
-        appearances[room] = dict(
-            sorted(char_cham.items(), key=lambda t: t[1].app, reverse=True),
-        )
-        appearances_write[room] = {}
-        rounds_write[room] = {}
-        rounds[room] = dict(
-            sorted(char_cham.items(), key=lambda t: t[1].round, reverse=True),
-        )
-        for char in char_cham:
-            appearances_write[room][char] = {
-                "app": char_cham[char].app,
-                "rarity": char_cham[char].rarity,
-                "diff": char_cham[char].diff,
-            }
-            if char_cham[char].round == 0:
-                continue
-            rounds_write[room][char] = {
-                "round": char_cham[char].round,
-                "rarity": char_cham[char].rarity,
-                "diff": char_cham[char].diff_rounds,
-            }
-    return (appearances_write, rounds_write)
 
 
 def comp_usages(
@@ -281,7 +193,6 @@ class CompUsage(Composition):
         self.round_num = {str(i): list[int]() for i in range(1, 13)}
         self.whale_count = set[str]()
         self.players = set[Composition]()
-        self.exc_comps = set[Composition]()
         self.boo_freq: dict[str, int] = {}
         self.bangboo: str
         self.is_count_round: bool
@@ -363,8 +274,6 @@ def used_comps(
         if comp_tuple not in comps_dict:
             comps_dict[comp_tuple] = CompUsage(comp)
         if comp.flag_cheat:
-            if not whale_comp:
-                comps_dict[comp_tuple].exc_comps.add(comp)
             continue
 
         comps_dict[comp_tuple].uses += 1
@@ -562,7 +471,7 @@ def char_usages(
 ]:
     """Calculate character usage."""
     app = cu.appearances(all_players, chambers=rooms, info_char=info_char)
-    chars_dict, boos_dict = cu.usages(app, PAST_PHASE, chambers=rooms)
+    chars_dict, boos_dict = cu.usages(app, chambers=rooms)
     char_usages_write(chars_dict, filename, archetype)
     boo_usages_write(boos_dict, "bangboo_" + filename, archetype)
     return (chars_dict, boos_dict)
@@ -578,7 +487,6 @@ def comp_usages_write(
     """Write comp usage."""
     out_json: list[dict[str, str | float]] = []
     out_comps: list[dict[str, str | int]] = []
-    exc_comps: list[dict[str, str | int | float]] = []
     outvar_comps: list[dict[str, str | int]] = []
     var_comps: list[dict[str, str | int]] = []
     variations: dict[str, int] = {}
@@ -677,22 +585,6 @@ def comp_usages_write(
             out_json_dict["avg_round"] = cur_comp.round
             out_json.append(out_json_dict)
 
-            for exc_comp in cur_comp.exc_comps:
-                exc_comp_append = {
-                    "player": exc_comp.player,
-                    "char_one": exc_comp.characters[0],
-                    "char_one_cons": exc_comp.char_cons[exc_comp.characters[0]],
-                    "char_two": exc_comp.characters[1],
-                    "char_two_cons": exc_comp.char_cons[exc_comp.characters[1]],
-                    "char_three": exc_comp.characters[2],
-                    "char_three_cons": exc_comp.char_cons[exc_comp.characters[2]],
-                    "score": exc_comp.round_num,
-                    "avg_score": cur_comp.round,
-                    "app_rate": cur_comp.app_rate,
-                    "stage": exc_comp.room,
-                }
-                exc_comps.append(exc_comp_append)
-
     if info_char:
         out_comps += var_comps
 
@@ -709,7 +601,7 @@ def comp_usages_write(
 
     if floor:
         with open(
-            "../results/comp_results/comps_usage_" + filename + ".csv",
+            f"../{COMP_RESULT_PATH}/comps_usage_{filename}.csv",
             "w",
             newline="",
         ) as f:
@@ -718,24 +610,8 @@ def comp_usages_write(
                 csv_writer.writerow(comps.values())
 
     if not info_char:
-        all_comps_json[filename] = out_json.copy()
-        if (len(exc_comps) > 0) and sort_app:
-            with open(
-                "../results/comp_results/comps_usage_exc" + filename + ".csv",
-                "w",
-                newline="",
-            ) as f:
-                csv_writer = csv.writer(f)
-                csv_writer.writerow(exc_comps[0].keys())
-                for comps in exc_comps:
-                    csv_writer.writerow(comps.values())
-            with open(
-                "../results/comp_results/json/exc" + filename + ".json",
-                "w",
-            ) as out_file:
-                out_file.write(json.dumps(exc_comps, indent=2))
         with open(
-            "../results/comp_results/json/" + filename + ".json",
+            f"../{COMP_RESULT_PATH}/{filename}.json",
             "w",
         ) as out_file:
             out_file.write(json.dumps(out_json, indent=2))
@@ -777,7 +653,7 @@ def duo_write(
     count = 0
     out_duos_check: dict[tuple[str, str], dict[str, str | float]] = {}
 
-    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
+    with open(f"../{DUOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
         for duos in out_duos:
             duo_char = str(duos["char"])
@@ -845,7 +721,7 @@ def duo_write(
         )
         out_dd = dict(sorted_out_dd)
 
-        with open("../results/char_results/duo_check.csv", "w", newline="") as f:
+        with open(f"../{DUOS_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
             csv_writer = csv.writer(f)
             for out_dd_print in out_dd_list:
                 csv_writer.writerow(out_dd_print)
@@ -855,7 +731,7 @@ def duo_write(
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:
             if out_duos[i][duo_value] in CHARS_INFO:
                 out_duos[i][duo_value] = CHARS_INFO[str(out_duos[i][duo_value])].slug
-    with open("../results/char_results/" + filename + ".json", "w") as out_file:
+    with open(f"../{DUOS_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(json.dumps(out_duos, indent=2))
 
 
@@ -914,10 +790,10 @@ def boo_usages_write(
                 out_chars[i][value] = round(float(out_chars[i][value]))
             else:
                 out_chars[i][value] = DEFAULT_ROUND
-    with open("../results/char_results/" + filename + ".json", "w") as out_file:
+    with open(f"../{BOOS_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(json.dumps(out_chars, indent=2))
 
-    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
+    with open(f"../{BOOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
         count = 0
         for chars in out_chars_csv:
@@ -1088,10 +964,10 @@ def char_usages_write(
                 )
             else:
                 out_chars[i][value] = DEFAULT_ROUND
-    with open("../results/char_results/" + filename + ".json", "w") as out_file:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.json", "w") as out_file:
         out_file.write(json.dumps(out_chars, indent=2))
 
-    with open("../results/char_results/" + filename + ".csv", "w", newline="") as f:
+    with open(f"../{CHAR_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
         count = 0
         for chars in out_chars_csv:

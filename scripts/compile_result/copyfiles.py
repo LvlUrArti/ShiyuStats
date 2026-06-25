@@ -5,14 +5,25 @@ from os import listdir, mkdir, path
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import RECENT_PHASE, RECENT_PHASE_SFX, da_mode, sd_mode
+from comp_rates_config import (
+    BOOS_RESULT_PATH,
+    CHAR_RESULT_PATH,
+    COMP_RESULT_PATH,
+    DUOS_RESULT_PATH,
+    RECENT_PHASE,
+    da_mode,
+    sd_mode,
+)
 from send2trash import send2trash
 
 mode_sfx = "da" if da_mode else "sd"
 
 source_dirs = [
-    "../../results/char_results/" + RECENT_PHASE_SFX,
-    "../../results/comp_results/" + RECENT_PHASE_SFX + "/json",
+    f"../../{BOOS_RESULT_PATH}",
+    f"../../{CHAR_RESULT_PATH}",
+    f"../../results/all_results/{RECENT_PHASE}",
+    f"../../{DUOS_RESULT_PATH}",
+    f"../../{COMP_RESULT_PATH}",
 ]
 
 target_dir: str = ""
@@ -24,17 +35,18 @@ if sd_mode and path.exists("../../results/web_results"):
 mkdir("../../results/web_results/" + mode_sfx)
 
 for source_dir in source_dirs:
-    if "comp_results" in source_dir:
-        target_dir = "../../results/web_results/" + mode_sfx + "/comps"
+    comp_mode = source_dir == f"../../{COMP_RESULT_PATH}"
+    if comp_mode:
+        target_dir = f"../../results/web_results/{mode_sfx}/comps"
     else:
-        target_dir = "../../results/web_results/" + mode_sfx + "/chars"
+        target_dir = f"../../results/web_results/{mode_sfx}/chars"
 
     file_names = listdir(source_dir)
     if path.exists(target_dir):
         send2trash(target_dir)
     mkdir(target_dir)
     for file_name in file_names:
-        if ("comp_results" in source_dir and "combined" in file_name) or (
+        if (comp_mode and "combined" in file_name) or (
             file_name in {"duo_usages.json", "bangboo_all.json", "demographic.json"}
             or (file_name == "builds.json" and mode_sfx == "sd")
             or (

@@ -10,6 +10,12 @@ from pickle import load as pickle_load
 from time import time
 
 from comp_rates_config import (
+    BASE_RESULT_PATH,
+    BOOS_RESULT_PATH,
+    BUILD_RESULT_PATH,
+    CHAR_RESULT_PATH,
+    COMP_RESULT_PATH,
+    DUOS_RESULT_PATH,
     RECENT_PHASE,
     RECENT_PHASE_SFX,
     da_mode,
@@ -49,12 +55,11 @@ def main() -> None:
     print("start")
 
     for make_path in [
-        "../results",
-        "../results/comp_results",
-        "../results/comp_results/json",
-        "../enka.network",
-        "../enka.network/results_real",
-        "../results/char_results",
+        f"../{BOOS_RESULT_PATH}",
+        f"../{COMP_RESULT_PATH}",
+        f"../{BUILD_RESULT_PATH}",
+        f"../{CHAR_RESULT_PATH}",
+        f"../{DUOS_RESULT_PATH}",
         "../data/pickle",
     ]:
         if not os.path.exists(make_path):
@@ -172,7 +177,7 @@ def main() -> None:
             all_players[comp.player] = PlayerPhase(comp.player)
         all_players[comp.player].add_comp(comp)
 
-    with open("../results/char_results/uids.csv", "w", newline="") as f:
+    with open(f"../{BASE_RESULT_PATH}/uids.csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
         for uid in uid_freq_comp:
             csv_writer.writerow([uid])

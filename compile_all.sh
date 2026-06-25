@@ -22,32 +22,22 @@ echo "SD"
 python comp_rates.py -w &
 python comp_rates.py -f &
 python comp_rates.py -a
-echo ""
-echo "Move SD"
-python move.py
 
 echo ""
 echo "DA"
 python comp_rates.py -da -w &
 python comp_rates.py -da -f &
 python comp_rates.py -da -a
-echo ""
-echo "Move DA"
-python move.py -da
 
 echo ""
 echo "SD stats"
 cd ../enka.network
 python stats.py
-cd ../scripts
-python move.py
 
 echo ""
 echo "DA stats"
 cd ../enka.network
 python stats.py -da
-cd ../scripts
-python move.py -da
 
 cd compile_result
 python combine_char.py

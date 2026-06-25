@@ -1,7 +1,6 @@
 """Compile all HSR character data."""
 
 # pyright: reportUnknownVariableType=false, reportMissingTypeStubs=false
-import json
 import warnings
 from itertools import chain
 from statistics import mean, stdev
@@ -404,7 +403,6 @@ class CharUsageData(CharApp):
 
 def usages(
     app: tuple[dict[str, CharApp], dict[str, CharApp]],
-    past_phase: str,
     chambers: list[str] = ROOMS,
 ) -> tuple[dict[str, CharUsageData], dict[str, CharUsageData]]:
     """Calculate usage data for each character."""
@@ -418,27 +416,6 @@ def usages(
     rates_boos: list[float] = []
 
     stage = "all" if chambers == ONE_STAGE else chambers[0]
-
-    try:
-        with open(
-            "../results/char_results/" + past_phase + "/appearance.json",
-        ) as stats:
-            past_usage = json.load(stats)
-        with open("../results/char_results/" + past_phase + "/rounds.json") as stats:
-            past_rounds = json.load(stats)
-    except FileNotFoundError:
-        pass
-    try:
-        with open(
-            "../results/char_results/" + past_phase + "/bangboo_appearance.json",
-        ) as stats:
-            past_usage = json.load(stats)
-        with open(
-            "../results/char_results/" + past_phase + "/bangboo_rounds.json",
-        ) as stats:
-            past_rounds = json.load(stats)
-    except FileNotFoundError:
-        pass
 
     app_chars, app_boos = app
 

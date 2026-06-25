@@ -39,7 +39,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 RECENT_PHASE = "3.0.1"
-PAST_PHASE = "2.8.1"
 
 
 def relative_path(relative_path: str) -> str:
@@ -158,6 +157,12 @@ CONS_LIMIT = 2
 mode_sfx = "_da" if da_mode else "_sd"
 
 RECENT_PHASE_SFX = RECENT_PHASE + mode_sfx
+BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_SFX}"
+BOOS_RESULT_PATH = f"{BASE_RESULT_PATH}/boos"
+CHAR_RESULT_PATH = f"{BASE_RESULT_PATH}/chars"
+COMP_RESULT_PATH = f"{BASE_RESULT_PATH}/comps"
+BUILD_RESULT_PATH = f"{BASE_RESULT_PATH}/builds"
+DUOS_RESULT_PATH = f"{BASE_RESULT_PATH}/duos"
 
 char_infographics = {"Zhu Yuan", "Ben", "Nicole"}
 char_infographics = next(iter(char_infographics))

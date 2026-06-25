@@ -283,14 +283,6 @@ with (
 temp_stats: list[str] = []
 with open("../results/char_results/" + phase_num + "/all.json") as char_file:
     CHARACTERS = json.load(char_file)
-with open(
-    "../results/char_results/" + phase_num + "/appearance_combine.json",
-) as app_char_file:
-    APP = json.load(app_char_file)
-with open(
-    "../results/char_results/" + phase_num + "/rounds_combine.json",
-) as round_char_file:
-    ROUND = json.load(round_char_file)
 for iter_char, char_value in enumerate(stats.values()):
     iterate_value_app: list[str] = []
     for i in range(3):

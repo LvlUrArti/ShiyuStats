@@ -29,10 +29,9 @@ from comp_rates_config import (
     CHARS_INFO,
     mode_sfx,
 )
-from csv_to_pickle import load_pickle_data
+from csv_to_pickle import PickleData, load_pickle_data
 
 if TYPE_CHECKING:
-    from csv_to_pickle import PickleData
     from player_phase import PlayerPhase
 
 with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:

@@ -30,3 +30,4 @@ extraPaths = ["./scripts"]
 strict-checking = true
 [tool.ruff.lint.flake8-type-checking]
 strict = true
+exempt-modules = ["csv_to_pickle"]

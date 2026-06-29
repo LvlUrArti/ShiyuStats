@@ -7,9 +7,9 @@ import json
 import operator
 import os
 import statistics
+import sys
 from dataclasses import dataclass
 from sys import exit as sys_exit
-from typing import TYPE_CHECKING
 
 from enka_config import (
     RECENT_PHASE,
@@ -20,18 +20,20 @@ from enka_config import (
 )
 from send2trash import send2trash
 
-from scripts.comp_rates_config import (
+sys.path.append("../scripts/")
+from typing import TYPE_CHECKING
+
+from comp_rates_config import (
     BUILD_RESULT_PATH,
     CHAR_RESULT_PATH,
     CHARS_INFO,
     mode_sfx,
 )
-from scripts.csv_to_pickle import load_pickle_data
+from csv_to_pickle import load_pickle_data
 
 if TYPE_CHECKING:
-    from scripts.csv_to_pickle import PickleData
-    from scripts.player_phase import PlayerPhase
-
+    from csv_to_pickle import PickleData
+    from player_phase import PlayerPhase
 
 with open(f"../{CHAR_RESULT_PATH}/all.csv") as f:
     builds = list(csv.DictReader(f, delimiter=","))

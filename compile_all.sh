@@ -5,6 +5,8 @@ set -e # Stop on error
 # Check for arguments, e.g. `sh compile_all.sh hello`
 if [ -n "$1" ]; then
 	cd scripts
+	python csv_to_pickle.py &
+	python csv_to_pickle.py -da
 else
 	cd scripts
 	python combine_raw_chars.py
@@ -12,6 +14,7 @@ else
 	python csv_to_pickle.py -da &
 	python hash.py
 	cd hf_data
+	python generate_config.py
 	python up_data.py -y
 	python up_data.py -n
 	cd ../
@@ -39,7 +42,7 @@ echo "DA stats"
 cd ../enka.network
 python stats.py -da
 
-cd compile_result
+cd ../scripts/compile_result
 python combine_char.py
 python combine_comp.py
 python combine_comp.py -da

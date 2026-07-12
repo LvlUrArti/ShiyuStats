@@ -202,7 +202,6 @@ if args.top or args.f2p:
     run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
-        "Comp usage 8 - 10",
     }
 
 if args.whale:

@@ -37,7 +37,7 @@ from comp_rates_config import (
     sig_weaps,
 )
 from composition import Composition
-from csv_to_pickle import PickleData, load_pickle_data  # noqa: TC002
+from csv_to_pickle import PickleData, load_pickle_data
 from scipy.stats import skew, trim_mean
 
 if TYPE_CHECKING:
@@ -609,7 +609,7 @@ def comp_usages_write(
             for comps in out_comps:
                 csv_writer.writerow(comps.values())
 
-    if not info_char:
+    if not info_char and sort_app:
         with open(
             f"../{COMP_RESULT_PATH}/{filename}.json",
             "w",

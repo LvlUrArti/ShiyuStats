@@ -2,10 +2,27 @@
 
 # pyright: reportMissingTypeStubs=false, reportUnknownVariableType=false, reportArgumentType=false
 
+import warnings
+
 from bs4 import BeautifulSoup
 from cloudscraper import create_scraper
 
 URL = "https://zenless-zone-zero.fandom.com/wiki/Agent"
+
+MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+]
 
 
 def scrape_wiki_chars() -> list[dict[str, str | int]]:
@@ -57,11 +74,11 @@ def scrape_wiki_chars() -> list[dict[str, str | int]]:
 
         faction = cells[6].get_text(strip=True)
 
-        release_date: int = (
-            int(cells[7]["data-sort-value"])
-            if cells[7].has_attr("data-sort-value")
-            else 0
+        release_text = cells[7].get_text(strip=True)
+        has_date = cells[7].has_attr("data-sort-value") and any(
+            m in release_text for m in MONTHS
         )
+        release_date: int = int(cells[7]["data-sort-value"]) if has_date else 0
 
         agents.append(
             {
@@ -74,5 +91,8 @@ def scrape_wiki_chars() -> list[dict[str, str | int]]:
                 "release_date": release_date,
             },
         )
+
+        if not has_date:
+            warnings.warn(f"No release date for '{name}'", stacklevel=2)
 
     return agents

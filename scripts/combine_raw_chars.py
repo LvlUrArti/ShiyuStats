@@ -43,7 +43,7 @@ with open(char_data_path) as f:
             ]
 for uid, uid_char in char_data.items():
     for char in uid_char:
-        print_data += [[uid, "", char] + uid_char[char]]
+        print_data += [[uid, char] + uid_char[char]]
 
 send2trash(char_data_path)
 send2trash(enka_char_path)

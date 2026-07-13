@@ -44,6 +44,8 @@ python stats.py -da
 
 cd ../scripts/compile_result
 python combine_char.py
+python combine_duo.py
+python combine_duo.py -da
 python combine_comp.py
 python combine_comp.py -da
 

@@ -99,7 +99,7 @@ def main() -> None:
 
     if "Char usages 8 - 10" in run_commands:
         usage, boo_usage = char_usages(one_stage, filename="all")
-        if not WHALE_ONLY and not F2P_ONLY:
+        if not F2P_ONLY:
             duo_usages(usage, archetype, one_stage)
         cur_time = time.time()
         print("done char 8 - 10: ", (cur_time - start_time), "s")
@@ -413,7 +413,7 @@ def used_duos(
                 if comp.char_cons[char] > 2:
                     giga_whale = True
 
-        if giga_whale:
+        if (WHALE_ONLY and not whale_comp) or giga_whale:
             continue
 
         # Permutate the duos, for example if Ganyu and Xiangling are used,
@@ -423,7 +423,7 @@ def used_duos(
             if duo not in duos_dict:
                 duos_dict[duo] = cu.RoundApp()
             duos_dict[duo].app_flat += 1
-            if not whale_comp:
+            if whale_comp == WHALE_ONLY:
                 duos_dict[duo].round_list[cur_room].append(comp.round_num)
 
     sorted_duos = sorted(duos_dict.items(), key=lambda t: t[1].app_flat, reverse=True)
@@ -647,6 +647,9 @@ def duo_write(
                     out_duos_append["app_flat_" + str(i + 1)] = 0
             out_duos.append(out_duos_append)
     out_duos = sorted(out_duos, key=lambda t: t["app"], reverse=True)
+
+    if WHALE_ONLY:
+        filename = filename + "_C1"
 
     if archetype != "all":
         filename = filename + "_" + archetype

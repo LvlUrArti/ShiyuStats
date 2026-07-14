@@ -7,6 +7,7 @@ ignore = [
   "ASYNC230", # Use await in sync context
   "ASYNC250", # Use "input" in async context
   "S301",     # Use of unsafe cryptographically weak random number
+  "S603",     # Use of subprocess
   "FBT",      # Boolean test
   "INP001",   # Unused import
   "TD002",    # Missing TODO author

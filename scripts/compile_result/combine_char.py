@@ -262,16 +262,22 @@ class FullCharacterStats(BaseCharacterStats):
 # ----------------------------------------------------------------------
 def load_base_stats(file_path: str) -> dict[str, BaseCharacterStats]:
     """Load basic stats (e0s1, e1, s0 files)."""
-    with open(file_path) as file:
-        data = json.load(file)
-    return {item["char"]: BaseCharacterStats(**item) for item in data}
+    try:
+        with open(file_path) as file:
+            data = json.load(file)
+        return {item["char"]: BaseCharacterStats(**item) for item in data}
+    except FileNotFoundError:
+        return {}
 
 
 def load_full_stats(file_path: str) -> dict[str, FullCharacterStats]:
     """Load full stats (all.json files with extended info)."""
-    with open(file_path) as file:
-        data = json.load(file)
-    return {item["char"]: FullCharacterStats(**item) for item in data}
+    try:
+        with open(file_path) as file:
+            data = json.load(file)
+        return {item["char"]: FullCharacterStats(**item) for item in data}
+    except FileNotFoundError:
+        return {}
 
 
 # ----------------------------------------------------------------------

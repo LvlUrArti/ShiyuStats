@@ -107,6 +107,7 @@ def main(add_args: list[str] | None = None) -> None:
     run_parallel(
         [
             [exe, "combine_char.py", *add_args],
+            [exe, "histograph.py", *add_args],
             [exe, "combine_comp.py", "-m", "sd", *add_args],
             [exe, "combine_comp.py", "-m", "da", *add_args],
             [exe, "combine_duo.py", "-m", "sd", *add_args],

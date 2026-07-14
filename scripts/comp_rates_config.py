@@ -10,6 +10,8 @@ from typing import Literal
 from pydantic import BaseModel, field_validator
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-v", "--version", help="Version to compile")
+parser.add_argument("-m", "--mode", help="Set which mode to compile (sd/da)")
 parser.add_argument("-off", "--offline_collect", action="store_true")
 parser.add_argument("-save", "--save_to_file", action="store_true")
 parser.add_argument("-a", "--all", action="store_true")
@@ -25,20 +27,9 @@ parser.add_argument("-f", "--f2p", action="store_true")
 parser.add_argument("-y", "--yes", action="store_true")
 parser.add_argument("-n", "--no", action="store_true")
 
-parser.add_argument(
-    "-sd",
-    "--shiyu_defense",
-    action="store_true",
-)
-parser.add_argument(
-    "-da",
-    "--deadly_assault",
-    action="store_true",
-)
-
 args = parser.parse_args()
 
-RECENT_PHASE = "3.0.2"
+RECENT_PHASE: str = args.version or "3.0.2"
 
 
 def relative_path(relative_path: str) -> str:
@@ -145,11 +136,10 @@ with open(relative_path("../data/bangboos.json")) as char_file:
 with open(relative_path("../data/w-engine.json")) as char_file:
     WENGINE = load(char_file)
 
-da_mode: bool = args.deadly_assault
+da_mode: bool = args.mode == "da"
+sd_mode: bool = args.mode == "sd"
 if not da_mode:
     da_mode = False
-
-sd_mode: bool = not da_mode
 
 DEFAULT_ROUND = 0
 CONS_LIMIT = 2

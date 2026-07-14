@@ -26,7 +26,6 @@ from comp_rates_config import (
     WHALE_ONLY,
     app_rate_threshold,
     app_rate_threshold_round,
-    archetype,
     char_app_rate_threshold,
     char_infographics,
     da_mode,
@@ -100,7 +99,7 @@ def main() -> None:
     if "Char usages 8 - 10" in run_commands:
         usage, boo_usage = char_usages(one_stage, filename="all")
         if not F2P_ONLY:
-            duo_usages(usage, archetype, one_stage)
+            duo_usages(usage, one_stage)
         cur_time = time.time()
         print("done char 8 - 10: ", (cur_time - start_time), "s")
 
@@ -376,12 +375,11 @@ def rank_usages(
 
 def duo_usages(
     usage: dict[str, cu.CharUsageData],
-    archetype: str,
     rooms: list[str],
 ) -> None:
     """Calculate duo usage."""
     duos_dict = used_duos(rooms, usage)
-    duo_write(duos_dict, usage, "duo_usages", archetype)
+    duo_write(duos_dict, usage, "duo_usages")
 
 
 def used_duos(
@@ -472,8 +470,8 @@ def char_usages(
     """Calculate character usage."""
     app = cu.appearances(all_players, chambers=rooms, info_char=info_char)
     chars_dict, boos_dict = cu.usages(app, chambers=rooms)
-    char_usages_write(chars_dict, filename, archetype)
-    boo_usages_write(boos_dict, "bangboo_" + filename, archetype)
+    char_usages_write(chars_dict, filename)
+    boo_usages_write(boos_dict, "bangboo_" + filename)
     return (chars_dict, boos_dict)
 
 
@@ -588,9 +586,6 @@ def comp_usages_write(
     if info_char:
         out_comps += var_comps
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
-
     if not (sort_app):
         filename = filename + "_rounds"
 
@@ -621,7 +616,6 @@ def duo_write(
     duos_dict: dict[str, dict[str, cu.RoundApp]],
     usage: dict[str, cu.CharUsageData],
     filename: str,
-    archetype: str,
 ) -> None:
     """Write duo usage."""
     out_duos: list[dict[str, str | float]] = []
@@ -651,8 +645,6 @@ def duo_write(
     if WHALE_ONLY:
         filename = filename + "_C1"
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
     count = 0
     out_duos_check: dict[tuple[str, str], dict[str, str | float]] = {}
 
@@ -741,7 +733,6 @@ def duo_write(
 def boo_usages_write(
     chars_dict: dict[str, cu.CharUsageData],
     filename: str,
-    archetype: str,
 ) -> None:
     """Write bangboos usage."""
     out_chars: list[dict[str, str | int | float]] = []
@@ -766,8 +757,6 @@ def boo_usages_write(
         if char == filename:
             break
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
     if WHALE_ONLY:
         filename = filename + "_C1"
     elif F2P_ONLY:
@@ -810,7 +799,6 @@ def boo_usages_write(
 def char_usages_write(
     chars_dict: dict[str, cu.CharUsageData],
     filename: str,
-    archetype: str,
 ) -> None:
     """Write character usage."""
     out_chars: list[dict[str, str | int | float]] = []
@@ -922,8 +910,6 @@ def char_usages_write(
         if char == filename:
             break
 
-    if archetype != "all":
-        filename = filename + "_" + archetype
     if WHALE_ONLY:
         filename = filename + "_C1"
     elif F2P_ONLY:

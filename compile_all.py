@@ -1,9 +1,11 @@
 """Main pipeline script."""
 
-from os import getcwd, path
+from os import getcwd, mkdir, path
 from subprocess import CalledProcessError, Popen, run
 from sys import executable as exe
 from sys import exit as sys_exit
+
+from send2trash import send2trash
 
 from scripts.utils.notif import send_notification
 
@@ -118,14 +120,17 @@ def main(add_args: list[str] | None = None) -> None:
 
     # --- Optional Web Results Deployment ---
     if path.isdir(WEB_RESULTS_DIR):
-        run_sequential(
-            [exe, "copyfiles.py", "-m", "sd", *add_args],
+        send2trash(WEB_RESULTS_DIR)
+        mkdir(WEB_RESULTS_DIR)
+
+        run_parallel(
+            [
+                [exe, "copyfiles.py", "-m", "sd", *add_args],
+                [exe, "copyfiles.py", "-m", "da", *add_args],
+            ],
             cwd=COMPILE_RESULT_DIR,
         )
-        run_sequential(
-            [exe, "copyfiles.py", "-m", "da", *add_args],
-            cwd=COMPILE_RESULT_DIR,
-        )
+        run_sequential([exe, "copy_common.py", *add_args], cwd=COMPILE_RESULT_DIR)
 
         if NEW_DATA:
             run_sequential([exe, "up_results.py", *add_args], cwd=HF_DATA_DIR)

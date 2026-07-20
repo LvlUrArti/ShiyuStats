@@ -1,9 +1,10 @@
 """Copy files to web_results."""
 
+import csv
 import json
 from os import path
 from pathlib import Path
-from shutil import copy, copyfile, copytree, make_archive, rmtree
+from shutil import copy, copytree, make_archive, rmtree
 from sys import path as sys_path
 
 sys_path.append("../")
@@ -35,10 +36,16 @@ if ENDGAME_INFO:
     copy("../../data/versions/config.json", "../../results/final_results/config.json")
 
     if ENDGAME_INFO.da and ENDGAME_INFO.da.ver:
-        copyfile(
-            f"../../results/all_results/{RECENT_PHASE}/da_bosses_name.csv",
+        with open("../../data/versions/da_boss_names.json") as f:
+            boss_names: dict[str, str] = json.load(f)[ENDGAME_INFO.da.ver]
+
+        with open(
             "../../results/web_results/da_bosses_name.csv",
-        )
+            "w",
+        ) as f:
+            writer = csv.writer(f)
+            writer.writerow(["boss", "floor"])
+            writer.writerows([boss, floor[-1]] for floor, boss in boss_names.items())
 
     make_archive("../../results/results", "zip", "../../results/web_results")
     copy_results()

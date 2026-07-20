@@ -1,0 +1,92 @@
+{
+  "1.7.2": {
+    "boss_1": "Notorious - Marionette",
+    "boss_2": "Notorious - Dead End Butcher",
+    "boss_3": "Autonomous Assault Unit - Typhon Destroyer"
+  },
+  "2.0.1": {
+    "boss_1": "Notorious - Marionette",
+    "boss_2": "Sacrifice - Bringer",
+    "boss_3": "Notorious - Pompey"
+  },
+  "2.0.2": {
+    "boss_1": "Notorious - Pompey",
+    "boss_2": "Unknown Corruption Complex",
+    "boss_3": "Sacrifice - Bringer"
+  },
+  "2.1.1": {
+    "boss_1": "Miasma Priest",
+    "boss_2": "Corrupted Overlord - Pompey",
+    "boss_3": "Notorious - Dead End Butcher"
+  },
+  "2.1.2": {
+    "boss_1": "Miasmic Fiend - Unfathomable",
+    "boss_2": "Notorious - Dead End Butcher",
+    "boss_3": "Notorious - Marionette"
+  },
+  "2.2.1": {
+    "boss_1": "The Defiler",
+    "boss_2": "Miasmic Fiend - Unfathomable",
+    "boss_3": "Miasma Priest"
+  },
+  "2.3.1": {
+    "boss_1": "Miasma Priest",
+    "boss_2": "The Defiler",
+    "boss_3": "Notorious - Dead End Butcher"
+  },
+  "2.3.2": {
+    "boss_1": "Wandering Hunter",
+    "boss_2": "Miasmic Fiend - Unfathomable",
+    "boss_3": "The Defiler"
+  },
+  "2.4.1": {
+    "boss_1": "Notorious - Marionette",
+    "boss_2": "Ye Shiyuan the Thrall",
+    "boss_3": "Miasmic Fiend - Unfathomable"
+  },
+  "2.6.2": {
+    "boss_1": "Discordant Solo - Vesper",
+    "boss_2": "The Defiler",
+    "boss_3": "Wandering Hunter"
+  },
+  "2.7.1": {
+    "boss_1": "Sanguine Sweeper",
+    "boss_2": "Miasma Priest",
+    "boss_3": "Notorious - Marionette"
+  },
+  "2.7.2": {
+    "boss_1": "Discordant Solo - Vesper",
+    "boss_2": "Unknown Corruption Complex",
+    "boss_3": "Ye Shiyuan the Thrall"
+  },
+  "2.8.1": {
+    "boss_1": "Phaethon of the Scorched Horizon",
+    "boss_2": "Wandering Hunter",
+    "boss_3": "The Defiler"
+  },
+  "2.8.2": {
+    "boss_1": "Notorious - Dead End Butcher",
+    "boss_2": "Ye Shiyuan the Thrall",
+    "boss_3": "Discordant Solo - Vesper"
+  },
+  "2.8.3": {
+    "boss_1": "Miasmic Fiend - Unfathomable",
+    "boss_2": "Ye Shiyuan the Thrall",
+    "boss_3": "The Defiler"
+  },
+  "3.0.1": {
+    "boss_1": "Girtablullu",
+    "boss_2": "Notorious - Marionette",
+    "boss_3": "Ye Shiyuan the Thrall"
+  },
+  "3.0.2": {
+    "boss_1": "Girtablullu",
+    "boss_2": "\"Primordial Nightmare - \"\"The Creator\"\"\"",
+    "boss_3": "Ye Shiyuan the Thrall"
+  },
+  "3.0.3": {
+    "boss_1": "Phaethon of the Scorched Horizon",
+    "boss_2": "Notorious - Pompey",
+    "boss_3": "Miasmic Fiend - Unfathomable"
+  }
+}

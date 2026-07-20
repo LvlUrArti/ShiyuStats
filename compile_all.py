@@ -139,7 +139,7 @@ def main(add_args: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    versions_to_process = ["3.0.2"]
+    versions_to_process = ["3.0.3"]
 
     try:
         for ver in versions_to_process:

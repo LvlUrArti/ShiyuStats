@@ -713,5 +713,18 @@
         "faction": "External Strategy Department",
         "release_date": 1781654400,
         "role": "subdps"
+    },
+    "Norma": {
+        "id": "1571",
+        "name": "Norma",
+        "full_name": "Norma Hollowell",
+        "slug": "norma",
+        "element": "Fire",
+        "availability": "Limited S",
+        "specialty": "Stun",
+        "attack_type": "Strike",
+        "faction": "External Strategy Department",
+        "release_date": 1783468800,
+        "role": "support"
     }
 }

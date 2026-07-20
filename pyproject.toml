@@ -26,7 +26,7 @@ ignore = [
 # Enforce typing-related rules
 [tool.pyright]
 typeCheckingMode = "strict"
-extraPaths = ["./scripts"]
+extraPaths = ["./scripts", "./ShiyuStats/scripts"]
 [tool.ruff.lint.flake8-builtins]
 strict-checking = true
 [tool.ruff.lint.flake8-type-checking]

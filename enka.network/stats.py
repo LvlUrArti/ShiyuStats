@@ -194,8 +194,8 @@ for uid in data:
     if cur_uid in spiral_rows:
         for char in data[uid]:
             if char not in chars:
-                print(char, "not exist")
-                sys_exit()
+                msg = f"Unknown character: {char}"
+                raise ValueError(msg)
             if char in spiral_rows[cur_uid]:
                 stats[char].sample_size_players += 1
                 cur_char = data[uid][char]
@@ -208,10 +208,12 @@ for uid in data:
                         sys_exit()
                     stats[char].stats_count[key].append(value)
                 for i in mainstats[char]:
-                    if getattr(cur_char, i) in mainstats[char][i]:
-                        mainstats[char][i][getattr(cur_char, i)] += 1
-                    else:
-                        mainstats[char][i][getattr(cur_char, i)] = 1
+                    mainstat = getattr(cur_char, i)
+                    if mainstat:
+                        if mainstat in mainstats[char][i]:
+                            mainstats[char][i][mainstat] += 1
+                        else:
+                            mainstats[char][i][mainstat] = 1
 
 for char, stat_char in stats.items():
     if stat_char.sample_size > 0:

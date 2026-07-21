@@ -178,7 +178,6 @@ run_commands = {
     # "Duos check",
     "Char usages 8 - 10",
     "Char usages for each stage",
-    "Char usages for each stage (combined)",
     # "Comp usage 8 - 10",
     # "Comp usages for each stage",
     # "Character specific infographics",
@@ -214,7 +213,6 @@ elif args.all:
     run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
-        "Char usages for each stage (combined)",
         "Comp usage 8 - 10",
         "Comp usages for each stage",
     }
@@ -223,7 +221,6 @@ elif args.chars_all:
     run_commands = {
         "Char usages 8 - 10",
         "Char usages for each stage",
-        "Char usages for each stage (combined)",
     }
 
 elif args.comps_all:

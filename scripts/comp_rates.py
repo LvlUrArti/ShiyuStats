@@ -78,13 +78,9 @@ else:
     hoyobuddy_uids: set[str] = set()
 
 if da_mode:
-    three_stages = ["1-1", "1-2", "1-3"]
-    three_double_stages = [["1-1", "1-2", "1-3"]]
     one_stage = ["1-1", "1-2", "1-3"]
     all_stages = ["1-1", "1-2", "1-3"]
 else:
-    three_stages = ["5-1", "5-2", "5-3"]
-    three_double_stages = [["5-1", "5-2", "5-3"]]
     one_stage = ["5-1", "5-2", "5-3"]
     all_stages = ["5-1", "5-2", "5-3"]
 
@@ -111,7 +107,7 @@ def main() -> None:
                 "all": boo_usage.copy(),
             }
             # for room in all_stages:
-            for room in three_stages:
+            for room in all_stages:
                 char_chambers[room], boo_chambers[room] = char_usages(
                     [room],
                     filename=room,
@@ -119,19 +115,6 @@ def main() -> None:
 
             cur_time = time.time()
             print("done char stage: ", (cur_time - start_time), "s")
-
-        if "Char usages for each stage (combined)" in run_commands:
-            char_chambers = {"all": usage.copy()}
-            boo_chambers = {"all": boo_usage.copy()}
-            # for room in all_double_stages:
-            for room in three_double_stages:
-                char_chambers[room[0]], boo_chambers[room[0]] = char_usages(
-                    room,
-                    filename=room[0].split("-")[0],
-                )
-
-            cur_time = time.time()
-            print("done char stage (combine): ", (cur_time - start_time), "s")
 
     if "Comp usage all stages" in run_commands:
         comp_usages(all_stages, filename="all", floor=True)
@@ -145,7 +128,7 @@ def main() -> None:
 
     if "Comp usages for each stage" in run_commands:
         # for room in all_stages:
-        for room in three_stages:
+        for room in all_stages:
             comp_usages([room], filename=room)
 
         if not WHALE_ONLY and not F2P_ONLY:

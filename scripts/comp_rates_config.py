@@ -5,6 +5,7 @@ from datetime import datetime
 from json import load
 from os.path import dirname as path_dirname
 from os.path import join as path_join
+from sys import exit as sys_exit
 from typing import Literal
 
 from pydantic import BaseModel, field_validator
@@ -145,6 +146,60 @@ DEFAULT_ROUND = 0
 CONS_LIMIT = 2
 
 mode_sfx = "_da" if da_mode else "_sd"
+
+
+class ModeConfig(BaseModel):
+    """Configuration for a game mode."""
+
+    default_stages: list[str]
+    default_one_stage: list[str]
+    star_num_default: int
+    thresholds: list[tuple[datetime, list[str], list[str], int]]
+
+
+# Mode configurations
+MODES_CONFIG: dict[str, ModeConfig] = {
+    "da": ModeConfig(
+        default_stages=["1-1", "1-2", "1-3"],
+        default_one_stage=["1-1", "1-2", "1-3"],
+        star_num_default=3,
+        thresholds=[],
+    ),
+    "sd": ModeConfig(
+        default_stages=["5-1", "5-2", "5-3"],
+        default_one_stage=["5-1", "5-2", "5-3"],
+        star_num_default=3,
+        thresholds=[],
+    ),
+}
+
+cfg = MODES_CONFIG.get(args.mode)
+
+if cfg is None:
+    all_stages: list[str] = []
+    one_stage: list[str] = []
+    star_num_threshold = 3
+else:
+    # Check version exists
+    if ENDGAME_INFO:
+        mode_obj = getattr(ENDGAME_INFO, args.mode)
+        if not mode_obj or not mode_obj.ver:
+            sys_exit()
+
+    # Initial values
+    all_stages = cfg.default_stages
+    one_stage = cfg.default_one_stage
+    star_num_threshold = cfg.star_num_default
+
+    # Apply thresholds if any
+    if ENDGAME_INFO and cfg.thresholds:
+        for date, stages, one_stages, star_num in cfg.thresholds:
+            if ENDGAME_INFO.collect_date <= date:
+                all_stages = stages
+                one_stage = one_stages
+                star_num_threshold = star_num
+                break
+
 
 RECENT_PHASE_SFX = RECENT_PHASE + mode_sfx
 BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_SFX}"

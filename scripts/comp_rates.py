@@ -24,6 +24,7 @@ from comp_rates_config import (
     DUOS_RESULT_PATH,
     F2P_ONLY,
     WHALE_ONLY,
+    all_stages,
     app_rate_threshold,
     app_rate_threshold_round,
     char_app_rate_threshold,
@@ -32,6 +33,7 @@ from comp_rates_config import (
     duo_dict_len,
     json_threshold,
     mode_sfx,
+    one_stage,
     run_commands,
     sig_weaps,
 )
@@ -76,13 +78,6 @@ else:
     interknot_uids: set[str] = set()
     star_db_uids: set[str] = set()
     hoyobuddy_uids: set[str] = set()
-
-if da_mode:
-    one_stage = ["1-1", "1-2", "1-3"]
-    all_stages = ["1-1", "1-2", "1-3"]
-else:
-    one_stage = ["5-1", "5-2", "5-3"]
-    all_stages = ["5-1", "5-2", "5-3"]
 
 
 def main() -> None:

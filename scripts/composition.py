@@ -1,6 +1,6 @@
 """An object that stores information about a particular composition."""
 
-from comp_rates_config import CHARS_INFO, RoleLit, da_mode
+from comp_rates_config import CHARS_INFO, RoleLit, da_mode, star_num_threshold
 
 # Set class constants in initialization
 
@@ -78,7 +78,7 @@ class Composition:
         self.characters = self.dps + self.subdps + self.stun + self.support
 
         self.flag_cheat = self.detect_cheat(len_elem, len_role)
-        self.valid_clear = self.star_num == 3
+        self.valid_clear = self.star_num >= star_num_threshold
 
         if not self.dps and not self.subdps and "Soukaku" in self.support:
             self.support.remove("Soukaku")

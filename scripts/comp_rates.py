@@ -268,7 +268,8 @@ def used_comps(
             avg_round_stage[cur_room].append(comp.round_num)
 
     for stage, round_stage in avg_round_stage.items():
-        sample_size[stage]["avg_round"] = round(mean(round_stage or [0]), 2)
+        if round_stage:
+            sample_size[stage]["avg_round"] = round(mean(round_stage or [0]), 2)
 
     chamber_num = list(str(filename).split("-"))
     if len(chamber_num) > 1 and chamber_num[1] == "1":

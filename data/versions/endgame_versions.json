@@ -216,167 +216,290 @@
   "Deadly Assault": {
     "1.4.1": {
       "time_start": "20/12/2024",
-      "time_end": "10/01/2025"
+      "time_end": "10/01/2025",
+      "boss_1": "Sacrifice: Bringer",
+      "boss_2": "Corrupted Overlord: Pompey",
+      "boss_3": "Notorious: Marionette"
     },
     "1.4.2": {
       "time_start": "10/01/2025",
-      "time_end": "24/01/2025"
+      "time_end": "24/01/2025",
+      "boss_1": "Sacrifice: Bringer",
+      "boss_2": "Typhon Destroyer",
+      "boss_3": "Dead End Butcher"
     },
     "1.5.1": {
       "time_start": "24/01/2025",
-      "time_end": "07/02/2025"
+      "time_end": "07/02/2025",
+      "boss_1": "Notorious: Dead End Butcher",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Corrupted Overlord: Pompey"
     },
     "1.5.2": {
       "time_start": "07/02/2025",
-      "time_end": "21/02/2025"
+      "time_end": "21/02/2025",
+      "boss_1": "Notorious: Dead End Butcher",
+      "boss_2": "Typhon Destroyer",
+      "boss_3": "Notorious: Marionette"
     },
     "1.5.3": {
       "time_start": "21/02/2025",
-      "time_end": "07/03/2025"
+      "time_end": "07/03/2025",
+      "boss_1": "Notorious: Pompey",
+      "boss_2": "Sacrifice: Bringer",
+      "boss_3": "Dead End Butcher"
     },
     "1.5.4": {
       "time_start": "07/03/2025",
-      "time_end": "20/03/2025"
+      "time_end": "20/03/2025",
+      "boss_1": "Unknown Corruption Complex",
+      "boss_2": "Sacrifice: Bringer",
+      "boss_3": "Notorious: Pompey"
     },
     "1.6.1": {
       "time_start": "21/03/2025",
-      "time_end": "04/04/2025"
+      "time_end": "04/04/2025",
+      "boss_1": "Unknown Corruption Complex",
+      "boss_2": "Corrupted Overlord: Pompey",
+      "boss_3": "Typhon Destroyer"
     },
     "1.6.2": {
       "time_start": "04/04/2025",
-      "time_end": "18/04/2025"
+      "time_end": "18/04/2025",
+      "boss_1": "Notorious: Marionette",
+      "boss_2": "Typhon Destroyer",
+      "boss_3": "Notorious: Pompey"
     },
     "1.6.3": {
       "time_start": "18/04/2025",
-      "time_end": "02/05/2025"
+      "time_end": "02/05/2025",
+      "boss_1": "Dead End Butcher",
+      "boss_2": "Sacrifice: Bringer",
+      "boss_3": "Unknown Corruption Complex"
     },
     "1.7.1": {
       "time_start": "02/05/2025",
-      "time_end": "16/05/2025"
+      "time_end": "16/05/2025",
+      "boss_1": "Sacrifice: Bringer",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Corrupted Overlord: Pompey"
     },
     "1.7.2": {
       "time_start": "16/05/2025",
-      "time_end": "30/05/2025"
+      "time_end": "30/05/2025",
+      "boss_1": "Notorious: Marionette",
+      "boss_2": "Notorious: Dead End Butcher",
+      "boss_3": "Typhon Destroyer"
     },
     "1.7.3": {
       "time_start": "30/05/2025",
-      "time_end": "13/06/2025"
+      "time_end": "13/06/2025",
+      "boss_1": "Notorious: Marionette",
+      "boss_2": "Sacrifice: Bringer",
+      "boss_3": "Notorious: Pompey"
     },
     "2.0.1": {
       "time_start": "13/06/2025",
-      "time_end": "27/06/2025"
+      "time_end": "27/06/2025",
+      "boss_1": "Miasma Priest",
+      "boss_2": "Notorious: Marionette",
+      "boss_3": "Notorious: Pompey"
     },
     "2.0.2": {
       "time_start": "27/06/2025",
-      "time_end": "11/07/2025"
+      "time_end": "11/07/2025",
+      "boss_1": "Notorious: Pompey",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Sacrifice: Bringer"
     },
     "2.0.3": {
       "time_start": "11/07/2025",
-      "time_end": "25/07/2025"
+      "time_end": "25/07/2025",
+      "boss_1": "Miasma Priest",
+      "boss_2": "Corrupted Overlord: Pompey",
+      "boss_3": "Notorious: Dead End Butcher"
     },
     "2.1.1": {
       "time_start": "25/07/2025",
-      "time_end": "08/08/2025"
+      "time_end": "08/08/2025",
+      "boss_1": "Miasma Priest",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "Notorious: Pompey"
     },
     "2.1.2": {
       "time_start": "08/08/2025",
-      "time_end": "22/08/2025"
+      "time_end": "22/08/2025",
+      "boss_1": "Miasmic Fiend: Unfathomable",
+      "boss_2": "Notorious: Dead End Butcher",
+      "boss_3": "Notorious: Marionette"
     },
     "2.1.3": {
       "time_start": "22/08/2025",
-      "time_end": "05/09/2025"
+      "time_end": "05/09/2025",
+      "boss_1": "Notorious: Dead End Butcher",
+      "boss_2": "Miasma Priest",
+      "boss_3": "Typhon Destroyer"
     },
     "2.2.1": {
       "time_start": "05/09/2025",
-      "time_end": "19/09/2025"
+      "time_end": "19/09/2025",
+      "boss_1": "The Defiler",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "Miasma Priest"
     },
     "2.2.2": {
       "time_start": "19/09/2025",
-      "time_end": "03/10/2025"
+      "time_end": "03/10/2025",
+      "boss_1": "The Defiler",
+      "boss_2": "Notorious: Dead End Butcher",
+      "boss_3": "Notorious: Pompey"
     },
     "2.2.3": {
       "time_start": "03/10/2025",
-      "time_end": "17/10/2025"
+      "time_end": "17/10/2025",
+      "boss_1": "Miasmic Fiend: Unfathomable",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Miasma Priest"
     },
     "2.3.1": {
       "time_start": "17/10/2025",
-      "time_end": "31/10/2025"
+      "time_end": "31/10/2025",
+      "boss_1": "Miasma Priest",
+      "boss_2": "The Defiler",
+      "boss_3": "Notorious: Dead End Butcher"
     },
     "2.3.2": {
       "time_start": "31/10/2025",
-      "time_end": "14/11/2025"
+      "time_end": "14/11/2025",
+      "boss_1": "Wandering Hunter",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "The Defiler"
     },
     "2.3.3": {
       "time_start": "14/11/2025",
-      "time_end": "28/11/2025"
+      "time_end": "28/11/2025",
+      "boss_1": "Wandering Hunter",
+      "boss_2": "Typhon Destroyer",
+      "boss_3": "Miasma Priest"
     },
     "2.4.1": {
       "time_start": "28/11/2025",
-      "time_end": "12/12/2025"
+      "time_end": "12/12/2025",
+      "boss_1": "Notorious: Marionette",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "Miasmic Fiend: Unfathomable"
     },
     "2.4.2": {
       "time_start": "12/12/2025",
-      "time_end": "02/01/2026"
+      "time_end": "02/01/2026",
+      "boss_1": "Wandering Hunter",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "Sacrifice: Bringer"
     },
     "2.5.1": {
       "time_start": "02/01/2026",
-      "time_end": "16/01/2026"
+      "time_end": "16/01/2026",
+      "boss_1": "Primordial Nightmare: \"The Creator\"",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "Wandering Hunter"
     },
     "2.5.2": {
       "time_start": "16/01/2026",
-      "time_end": "30/01/2026"
+      "time_end": "30/01/2026",
+      "boss_1": "The Defiler",
+      "boss_2": "Notorious: Marionette",
+      "boss_3": "Miasma Priest"
     },
     "2.5.3": {
       "time_start": "30/01/2026",
-      "time_end": "13/02/2026"
+      "time_end": "13/02/2026",
+      "boss_1": "Primordial Nightmare: \"The Creator\"",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Wandering Hunter"
     },
     "2.6.1": {
       "time_start": "13/02/2026",
-      "time_end": "27/02/2026"
+      "time_end": "27/02/2026",
+      "boss_1": "Primordial Nightmare: \"The Creator\"",
+      "boss_2": "Miasma Priest",
+      "boss_3": "Notorious: Dead End Butcher"
     },
     "2.6.2": {
       "time_start": "27/02/2026",
-      "time_end": "13/03/2026"
+      "time_end": "13/03/2026",
+      "boss_1": "Discordant Solo: Vesper",
+      "boss_2": "The Defiler",
+      "boss_3": "Wandering Hunter"
     },
     "2.6.3": {
       "time_start": "13/03/2026",
-      "time_end": "27/03/2026"
+      "time_end": "27/03/2026",
+      "boss_1": "Miasmic Fiend: Unfathomable",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "Notorious: Pompey"
     },
     "2.7.1": {
       "time_start": "27/03/2026",
-      "time_end": "10/04/2026"
+      "time_end": "10/04/2026",
+      "boss_1": "Sanguine Sweeper",
+      "boss_2": "Miasma Priest",
+      "boss_3": "Notorious: Marionette"
     },
     "2.7.2": {
       "time_start": "10/04/2026",
-      "time_end": "24/04/2026"
+      "time_end": "24/04/2026",
+      "boss_1": "Discordant Solo: Vesper",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Ye Shiyuan the Thrall"
     },
     "2.7.3": {
       "time_start": "24/04/2026",
-      "time_end": "08/05/2026"
+      "time_end": "08/05/2026",
+      "boss_1": "Sanguine Sweeper",
+      "boss_2": "Primordial Nightmare: \"The Creator\"",
+      "boss_3": "The Defiler"
     },
     "2.8.1": {
       "time_start": "08/05/2026",
-      "time_end": "22/05/2026"
+      "time_end": "22/05/2026",
+      "boss_1": "Phaethon of the Scorched Horizon",
+      "boss_2": "Wandering Hunter",
+      "boss_3": "The Defiler"
     },
     "2.8.2": {
       "time_start": "22/05/2026",
-      "time_end": "05/06/2026"
+      "time_end": "05/06/2026",
+      "boss_1": "Notorious: Dead End Butcher",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "Discordant Solo: Vesper"
     },
     "2.8.3": {
       "time_start": "05/06/2026",
-      "time_end": "19/06/2026"
+      "time_end": "19/06/2026",
+      "boss_1": "Miasmic Fiend: Unfathomable",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "The Defiler"
     },
     "3.0.1": {
       "time_start": "19/06/2026",
-      "time_end": "03/07/2026"
+      "time_end": "03/07/2026",
+      "boss_1": "Girtablullu",
+      "boss_2": "Notorious: Marionette",
+      "boss_3": "Ye Shiyuan the Thrall"
     },
     "3.0.2": {
       "time_start": "03/07/2026",
-      "time_end": "17/07/2026"
+      "time_end": "17/07/2026",
+      "boss_1": "Girtablullu",
+      "boss_2": "Primordial Nightmare: \"The Creator\"",
+      "boss_3": "Ye Shiyuan the Thrall"
     },
     "3.0.3": {
       "time_start": "17/07/2026",
-      "time_end": "29/07/2026"
+      "time_end": "29/07/2026",
+      "boss_1": "Phaethon of the Scorched Horizon",
+      "boss_2": "Notorious: Pompey",
+      "boss_3": "Miasmic Fiend: Unfathomable"
     }
   }
 }

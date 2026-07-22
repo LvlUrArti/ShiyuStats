@@ -1,7 +1,6 @@
 """Copy files to web_results."""
 
 import csv
-import json
 from os import path
 from pathlib import Path
 from shutil import copy, copytree, make_archive, rmtree
@@ -36,16 +35,16 @@ if ENDGAME_INFO:
     copy("../../data/versions/config.json", "../../results/final_results/config.json")
 
     if ENDGAME_INFO.da and ENDGAME_INFO.da.ver:
-        with open("../../data/versions/da_boss_names.json") as f:
-            boss_names: dict[str, str] = json.load(f)[ENDGAME_INFO.da.ver]
-
         with open(
             "../../results/web_results/da_bosses_name.csv",
             "w",
+            newline="",
         ) as f:
             writer = csv.writer(f)
             writer.writerow(["boss", "floor"])
-            writer.writerows([boss, floor[-1]] for floor, boss in boss_names.items())
+            writer.writerows(
+                [getattr(ENDGAME_INFO.da, f"boss_{i}"), i] for i in range(1, 4)
+            )
 
     make_archive("../../results/results", "zip", "../../results/web_results")
     copy_results()

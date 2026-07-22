@@ -83,11 +83,20 @@ def get_version_map(
         ver_name = get_ver(split_name, collect_dates[version])
         if ver_name:
             endgame = endgame_versions[ENDGAME_NAMES[split_name]][ver_name]
-            version_map[version][split_name] = {
+            entry: dict[str, str | bool | None] = {
                 "ver": ver_name,
                 "start": endgame["time_start"],
                 "end": endgame["time_end"],
             }
+
+            if split_name == "da":
+                entry = entry | {
+                    "boss_1": endgame["boss_1"],
+                    "boss_2": endgame["boss_2"],
+                    "boss_3": endgame["boss_3"],
+                }
+
+            version_map[version][split_name] = entry
 
     return version_map
 

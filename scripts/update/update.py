@@ -209,8 +209,19 @@ with open("../../data/bangboos.json", "w") as out_file:
     out_file.write(json.dumps(bangboos, indent=4))
 
 
+class VersionEnemy(BaseModel):
+    id: str
+    type: int
+
+
 class EndgameConfig(BaseModel):
     versionTime: str
+    versionEnemies: list[VersionEnemy] | dict[str, Any]
+
+
+enemies: dict[str, dict[str, str]] = load_from_url(
+    "https://www.buhflipexplode.org/assets/zzz/enemies.json",
+)
 
 
 def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str, str]]:
@@ -224,6 +235,10 @@ def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str,
                 "time_start": version_time.split(" - ")[0],
                 "time_end": version_time.split(" - ")[1],
             }
+
+            if isinstance(config.versionEnemies, list):
+                for i, enemy in enumerate(config.versionEnemies):
+                    versions[version][f"boss_{i + 1}"] = enemies[enemy.id]["name"]
     return versions
 
 

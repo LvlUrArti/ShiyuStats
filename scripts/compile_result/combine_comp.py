@@ -6,18 +6,11 @@ import json
 from sys import path as sys_path
 
 sys_path.append("../")
-from comp_rates_config import COMP_RESULT_PATH, da_mode
+from comp_rates_config import COMP_RESULT_PATH, all_stages
 from send2trash import send2trash
 
-file_names = ["top"]
-da_names = ["1-1", "1-2", "1-3"]
-sd_names = ["5-1", "5-2", "5-3"]
+file_names = ["top", *all_stages]
 exclude_value = 0
-
-if da_mode:
-    file_names.extend(da_names)
-else:
-    file_names.extend(sd_names)
 
 for file_name in file_names:
     combine_path = f"../../{COMP_RESULT_PATH}/{file_name}"

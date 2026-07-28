@@ -13,6 +13,7 @@ from comp_rates_config import (
     F2P_ONLY,
     WHALE_ONLY,
     da_mode,
+    one_stage,
     sig_weaps,
 )
 from percentile import calculate_percentile
@@ -20,8 +21,6 @@ from player_phase import PlayerPhase
 from scipy.stats import skew, trim_mean
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
-ONE_STAGE = ["1-1", "1-2", "1-3"] if da_mode else ["5-1", "5-2", "5-3"]
-ROOMS = ONE_STAGE if da_mode else ["5-1", "5-2", "5-3"]
 SKEW_LIMIT = 0.8
 SKEW_APP_LIMIT = 10
 gear_app_threshold = 0
@@ -60,7 +59,7 @@ class CharApp(RoundApp):
 
 def appearances(
     users: dict[str, PlayerPhase],
-    chambers: list[str] = ROOMS,
+    chambers: list[str],
     info_char: bool = False,
 ) -> tuple[dict[str, CharApp], dict[str, CharApp]]:
     """Calculate appearance data for each character."""
@@ -117,7 +116,7 @@ def appearances(
                 user_round = cur_user.round_num
 
                 app[char].app_flat_all += 1
-                if cur_user.char_cons and chambers == ONE_STAGE:
+                if cur_user.char_cons and chambers == one_stage:
                     char_con = cur_user.char_cons[char]
                     app[char].cons_freq[char_con].app_flat += 1
                     app[char].cons_freq[char_con].round_list[cur_chamber].append(
@@ -130,7 +129,7 @@ def appearances(
 
                 # to print the amount of players using a character,
                 # for char infographics
-                if chambers == ONE_STAGE:
+                if chambers == one_stage:
                     user_chars[char].add(user.player)
 
                 app[char].app_flat += 1
@@ -144,7 +143,7 @@ def appearances(
                         )
                     app[char].round_list[cur_chamber].append(cur_user.round_num)
                 # In case of character in comp data missing from character data
-                if chambers != ONE_STAGE:
+                if chambers != one_stage:
                     continue
                 if char not in user.owned:
                     continue
@@ -172,7 +171,7 @@ def appearances(
 
             boo = cur_user.bangboo
             if boo:
-                if chambers == ONE_STAGE:
+                if chambers == one_stage:
                     user_boos[boo].add(user.player)
                 app_boos[boo].app_flat += 1
 
@@ -211,7 +210,7 @@ def appearances(
             is_count_cycles = True
             if not uses_room:
                 is_count_cycles = False
-            elif chambers == ONE_STAGE:
+            elif chambers == one_stage:
                 char_item.sample_app_flat = uses_room[1 if da_mode else 5]
             for uses_room_num in uses_room.values():
                 if uses_room_num < 10:
@@ -234,7 +233,7 @@ def appearances(
             user_chars[char] if char in user_chars else user_boos[char],
         )
 
-        if chambers != ONE_STAGE:
+        if chambers != one_stage:
             continue
         # Calculate constellations
         if char_item.app_flat_all > 0:
@@ -403,7 +402,7 @@ class CharUsageData(CharApp):
 
 def usages(
     app: tuple[dict[str, CharApp], dict[str, CharApp]],
-    chambers: list[str] = ROOMS,
+    chambers: list[str],
 ) -> tuple[dict[str, CharUsageData], dict[str, CharUsageData]]:
     """Calculate usage data for each character."""
     uses: dict[str, CharUsageData] = {}
@@ -415,7 +414,7 @@ def usages(
     rates: list[float] = []
     rates_boos: list[float] = []
 
-    stage = "all" if chambers == ONE_STAGE else chambers[0]
+    stage = "all" if chambers == one_stage else chambers[0]
 
     app_chars, app_boos = app
 
@@ -453,7 +452,7 @@ def usages(
         for i in range(7):
             uses[char].cons_usage[i] = {"app": "-", "own": "-", "usage": "-"}
 
-        if chambers != ONE_STAGE:
+        if chambers != one_stage:
             continue
 
         weapons = list(app_char.weap_freq)

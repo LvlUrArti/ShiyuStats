@@ -81,9 +81,10 @@ async def main() -> None:
         if is_update == "y":
             await client.update_assets()
 
-        writer = csv.writer(open(filename, "a", encoding="UTF8", newline=""))
-        if empty_file(filename):
-            writer.writerow(output_keys)
+        with open(filename, "a", encoding="UTF8", newline="") as f:
+            writer = csv.writer(f)
+            if empty_file(filename):
+                writer.writerow(output_keys)
 
         header = [
             "uid",
@@ -97,11 +98,10 @@ async def main() -> None:
             "potential",
         ]
 
-        writer_chars = csv.writer(
-            open(char_filename, "a", encoding="UTF8", newline=""),
-        )
-        if empty_file(char_filename):
-            writer_chars.writerow(header)
+        with open(char_filename, "a", encoding="UTF8", newline="") as f:
+            writer_chars = csv.writer(f)
+            if empty_file(char_filename):
+                writer_chars.writerow(header)
 
         input_list: list[bool] = []
         _thread.start_new_thread(input_thread, (input_list,))
@@ -255,7 +255,7 @@ async def main() -> None:
                             mainstats[stat_key] for stat_key in list(mainstats.keys())
                         )
 
-                        char_set: None | str = None
+                        char_set: str | None = None
                         len_artifacts = 0
                         for arti_set, arti_set_value in artifacts.items():
                             if arti_set_value >= 2:
@@ -281,8 +281,10 @@ async def main() -> None:
                         line_chars.append(char_set)
                         line_chars.append(character.potential)
 
-                        writer.writerow(remove_nbsp(line))
-                        writer_chars.writerow(remove_nbsp(line_chars))
+                        with open(filename, "a", encoding="UTF8", newline="") as f:
+                            writer.writerow(remove_nbsp(line))
+                        with open(char_filename, "a", encoding="UTF8", newline="") as f:
+                            writer_chars.writerow(remove_nbsp(line_chars))
                     break
 
                 except enka.errors.PlayerDoesNotExistError:

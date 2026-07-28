@@ -6,6 +6,7 @@ ignore = [
   "BLE001",   # Use of assert
   "ASYNC230", # Use await in sync context
   "ASYNC250", # Use "input" in async context
+  "CPY001",   # Missing copyright notice
   "S301",     # Use of unsafe cryptographically weak random number
   "S603",     # Use of subprocess
   "FBT",      # Boolean test

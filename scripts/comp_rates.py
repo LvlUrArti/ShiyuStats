@@ -731,7 +731,9 @@ def char_usages_write(
     out_chars_csv: list[dict[str, str | int | float]] = []
     weap_len = 10
     arti_len = 10
-    chars_dict = dict(sorted(chars_dict.items(), key=lambda t: t[1].app, reverse=True))
+    chars_dict = dict(
+        sorted(chars_dict.items(), key=lambda t: t[1].round, reverse=True),
+    )
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
             "char": char,

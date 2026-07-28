@@ -9,7 +9,6 @@ import time
 from itertools import permutations
 from os.path import isfile
 from statistics import mean
-from sys import exit as sys_exit
 from typing import TYPE_CHECKING
 
 import char_usage as cu
@@ -625,7 +624,6 @@ def duo_write(
         filename = filename + "_C1"
 
     count = 0
-    out_duos_check: dict[tuple[str, str], dict[str, str | float]] = {}
 
     with open(f"../{DUOS_RESULT_PATH}/{filename}.csv", "w", newline="") as f:
         csv_writer = csv.writer(f)
@@ -649,57 +647,6 @@ def duo_write(
                     duos["avg_round_" + str(i + 1)],
                 ]
             csv_writer.writerow(temp_duos)
-            for i in range(duo_dict_len):
-                j = str(i + 1)
-                duo_app_j = float(str(duos["app_rate_" + j])[:-1])
-                duo_round_j = float(duos["avg_round_" + j])
-                duo_j = str(duos["char_" + j])
-                if (
-                    duo_app_j >= 1
-                    and float(duos["app_flat_" + j]) >= 10
-                    and (
-                        (duo_round_j < usage[duo_j].round)
-                        or (duo_round_j < usage[duo_char].round)
-                    )
-                    and usage[duo_j].round != 1
-                    and usage[duo_j].round != 0
-                ):
-                    out_duos_check[(duo_char, duo_j)] = {
-                        "app": duo_app_j,
-                        "avg_round": duo_round_j,
-                    }
-
-    if "Duos check" in run_commands:
-        char_names = list(CHARS_INFO.keys())
-        out_dd: dict[frozenset[str], dict[str, str | float]] = {}
-        out_dd_list: list[list[str]] = []
-        for char_i in char_names:
-            for char_j in char_names:
-                is_char_i_dps = CHARS_INFO[char_i].role == "dps"
-                is_char_j_dps = CHARS_INFO[char_j].role == "dps"
-                tuple_duo = (char_i, char_j)
-                if is_char_i_dps and is_char_j_dps and tuple_duo in out_duos_check:
-                    out_dd_list.append([char_j, char_i])
-                    out_i_j = out_duos_check[tuple_duo]
-                    out_dd[frozenset([char_i, char_j])] = {
-                        "char_i": char_i,
-                        "char_i_app": str(out_i_j["app"]),
-                        "char_j": char_j,
-                        "avg_round": str(out_i_j["avg_round"]),
-                    }
-
-        sorted_out_dd = sorted(
-            out_dd.items(),
-            key=lambda t: t[1]["char_i"],
-            reverse=True,
-        )
-        out_dd = dict(sorted_out_dd)
-
-        with open(f"../{DUOS_RESULT_PATH}/duo_check.csv", "w", newline="") as f:
-            csv_writer = csv.writer(f)
-            for out_dd_print in out_dd_list:
-                csv_writer.writerow(out_dd_print)
-        sys_exit()
 
     for i in range(len(out_duos)):
         for duo_value in ["char"] + [f"char_{i}" for i in range(1, 31)]:

@@ -18,7 +18,6 @@ parser.add_argument("-save", "--save_to_file", action="store_true")
 parser.add_argument("-a", "--all", action="store_true")
 parser.add_argument("-ca", "--comps_all", action="store_true")
 parser.add_argument("-cha", "--chars_all", action="store_true")
-parser.add_argument("-d", "--duos", action="store_true")
 parser.add_argument("-t", "--top", action="store_true")
 parser.add_argument("-cht", "--chars_top", action="store_true")
 parser.add_argument("-ct", "--comps_top", action="store_true")
@@ -285,12 +284,6 @@ elif args.comps_all:
     run_commands = {
         "Comp usage 8 - 10",
         "Comp usages for each stage",
-    }
-
-elif args.duos:
-    run_commands = {
-        "Char usages 8 - 10",
-        "Duos check",
     }
 
 sig_weaps: set[str] = set()

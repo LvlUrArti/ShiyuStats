@@ -88,7 +88,6 @@ async def main() -> None:
 
         header = [
             "uid",
-            "phase",
             "name",
             "level",
             "cons",
@@ -177,7 +176,6 @@ async def main() -> None:
                         line_chars.extend(
                             [
                                 uid,
-                                "",
                                 character.name,
                                 character.level,
                                 character.mindscape,

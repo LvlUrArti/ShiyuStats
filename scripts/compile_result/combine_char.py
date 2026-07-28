@@ -29,6 +29,7 @@ GEAR_COUNTS = {
     "slot_5": 3,
     "slot_6": 3,
 }
+DEFAULT_SCORE = 0
 
 # List of numeric fields that need weighted averaging across game modes
 NUMERIC_STATS = [
@@ -422,8 +423,10 @@ def build_gear_usage(
 
 
 # Build usage structures for each mode
-sd_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["sd"])
-da_usage: dict[str, CharacterGearUsage] = build_gear_usage(raw_full["da"])
+usage_dicts: dict[str, dict[str, CharacterGearUsage]] = {
+    "sd": build_gear_usage(raw_full["sd"]),
+    "da": build_gear_usage(raw_full["da"]),
+}
 
 # ----------------------------------------------------------------------
 # Build list of all character keys
@@ -467,13 +470,13 @@ def process_chars() -> None:
             app_sd = gear_sd.app if gear_sd else 0.0
             app_da = gear_da.app if gear_da else 0.0
 
-            app_sd = app_sd * rate_sd / rate_combine
-            app_da = app_da * rate_da / rate_combine
+            app_sd = app_sd * rate["sd"] / rate_combine
+            app_da = app_da * rate["da"] / rate_combine
 
             merged[name] = MergedGearStats(
                 app=app_sd + app_da,
-                round_sd=gear_sd.round if gear_sd else 0,
-                round_da=gear_da.round if gear_da else 0,
+                round_sd=gear_sd.round if gear_sd else DEFAULT_SCORE,
+                round_da=gear_da.round if gear_da else DEFAULT_SCORE,
                 set1=gear_set.set1,
                 set2=gear_set.set2,
                 set3=gear_set.set3,
@@ -493,8 +496,8 @@ def process_chars() -> None:
             app_sd = relic_sd.get(name) or 0.0
             app_da = relic_da.get(name) or 0.0
 
-            app_sd = app_sd * rate_sd / rate_combine
-            app_da = app_da * rate_da / rate_combine
+            app_sd = app_sd * rate["sd"] / rate_combine
+            app_da = app_da * rate["da"] / rate_combine
 
             merged[name] = app_sd + app_da
 
@@ -514,7 +517,7 @@ def process_chars() -> None:
         """
         sorted_items = sorted(
             merged_gear.items(),
-            key=lambda x: x[1].app,
+            key=lambda x: (x[1].app, x[0]),
             reverse=True,
         )
         for i in range(GEAR_COUNTS[category]):
@@ -535,8 +538,8 @@ def process_chars() -> None:
                     out_dict[f"{category}_{i + 1}_2"] = ""
                     out_dict[f"{category}_{i + 1}_3"] = ""
                 out_dict[f"{category}_{i + 1}_app"] = 0.0
-                out_dict[f"{category}_{i + 1}_round_sd"] = 0
-                out_dict[f"{category}_{i + 1}_round_da"] = 0
+                out_dict[f"{category}_{i + 1}_round_sd"] = DEFAULT_SCORE
+                out_dict[f"{category}_{i + 1}_round_da"] = DEFAULT_SCORE
 
     def populate_drive_stat_usage(
         part: str,
@@ -547,7 +550,11 @@ def process_chars() -> None:
 
         Write with keys like drive_slot_4_1, drive_slot_4_1_app, etc.
         """
-        sorted_items = sorted(merged_stats.items(), key=lambda x: x[1], reverse=True)
+        sorted_items = sorted(
+            merged_stats.items(),
+            key=lambda x: (x[1], x[0]),
+            reverse=True,
+        )
         for i in range(GEAR_COUNTS[part]):
             if i < len(sorted_items):
                 name, app = sorted_items[i]
@@ -565,7 +572,9 @@ def process_chars() -> None:
     ) -> float | int:
         if char in dict_obj:
             return getattr(dict_obj[char], attr)
-        return 0.0 if "app_rate" in attr else 0
+        if "sample" in attr:
+            return 0
+        return 0.0 if "app_rate" in attr else DEFAULT_SCORE
 
     boss_suffixes = ["", "_boss_1", "_boss_2", "_boss_3"]
     variants = ["", "_e1", "_s0"]
@@ -613,75 +622,75 @@ def process_chars() -> None:
 
         # ----- 3. Mindscape round data (0..6) for base modes -----
         round_modes = [
-            ("sd", raw_full["sd"]),
-            ("da", raw_full["da"]),
+            ("sd", raw_full["sd"], DEFAULT_SCORE),
+            ("da", raw_full["da"], DEFAULT_SCORE),
         ]
         for e in range(7):
             out[f"app_{e}"] = 0
-            for mode, base in round_modes:
-                out[f"round_{e}_{mode}"] = getattr(base[char], f"round_{e}")
+            for mode, base, default in round_modes:
+                out[f"round_{e}_{mode}"] = (
+                    getattr(base[char], f"round_{e}") if char in base else default
+                )
 
         # Set cons_avg to 0, will be used later
         out["cons_avg"] = 0.0
 
         # ----- 4. Compute mode appearance rates for weighting -----
         # These are used later to weight gear and numeric stats.
-        rate_sd = (
-            raw_full["sd"][char].app_rate
-            if raw_full["sd"][char].app_rate != 0
-            and raw_full["sd"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_da = (
-            raw_full["da"][char].app_rate
-            if raw_full["da"][char].app_rate != 0
-            and raw_full["da"][char].weapon_1_app != 0
-            else 0
-        )
-        rate_combine = rate_sd + rate_da or 1  # avoid division by zero
+        rate: dict[str, float] = {}
+        for mode in modes:
+            rate[mode] = (
+                raw_full[mode][char].app_rate
+                if (
+                    char in raw_full[mode]
+                    and raw_full[mode][char].app_rate != 0
+                    and raw_full[mode][char].weapon_1_app != 0
+                )
+                else 0
+            )
+        rate_combine = sum(rate.values()) or 1  # avoid division by zero
 
-        # ----- 5. Merge gear stats from SD and DA -----
-        merged_weapons: dict[str, MergedGearStats] = merge_gear_stats(
-            sd_usage[char].weapons,
-            da_usage[char].weapons,
-        )
-        merged_artifacts: dict[str, MergedGearStats] = merge_gear_stats(
-            sd_usage[char].artifacts,
-            da_usage[char].artifacts,
-        )
+        # ----- 5. Populate output with top gear and relic stats -----
+        def get_gear(
+            usage_dict: dict[str, CharacterGearUsage],
+            char: str,
+            attr: str,
+        ) -> dict[str, GearStats]:
+            obj = usage_dict.get(char)
+            return getattr(obj, attr) if obj is not None else {}
 
-        merged_slot_4: dict[str, float] = merge_drive_stats(
-            sd_usage[char].drive_slot_4,
-            da_usage[char].drive_slot_4,
-        )
-        merged_slot_5: dict[str, float] = merge_drive_stats(
-            sd_usage[char].drive_slot_5,
-            da_usage[char].drive_slot_5,
-        )
-        merged_slot_6: dict[str, float] = merge_drive_stats(
-            sd_usage[char].drive_slot_6,
-            da_usage[char].drive_slot_6,
-        )
+        def get_app(
+            usage_dict: dict[str, CharacterGearUsage],
+            char: str,
+            attr: str,
+        ) -> dict[str, float]:
+            obj = usage_dict.get(char)
+            return getattr(obj, attr) if obj is not None else {}
 
-        # ----- 6. Populate output with top gear and drive stats -----
-        populate_gear_usage("weapons", merged_weapons, out)
-        populate_gear_usage("artifacts", merged_artifacts, out)
+        for stat in ["weapons", "artifacts"]:
+            merged_gear: dict[str, MergedGearStats] = merge_gear_stats(
+                *(get_gear(usage_dicts[m], char, stat) for m in modes),
+            )
+            populate_gear_usage(stat, merged_gear, out)
 
-        populate_drive_stat_usage("slot_4", merged_slot_4, out)
-        populate_drive_stat_usage("slot_5", merged_slot_5, out)
-        populate_drive_stat_usage("slot_6", merged_slot_6, out)
+        for stat in range(4, 7):
+            merged: dict[str, float] = merge_drive_stats(
+                *(get_app(usage_dicts[m], char, f"drive_slot_{stat}") for m in modes),
+            )
+            populate_drive_stat_usage(f"slot_{stat}", merged, out)
 
-        # ----- 7. Weighted average of numeric stats -----
+        # ----- 6. Weighted average of numeric stats -----
         for stat in NUMERIC_STATS:
-            val_sd: float = getattr(raw_full["sd"][char], stat)
-            val_da: float = getattr(raw_full["da"][char], stat)
+            vals: dict[str, float] = {}
+            for mode in modes:
+                vals[mode] = (
+                    getattr(raw_full[mode][char], stat) if char in raw_full[mode] else 0
+                )
 
-            dividend = val_sd * rate_sd + val_da * rate_da
+            dividend = sum(vals[mode] * rate[mode] for mode in vals)
 
             # Only modes where the stat is non-zero contribute to the denominator
-            divisor = (
-                (rate_sd if val_sd != 0 else 0) + (rate_da if val_da != 0 else 0)
-            ) or 1
+            divisor = sum(rate[mode] for mode in vals if vals[mode] != 0) or 1
 
             out[stat] = round(
                 # Mindscape data should still be divided with rate_combine

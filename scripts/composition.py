@@ -1,30 +1,27 @@
 """An object that stores information about a particular composition."""
 
+from dataclasses import dataclass
+
 from comp_rates_config import CHARS_INFO, RoleLit, da_mode, star_num_threshold
 
 # Set class constants in initialization
 
 
+@dataclass
 class Composition:
     """An object that stores information about a particular composition."""
 
-    def __init__(
-        self,
-        uid: str,
-        comp_chars: list[str],
-        round_num: str,
-        star_num: int,
-        room: str,
-        bangboo: str,
-        comp_chars_cons: list[int],
-    ) -> None:
+    player: str  # UID as string
+    comp_chars: list[str]
+    round_num: int
+    star_num: int
+    room: str
+    bangboo: str
+    comp_chars_cons: list[int]
+
+    def __post_init__(self) -> None:
         """Composition constructor."""
-        self.player = str(uid)
-        self.room = room
-        self.round_num = int(round_num)
-        self.star_num = int(star_num)
-        self.char_structs(comp_chars, comp_chars_cons)
-        self.bangboo = bangboo
+        self.char_structs(self.comp_chars, self.comp_chars_cons)
 
     def char_structs(self, comp_chars: list[str], comp_chars_cons: list[int]) -> None:
         """Character structure creator."""
@@ -78,7 +75,7 @@ class Composition:
         self.fivecount = len(fives)
         self.characters = self.dps + self.subdps + self.stun + self.support
 
-        self.flag_cheat = self.detect_cheat(len_elem, len_role)
+        self.flag_cheat = self.detect_cheat(len_role)
         self.valid_clear = self.star_num >= star_num_threshold
 
         if not self.dps and not self.subdps and "Soukaku" in self.support:
@@ -108,7 +105,6 @@ class Composition:
 
     def detect_cheat(
         self,
-        len_elem: dict[str, int],
         len_role: dict[RoleLit, int],
     ) -> bool:
         """Return a bool whether this comp is a cheat."""

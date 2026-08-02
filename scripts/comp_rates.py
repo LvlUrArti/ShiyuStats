@@ -166,7 +166,7 @@ class CompUsage(Composition):
         del self.player
         self.uses = 0
         self.owns = 0
-        self.round_num = {str(i): list[int]() for i in range(1, 13)}
+        self.round_num_dict = {str(i): list[int]() for i in range(1, 13)}
         self.whale_count = set[str]()
         self.players = set[Composition]()
         self.boo_freq: dict[str, int] = {}
@@ -263,7 +263,7 @@ def used_comps(
         if whale_comp:
             comps_dict[comp_tuple].whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
-            comps_dict[comp_tuple].round_num[cur_room].append(comp.round_num)
+            comps_dict[comp_tuple].round_num_dict[cur_room].append(comp.round_num)
             avg_round_stage[cur_room].append(comp.round_num)
 
     for stage, round_stage in avg_round_stage.items():
@@ -303,7 +303,7 @@ def rank_usages(
         uses_room: dict[int, int] = {}
 
         for room_num in range(1, 8):
-            cur_round = cur_comp.round_num[str(room_num)]
+            cur_round = cur_comp.round_num_dict[str(room_num)]
             if cur_round:
                 uses_room[room_num] = len(cur_round)
                 if cur_comp.uses > 10:

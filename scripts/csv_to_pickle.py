@@ -118,13 +118,13 @@ def main() -> None:
                         cons_chars_temp.append(int(line[f"ch{i}_rank"]))
             if comp_chars_temp:
                 comp = Composition(
-                    player,
-                    comp_chars_temp,
-                    line["score"],
-                    star_num,
-                    "1-" + stage if da_mode else stage + "-" + str(line["node"]),
-                    line.get("bangboo", line.get("ch4")),
-                    cons_chars_temp,
+                    player=player,
+                    comp_chars=comp_chars_temp,
+                    round_num=int(line["score"]),
+                    star_num=star_num,
+                    room="1-" + stage if da_mode else stage + "-" + str(line["node"]),
+                    bangboo=line.get("bangboo", line.get("ch4")),
+                    comp_chars_cons=cons_chars_temp,
                 )
                 all_comps.append(comp)
 

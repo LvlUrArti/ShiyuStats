@@ -81,7 +81,7 @@ def appearances(
     # There's probably a better way to cache these things
     for user in users.values():
         for chamber, cur_user in user.chambers.items():
-            if chamber not in chambers or not cur_user.valid_clear:
+            if str(chamber) not in chambers or not cur_user.valid_clear:
                 continue
             whale_comp = False
             giga_whale = False

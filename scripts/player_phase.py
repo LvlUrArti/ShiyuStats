@@ -17,6 +17,7 @@ ElemLit = Literal[
     "Electric",
     "Physical",
     "Wind",
+    "Lumiflux",
 ]
 
 

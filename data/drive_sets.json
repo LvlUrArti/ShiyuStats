@@ -250,5 +250,23 @@
             "Ether DMG +10%.",
             "When the equipper is an Ether attribute Agent, their CRIT DMG increases by 30%. When the equipper uses an EX Special Attack or Ultimate, their ATK increases by 10% for 30s. Repeated triggers reset the duration."
         ]
+    },
+    "34100": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitFeatheredFate.png",
+        "id": "34100",
+        "name": "Feathered Fate",
+        "desc": [
+            "Anomaly Proficiency +30",
+            "When the equipper enters the battlefield or is switched in as the active character, they gain the following buff: Anomaly Proficiency increases by 50. If the equipper is a Lumiflux character, Attribute Anomaly DMG increases by 15%, lasting 15s.\nThis buff remains active while the equipper is off-field."
+        ]
+    },
+    "34200": {
+        "icon": "UI/Sprite/A1DynamicLoad/IconSuit/UnPacker/SuitThornedRose.png",
+        "id": "34200",
+        "name": "Thorned Rose",
+        "desc": [
+            "DEF +16%",
+            "The equipper's DMG increases by 15%. When the equipper's initial DEF is at least 1,000/1,800, CRIT Rate increases by 8/16%."
+        ]
     }
 }

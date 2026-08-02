@@ -238,5 +238,11 @@
         "name": "Ultra Jake",
         "slug": "ultra-jake",
         "availability": "S"
+    },
+    "Ariel": {
+        "id": "54023",
+        "name": "Ariel",
+        "slug": "ariel",
+        "availability": "S"
     }
 }

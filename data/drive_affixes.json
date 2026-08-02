@@ -1,7 +1,8 @@
 {
     "AP +30": [
         "Freedom Blues",
-        "Chaos Jazz"
+        "Chaos Jazz",
+        "Feathered Fate"
     ],
     "ATK +10%": [
         "Hormone Punk",
@@ -27,5 +28,9 @@
     "HP +10%": [
         "Yunkui Tales",
         "Bunny in Wonderland"
+    ],
+    "DEF +16%": [
+        "Soul Rock",
+        "Thorned Rose"
     ]
 }

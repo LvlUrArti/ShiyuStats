@@ -500,6 +500,14 @@
       "boss_1": "Phaethon of the Scorched Horizon",
       "boss_2": "Notorious: Pompey",
       "boss_3": "Miasmic Fiend: Unfathomable"
+    },
+    "3.1.1": {
+      "time_start": "29/07/2026",
+      "time_end": "13/08/2026",
+      "boss_1": "Girtablullu: Stagnant Aberrant",
+      "boss_2": "Notorious: Dead End Butcher",
+      "boss_3": "Unknown Corruption Complex",
+      "boss_4": "Integrated - Girtablullu"
     }
   }
 }

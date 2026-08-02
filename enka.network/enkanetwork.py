@@ -152,8 +152,8 @@ async def main() -> None:
                                 dmg_bonus = AgentStatType.ELECTRIC_DMG_BONUS
                             case Element.ETHER | Element.AURIC_ETHER:
                                 dmg_bonus = AgentStatType.ETHER_DMG_BONUS
-                            case _:
-                                dmg_bonus = AgentStatType.PHYSICAL_DMG_BONUS
+                            case Element.LUMIFLUX | _:
+                                dmg_bonus = AgentStatType.ETHER_DMG_BONUS
 
                         if element_name == "Elec":
                             element_name = "Electric"

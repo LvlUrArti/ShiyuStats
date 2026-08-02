@@ -726,5 +726,18 @@
         "faction": "External Strategy Department",
         "release_date": 1783468800,
         "role": "support"
+    },
+    "Remielle": {
+        "id": "1581",
+        "name": "Remielle",
+        "full_name": "Remielle Dan",
+        "slug": "remielle",
+        "element": "Lumiflux",
+        "availability": "Limited S",
+        "specialty": "Anomaly",
+        "attack_type": "Slash",
+        "faction": "Covenant of Dayat",
+        "release_date": 1785283200,
+        "role": "dps"
     }
 }

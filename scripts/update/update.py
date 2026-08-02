@@ -131,6 +131,7 @@ ELEMENT_MAP: dict[int, str] = {
     203: "Electric",
     204: "Wind",
     205: "Ether",
+    300: "Lumiflux",
 }
 
 SPECIALTY_MAP: dict[int, str] = {

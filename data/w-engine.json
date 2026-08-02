@@ -971,5 +971,15 @@
         "id": "14157",
         "name": "Chief Sidekick",
         "availability": "Limited S"
+    },
+    "Ode of Resurrected Wings": {
+        "id": "14158",
+        "name": "Ode of Resurrected Wings",
+        "availability": "Limited S"
+    },
+    "Knight's Extolment": {
+        "id": "14159",
+        "name": "Knight's Extolment",
+        "availability": "Limited S"
     }
 }

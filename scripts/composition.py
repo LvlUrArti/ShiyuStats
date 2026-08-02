@@ -99,7 +99,9 @@ class Composition:
         self.characters = self.dps + self.subdps + self.stun + self.support
 
         self.flag_cheat = self.detect_cheat(len_role)
-        self.valid_clear = self.star_num >= star_num_threshold
+        self.valid_clear = (self.star_num >= star_num_threshold) or (
+            da_mode and self.room.stage == 2 and self.star_num >= 1
+        )
 
         if not self.dps and not self.subdps and "Soukaku" in self.support:
             self.support.remove("Soukaku")

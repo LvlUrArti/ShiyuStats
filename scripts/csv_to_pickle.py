@@ -18,6 +18,7 @@ from comp_rates_config import (
     DUOS_RESULT_PATH,
     RECENT_PHASE,
     RECENT_PHASE_SFX,
+    all_stages,
     da_mode,
     mode_sfx,
     skip_random,
@@ -80,7 +81,10 @@ def main() -> None:
     ) as f:
         reader = list(csv.DictReader(f))
     all_comps: list[Composition] = []
-    all_chambers = ["1"] if da_mode else ["1", "2", "3", "4", "5", "6", "7"]
+    if da_mode:
+        all_chambers = ["1", "2"] if "2-1" in all_stages else ["1"]
+    else:
+        all_chambers = ["1", "2", "3", "4", "5", "6", "7"]
 
     # uid_freq_comp will help detect duplicate UIDs
     uid_freq_comp: dict[str, int] = {}
@@ -108,8 +112,9 @@ def main() -> None:
         last_uid = player
         if not skip_uid:
             if da_mode:
-                stage = 1
-                node = int(line["floor"])
+                adversity_mode = int(line["floor"]) > 3
+                stage = 2 if adversity_mode else 1
+                node = 1 if adversity_mode else int(line["floor"])
             else:
                 stage = int(line["floor"])
                 node = int(line["node"])

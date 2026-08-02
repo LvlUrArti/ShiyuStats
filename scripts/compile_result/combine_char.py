@@ -312,7 +312,7 @@ VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
 
 # Format: {mode: [(boss number, room id), ...]}
 BOSS_ROOMS = {
-    "da": [(1, "1-1"), (2, "1-2"), (3, "1-3")],
+    "da": [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")],
     "sd": [(1, "5-1"), (2, "5-2"), (3, "5-3")],
 }
 
@@ -576,7 +576,6 @@ def process_chars() -> None:
             return 0
         return 0.0 if "app_rate" in attr else DEFAULT_SCORE
 
-    boss_suffixes = ["", "_boss_1", "_boss_2", "_boss_3"]
     variants = ["", "_e1", "_s0"]
     fields = ["app_rate", "avg_round"]
 
@@ -597,6 +596,13 @@ def process_chars() -> None:
             ]
 
             for mode, base in base_modes:
+                boss_suffixes = [
+                    "",
+                    "_boss_1",
+                    "_boss_2",
+                    "_boss_3",
+                    *(["_boss_4"] if mode == "da" else []),
+                ]
                 for boss_idx, boss_suf in enumerate(boss_suffixes):
                     for var_off, var_suf in enumerate(variants):
                         is_base = boss_idx + var_off == 0

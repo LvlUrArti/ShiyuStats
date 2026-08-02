@@ -162,10 +162,13 @@ class ModeConfig(BaseModel):
 # Mode configurations
 MODES_CONFIG: dict[str, ModeConfig] = {
     "da": ModeConfig(
-        default_stages=["1-1", "1-2", "1-3"],
+        default_stages=["1-1", "1-2", "1-3", "2-1"],
         default_one_stage=["1-1", "1-2", "1-3"],
         star_num_default=3,
-        thresholds=[],
+        thresholds=[
+            # Adversity mode added in 3.1.1
+            (datetime(2026, 7, 29), ["1-1", "1-2", "1-3"], ["1-1", "1-2", "1-3"], 3),
+        ],
     ),
     "sd": ModeConfig(
         default_stages=["5-1", "5-2", "5-3"],

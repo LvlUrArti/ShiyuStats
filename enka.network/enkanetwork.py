@@ -280,8 +280,10 @@ async def main() -> None:
                         line_chars.append(character.potential)
 
                         with open(filename, "a", encoding="UTF8", newline="") as f:
+                            writer = csv.writer(f)
                             writer.writerow(remove_nbsp(line))
                         with open(char_filename, "a", encoding="UTF8", newline="") as f:
+                            writer_chars = csv.writer(f)
                             writer_chars.writerow(remove_nbsp(line_chars))
                     break
 

@@ -166,9 +166,9 @@ class CompUsage(Composition):
         del self.player
         self.uses = 0
         self.owns = 0
-        self.round_num_dict = {str(i): list[int]() for i in range(1, 13)}
+        self.round_num_dict = {i: list[int]() for i in range(1, 13)}
         self.whale_count = set[str]()
-        self.players = set[Composition]()
+        self.players = set[str]()
         self.boo_freq: dict[str, int] = {}
         self.bangboo: str
         self.is_count_round: bool
@@ -197,10 +197,10 @@ def used_comps(
 
     for comp in all_comps:
         comp_tuple = tuple(comp.characters)
-        cur_room = next(iter(str(comp.room).split("-")))
+        cur_room = comp.room.stage
         # Check if the comp is used in the rooms that are being checked, and
         # if the clear is valid (reached 3 stars)
-        if comp.room not in rooms or not comp.valid_clear:
+        if str(comp.room) not in rooms or not comp.valid_clear:
             continue
 
         all_comp_uids.add(comp.player)
@@ -253,7 +253,7 @@ def used_comps(
             continue
 
         comps_dict[comp_tuple].uses += 1
-        comps_dict[comp_tuple].players.add(comp)
+        comps_dict[comp_tuple].players.add(comp.player)
 
         if comp.bangboo:
             if comp.bangboo not in comps_dict[comp_tuple].boo_freq:
@@ -264,7 +264,8 @@ def used_comps(
             comps_dict[comp_tuple].whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             comps_dict[comp_tuple].round_num_dict[cur_room].append(comp.round_num)
-            avg_round_stage[cur_room].append(comp.round_num)
+            # TODO: Move sample size to comp_rates.py
+            avg_round_stage[str(cur_room)].append(comp.round_num)
 
     for stage, round_stage in avg_round_stage.items():
         if round_stage:
@@ -303,7 +304,7 @@ def rank_usages(
         uses_room: dict[int, int] = {}
 
         for room_num in range(1, 8):
-            cur_round = cur_comp.round_num_dict[str(room_num)]
+            cur_round = cur_comp.round_num_dict[room_num]
             if cur_round:
                 uses_room[room_num] = len(cur_round)
                 if cur_comp.uses > 10:
@@ -370,7 +371,7 @@ def used_duos(
     for comp in all_comps:
         if (
             len(comp.characters) < 2
-            or comp.room not in rooms
+            or str(comp.room) not in rooms
             or not comp.valid_clear
             or comp.flag_cheat
         ):
@@ -378,7 +379,7 @@ def used_duos(
 
         whale_comp = False
         giga_whale = False
-        cur_room = next(iter(str(comp.room).split("-")))
+        cur_room = comp.room.stage
         for char in comp.characters:
             if (
                 CHARS_INFO[char].availability == "Limited S"
@@ -415,7 +416,7 @@ def used_duos(
             cur_duo.app_flat = 0
             avg_round: list[float] = []
             for room_num in range(1, 8):
-                duo_round = cur_duo.round_list[str(room_num)]
+                duo_round = cur_duo.round_list[room_num]
                 if duo_round:
                     cur_duo.app_flat += len(duo_round)
                     if len(duo_round) > 1:

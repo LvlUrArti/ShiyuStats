@@ -23,7 +23,7 @@ from comp_rates_config import (
     skip_random,
     skip_self,
 )
-from composition import Composition
+from composition import Composition, Stage
 from player_phase import PlayerPhase
 
 
@@ -107,7 +107,12 @@ def main() -> None:
                 uid_freq_comp[player] = 1
         last_uid = player
         if not skip_uid:
-            stage = str(line["floor"])
+            if da_mode:
+                stage = 1
+                node = int(line["floor"])
+            else:
+                stage = int(line["floor"])
+                node = int(line["node"])
 
             comp_chars_temp: list[str] = []
             cons_chars_temp: list[int] = []
@@ -122,7 +127,7 @@ def main() -> None:
                     comp_chars=comp_chars_temp,
                     round_num=int(line["score"]),
                     star_num=star_num,
-                    room="1-" + stage if da_mode else stage + "-" + str(line["node"]),
+                    room=Stage(stage, node),
                     bangboo=line.get("bangboo", line.get("ch4")),
                     comp_chars_cons=cons_chars_temp,
                 )

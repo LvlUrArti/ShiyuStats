@@ -1,10 +1,33 @@
 """An object that stores information about a particular composition."""
 
-from dataclasses import dataclass
+from __future__ import annotations
 
-from comp_rates_config import CHARS_INFO, RoleLit, da_mode, star_num_threshold
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, NamedTuple
+
+from comp_rates_config import CHARS_INFO, da_mode, star_num_threshold
+
+if TYPE_CHECKING:
+    from comp_rates_config import RoleLit
 
 # Set class constants in initialization
+
+
+class Stage(NamedTuple):
+    """A stage in a phase."""
+
+    stage: int
+    node: int
+
+    def __str__(self) -> str:
+        """Stage string representation."""
+        return f"{self.stage}-{self.node}"
+
+    @classmethod
+    def from_string(cls, stage_str: str) -> Stage:
+        """Stage constructor."""
+        room, node = stage_str.split("-")
+        return cls(int(room), int(node))
 
 
 @dataclass
@@ -15,7 +38,7 @@ class Composition:
     comp_chars: list[str]
     round_num: int
     star_num: int
-    room: str
+    room: Stage
     bangboo: str
     comp_chars_cons: list[int]
 

@@ -1,9 +1,12 @@
 """An object that stores information about a player on a phase."""
 
-import json
-from typing import Literal, cast
+from __future__ import annotations
 
-from composition import Composition
+import json
+from typing import TYPE_CHECKING, Literal, cast
+
+if TYPE_CHECKING:
+    from composition import Composition, Stage
 
 # Set class constants in initialization
 with open("../data/drive_affixes.json") as relic_file:
@@ -54,7 +57,7 @@ class PlayerPhase:
     def __init__(self, player: str) -> None:
         """Composition constructor."""
         self.player = player
-        self.chambers: dict[str, Composition] = {}
+        self.chambers: dict[Stage, Composition] = {}
         self.owned: dict[str, OwnedChars] = {}
 
     def add_character(

@@ -96,6 +96,11 @@ class Composition:
             len_elem[char_data.element] += 1
             len_role[char_data.specialty] += 1
         self.fivecount = len(fives)
+
+        if "Remielle" in self.dps:
+            self.dps.remove("Remielle")
+            self.dps.insert(0, "Remielle")
+
         self.characters = self.dps + self.subdps + self.stun + self.support
 
         self.flag_cheat = self.detect_cheat(len_role)

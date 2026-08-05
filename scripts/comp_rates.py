@@ -450,7 +450,8 @@ def char_usages(
     app = cu.appearances(all_players, chambers=rooms, info_char=info_char)
     chars_dict, boos_dict = cu.usages(app, chambers=rooms)
     char_usages_write(chars_dict, filename)
-    boo_usages_write(boos_dict, "bangboo_" + filename)
+    if rooms == one_stage and not (WHALE_ONLY or F2P_ONLY):
+        boo_usages_write(boos_dict, "bangboo_" + filename)
     return (chars_dict, boos_dict)
 
 
@@ -683,11 +684,6 @@ def boo_usages_write(
         out_chars_csv.append(out_chars_append.copy())
         if char == filename:
             break
-
-    if WHALE_ONLY:
-        filename = filename + "_C1"
-    elif F2P_ONLY:
-        filename = filename + "_E0S0"
 
     iterate_value_app = ["app_rate", "diff"]
     iterate_value_round = ["avg_round", "diff_rounds"]

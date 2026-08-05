@@ -178,6 +178,16 @@ mode_configs: dict[str, ModeConfig] = {
     ),
 }
 
+for config in mode_configs.values():
+    # Apply thresholds if any
+    if ENDGAME_INFO and config.thresholds:
+        for date, stages, one_stages, star_num in config.thresholds:
+            if ENDGAME_INFO.collect_date <= date:
+                config.all_stages = stages
+                config.one_stage = one_stages
+                config.star_num_threshold = star_num
+                break
+
 cfg = mode_configs.get(args.mode)
 
 if cfg is None:
@@ -191,19 +201,9 @@ else:
         if not mode_obj or not mode_obj.ver:
             sys_exit()
 
-    # Initial values
     all_stages = cfg.all_stages
     one_stage = cfg.one_stage
     star_num_threshold = cfg.star_num_threshold
-
-    # Apply thresholds if any
-    if ENDGAME_INFO and cfg.thresholds:
-        for date, stages, one_stages, star_num in cfg.thresholds:
-            if ENDGAME_INFO.collect_date <= date:
-                all_stages = stages
-                one_stage = one_stages
-                star_num_threshold = star_num
-                break
 
 
 RECENT_PHASE_SFX = RECENT_PHASE + mode_sfx

@@ -162,12 +162,17 @@ class ModeConfig(BaseModel):
 # Mode configurations
 mode_configs: dict[str, ModeConfig] = {
     "da": ModeConfig(
-        all_stages=["1-1", "1-2", "1-3", "2-1"],
+        all_stages=["1-1", "1-2", "1-3"],
         one_stage=["1-1", "1-2", "1-3"],
         star_num_threshold=3,
         thresholds=[
             # Adversity mode added in 3.1.1
-            (datetime(2026, 7, 29), ["1-1", "1-2", "1-3"], ["1-1", "1-2", "1-3"], 3),
+            (
+                datetime(2026, 7, 29),
+                ["1-1", "1-2", "1-3", "2-1"],
+                ["1-1", "1-2", "1-3"],
+                3,
+            ),
         ],
     ),
     "sd": ModeConfig(
@@ -182,7 +187,7 @@ for config in mode_configs.values():
     # Apply thresholds if any
     if ENDGAME_INFO and config.thresholds:
         for date, stages, one_stages, star_num in config.thresholds:
-            if ENDGAME_INFO.collect_date <= date:
+            if ENDGAME_INFO.collect_date >= date:
                 config.all_stages = stages
                 config.one_stage = one_stages
                 config.star_num_threshold = star_num

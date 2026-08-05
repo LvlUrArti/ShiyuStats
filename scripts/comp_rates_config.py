@@ -153,32 +153,32 @@ mode_sfx = "_da" if da_mode else "_sd"
 class ModeConfig(BaseModel):
     """Configuration for a game mode."""
 
-    default_stages: list[str]
-    default_one_stage: list[str]
-    star_num_default: int
+    all_stages: list[str]
+    one_stage: list[str]
+    star_num_threshold: int
     thresholds: list[tuple[datetime, list[str], list[str], int]]
 
 
 # Mode configurations
-MODES_CONFIG: dict[str, ModeConfig] = {
+mode_configs: dict[str, ModeConfig] = {
     "da": ModeConfig(
-        default_stages=["1-1", "1-2", "1-3", "2-1"],
-        default_one_stage=["1-1", "1-2", "1-3"],
-        star_num_default=3,
+        all_stages=["1-1", "1-2", "1-3", "2-1"],
+        one_stage=["1-1", "1-2", "1-3"],
+        star_num_threshold=3,
         thresholds=[
             # Adversity mode added in 3.1.1
             (datetime(2026, 7, 29), ["1-1", "1-2", "1-3"], ["1-1", "1-2", "1-3"], 3),
         ],
     ),
     "sd": ModeConfig(
-        default_stages=["5-1", "5-2", "5-3"],
-        default_one_stage=["5-1", "5-2", "5-3"],
-        star_num_default=3,
+        all_stages=["5-1", "5-2", "5-3"],
+        one_stage=["5-1", "5-2", "5-3"],
+        star_num_threshold=3,
         thresholds=[],
     ),
 }
 
-cfg = MODES_CONFIG.get(args.mode)
+cfg = mode_configs.get(args.mode)
 
 if cfg is None:
     all_stages: list[str] = []
@@ -192,9 +192,9 @@ else:
             sys_exit()
 
     # Initial values
-    all_stages = cfg.default_stages
-    one_stage = cfg.default_one_stage
-    star_num_threshold = cfg.star_num_default
+    all_stages = cfg.all_stages
+    one_stage = cfg.one_stage
+    star_num_threshold = cfg.star_num_threshold
 
     # Apply thresholds if any
     if ENDGAME_INFO and cfg.thresholds:

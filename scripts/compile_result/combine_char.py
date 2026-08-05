@@ -12,6 +12,7 @@ from comp_rates_config import (
     ENDGAME_INFO,
     ENDGAME_INFOS,
     RECENT_PHASE,
+    mode_configs,
 )
 from pydantic import BaseModel
 
@@ -307,12 +308,19 @@ def get_previous_mode_phase(mode: str) -> str:
     return RECENT_PHASE
 
 
+adversity_mode = "2-1" in mode_configs["da"].all_stages
+
 # Format: (key suffix, file suffix) - empty string means base variant
 VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
 
 # Format: {mode: [(boss number, room id), ...]}
 BOSS_ROOMS = {
-    "da": [(1, "1-1"), (2, "1-2"), (3, "1-3"), (4, "2-1")],
+    "da": [
+        (1, "1-1"),
+        (2, "1-2"),
+        (3, "1-3"),
+        *([(4, "2-1")] if adversity_mode else []),
+    ],
     "sd": [(1, "5-1"), (2, "5-2"), (3, "5-3")],
 }
 
@@ -601,7 +609,7 @@ def process_chars() -> None:
                     "_boss_1",
                     "_boss_2",
                     "_boss_3",
-                    *(["_boss_4"] if mode == "da" else []),
+                    *(["_boss_4"] if (mode == "da" and adversity_mode) else []),
                 ]
                 for boss_idx, boss_suf in enumerate(boss_suffixes):
                     for var_off, var_suf in enumerate(variants):

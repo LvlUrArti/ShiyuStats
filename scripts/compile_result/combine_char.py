@@ -84,7 +84,6 @@ class BaseCharacterStats(BaseModel):
     app_rate_m0: float
     avg_round: int
     std_dev_round: int
-    q1_round: int
     role: str
     rarity: str
     diff: float

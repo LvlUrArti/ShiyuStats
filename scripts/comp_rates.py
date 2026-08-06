@@ -34,6 +34,7 @@ from comp_rates_config import (
     mode_sfx,
     one_stage,
     run_commands,
+    score_mode,
     sig_weaps,
 )
 from composition import Composition
@@ -480,7 +481,11 @@ def comp_usages_write(
         )
     else:
         comps_dict = dict(
-            sorted(comps_dict.items(), key=lambda t: t[1].round, reverse=True),
+            sorted(
+                comps_dict.items(),
+                key=lambda t: t[1].round,
+                reverse=da_mode or score_mode,
+            ),
         )
     comp_names: list[str] = []
 
@@ -670,7 +675,11 @@ def boo_usages_write(
     out_chars: list[dict[str, str | int | float]] = []
     out_chars_csv: list[dict[str, str | int | float]] = []
     chars_dict = dict(
-        sorted(chars_dict.items(), key=lambda t: t[1].round, reverse=da_mode),
+        sorted(
+            chars_dict.items(),
+            key=lambda t: t[1].round,
+            reverse=da_mode or score_mode,
+        ),
     )
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {
@@ -733,7 +742,11 @@ def char_usages_write(
     weap_len = 10
     arti_len = 10
     chars_dict = dict(
-        sorted(chars_dict.items(), key=lambda t: t[1].round, reverse=True),
+        sorted(
+            chars_dict.items(),
+            key=lambda t: t[1].round,
+            reverse=da_mode or score_mode,
+        ),
     )
     for char, cur_char in chars_dict.items():
         out_chars_append: dict[str, str | int | float] = {

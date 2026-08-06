@@ -144,9 +144,6 @@ sd_mode: bool = args.mode == "sd"
 if not da_mode:
     da_mode = False
 
-DEFAULT_ROUND = 0
-CONS_LIMIT = 2
-
 mode_sfx = "_da" if da_mode else "_sd"
 
 
@@ -155,8 +152,9 @@ class ModeConfig(BaseModel):
 
     all_stages: list[str]
     one_stage: list[str]
+    score_mode: bool = True
     star_num_threshold: int
-    thresholds: list[tuple[datetime, list[str], list[str], int]]
+    thresholds: list[tuple[datetime, list[str], list[str], int, bool]]
 
 
 # Mode configurations
@@ -172,25 +170,38 @@ mode_configs: dict[str, ModeConfig] = {
                 ["1-1", "1-2", "1-3", "2-1"],
                 ["1-1", "1-2", "1-3"],
                 3,
+                True,
             ),
         ],
     ),
+    # TODO: Times only recorded since 1.4.1
     "sd": ModeConfig(
-        all_stages=["5-1", "5-2", "5-3"],
-        one_stage=["5-1", "5-2", "5-3"],
+        all_stages=["7-1", "7-2"],
+        one_stage=["7-1", "7-2"],
         star_num_threshold=3,
-        thresholds=[],
+        score_mode=False,
+        thresholds=[
+            # Scoring changed in 2.5.1
+            (
+                datetime(2025, 12, 30),
+                ["5-1", "5-2", "5-3"],
+                ["5-1", "5-2", "5-3"],
+                3,
+                True,
+            ),
+        ],
     ),
 }
 
 for config in mode_configs.values():
     # Apply thresholds if any
     if ENDGAME_INFO and config.thresholds:
-        for date, stages, one_stages, star_num in config.thresholds:
+        for date, stages, one_stages, star_num, score_mode_bool in config.thresholds:
             if ENDGAME_INFO.collect_date >= date:
                 config.all_stages = stages
                 config.one_stage = one_stages
                 config.star_num_threshold = star_num
+                config.score_mode = score_mode_bool
                 break
 
 cfg = mode_configs.get(args.mode)
@@ -199,6 +210,7 @@ if cfg is None:
     all_stages: list[str] = []
     one_stage: list[str] = []
     star_num_threshold = 3
+    score_mode = True
 else:
     # Check version exists
     if ENDGAME_INFO:
@@ -209,7 +221,11 @@ else:
     all_stages = cfg.all_stages
     one_stage = cfg.one_stage
     star_num_threshold = cfg.star_num_threshold
+    score_mode = cfg.score_mode
 
+
+DEFAULT_ROUND = 0 if da_mode or score_mode else 600
+CONS_LIMIT = 2
 
 RECENT_PHASE_SFX = RECENT_PHASE + mode_sfx
 BASE_RESULT_PATH = f"results/all_results/{RECENT_PHASE}/{RECENT_PHASE_SFX}"

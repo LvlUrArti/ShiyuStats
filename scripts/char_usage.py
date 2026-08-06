@@ -12,7 +12,6 @@ from comp_rates_config import (
     DEFAULT_ROUND,
     F2P_ONLY,
     WHALE_ONLY,
-    da_mode,
     one_stage,
     sig_weaps,
 )
@@ -206,7 +205,7 @@ def appearances(
             if not uses_room:
                 is_count_cycles = False
             elif chambers == one_stage:
-                char_item.sample_app_flat = uses_room[1 if da_mode else 5]
+                char_item.sample_app_flat = uses_room[int(one_stage[0][0])]
             for uses_room_num in uses_room.values():
                 if uses_room_num < 10:
                     is_count_cycles = False

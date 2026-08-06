@@ -55,7 +55,6 @@ class CharacterData:
     base_atk: int
     base_def: int
     base_impact: int
-    sheer_force: int
     crit_rate: float
     crit_dmg: float
     anomaly_mastery: int
@@ -80,12 +79,16 @@ class CharacterData:
     drive_slot_6: str
     drive_sets: str
 
+    # Rupture class released in 2.0
+    sheer_force: int | None = None
+
     @classmethod
     def from_dict(cls, data: dict[str, str | int | float]) -> CharacterData:
         """Convert dictionary (from CSV row) to a CharacterData instance."""
         return cls(**data)  # pyright: ignore[reportArgumentType]
 
 
+# TODO: Builds only added in 1.7.1
 def transform_csv_data(file_path: str) -> dict[str, dict[str, CharacterData]]:
     """Transform the CSV data into a dictionary of UID → {character: CharacterData}."""
     result: dict[str, dict[str, CharacterData]] = {}

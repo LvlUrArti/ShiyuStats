@@ -313,14 +313,9 @@ adversity_mode = "2-1" in mode_configs["da"].all_stages
 VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
 
 # Format: {mode: [(boss number, room id), ...]}
-BOSS_ROOMS = {
-    "da": [
-        (1, "1-1"),
-        (2, "1-2"),
-        (3, "1-3"),
-        *([(4, "2-1")] if adversity_mode else []),
-    ],
-    "sd": [(1, "5-1"), (2, "5-2"), (3, "5-3")],
+BOSS_ROOMS: dict[str, list[tuple[int, str]]] = {
+    mode: [(int(stage[-1]), stage) for stage in config.all_stages]
+    for mode, config in mode_configs.items()
 }
 
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
@@ -603,12 +598,9 @@ def process_chars() -> None:
             ]
 
             for mode, base in base_modes:
-                boss_suffixes = [
+                boss_suffixes: list[str] = [
                     "",
-                    "_boss_1",
-                    "_boss_2",
-                    "_boss_3",
-                    *(["_boss_4"] if (mode == "da" and adversity_mode) else []),
+                    *([f"_boss_{i}" for i, _room in BOSS_ROOMS[mode]]),
                 ]
                 for boss_idx, boss_suf in enumerate(boss_suffixes):
                     for var_off, var_suf in enumerate(variants):

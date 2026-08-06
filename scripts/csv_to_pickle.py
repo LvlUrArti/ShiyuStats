@@ -129,7 +129,7 @@ def main() -> None:
                 comp = Composition(
                     player=player,
                     comp_chars=comp_chars_temp,
-                    round_num=int(line["score"]),
+                    round_num=int(line.get("score", line.get("time"))),
                     star_num=star_num,
                     room=Stage(stage, node),
                     bangboo=line.get("bangboo", line.get("ch4")),

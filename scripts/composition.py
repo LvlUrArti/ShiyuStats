@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
-from comp_rates_config import CHARS_INFO, da_mode, star_num_threshold
+from comp_rates_config import CHARS_INFO, da_mode, score_mode, star_num_threshold
 
 if TYPE_CHECKING:
     from comp_rates_config import RoleLit
@@ -151,6 +151,11 @@ class Composition:
 
         high_score = self.round_num >= (50000 if da_mode else 45000)
         max_score = self.round_num >= (55000 if da_mode else 49000)
+
+        if not da_mode and not score_mode:
+            high_score = self.round_num <= 15
+            max_score = self.round_num <= 10
+
         return (any(cheat_conditions) and high_score) or max_score
 
     def contains_chars(self, chars: list[str]) -> bool:

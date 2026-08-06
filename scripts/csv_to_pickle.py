@@ -25,7 +25,7 @@ from comp_rates_config import (
     skip_self,
 )
 from composition import Composition, Stage
-from player_phase import PlayerPhase
+from player_phase import OwnedChars, PlayerPhase
 
 
 @dataclass
@@ -174,11 +174,13 @@ def main() -> None:
                     player = PlayerPhase(last_uid)
                 player.add_character(
                     line["name"],
-                    line["level"],
-                    line["cons"],
-                    line["weapon"],
-                    line["element"],
-                    line["artifacts"],
+                    OwnedChars(
+                        level=line["level"],
+                        cons=line["cons"],
+                        weapon=line["weapon"],
+                        element=line["element"],
+                        artifacts=line["artifacts"],
+                    ),
                 )
     all_players[last_uid] = player
 

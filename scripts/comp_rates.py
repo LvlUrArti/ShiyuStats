@@ -52,7 +52,7 @@ loaded_data: PickleData = load_pickle_data("../data/pickle/data" + mode_sfx + ".
 all_players: dict[str, PlayerPhase] = loaded_data.all_players
 all_comps: list[Composition] = loaded_data.all_comps
 avg_round_stage: dict[str, list[int]] = loaded_data.avg_round_stage
-sample_size: dict[int | str, dict[str, int | float]] = loaded_data.sample_size
+sample_size: dict[int | str, dict[str, int | float]] = {}
 all_comp_uids: set[str] = set()
 
 if isfile("../../uids.csv"):
@@ -264,21 +264,25 @@ def used_comps(
             comps_dict[comp_tuple].whale_count.add(comp.player)
         if whale_comp == WHALE_ONLY and (not F2P_ONLY or f2p_comp):
             comps_dict[comp_tuple].round_num_dict[cur_room].append(comp.round_num)
-            # TODO: Move sample size to comp_rates.py
             avg_round_stage[str(cur_room)].append(comp.round_num)
-
-    for stage, round_stage in avg_round_stage.items():
-        if round_stage:
-            sample_size[stage]["avg_round"] = round(mean(round_stage or [0]), 2)
 
     chamber_num = list(str(filename).split("-"))
     if len(chamber_num) > 1 and chamber_num[1] == "1":
-        sample_size[chamber_num[0]]["total"] = len(all_comp_uids)
-        sample_size[chamber_num[0]]["prydwen"] = len(all_comp_self_uids)
-        sample_size[chamber_num[0]]["random"] = len(all_comp_random_uids)
-        sample_size[chamber_num[0]]["interknot"] = len(all_comp_interknot_uids)
-        sample_size[chamber_num[0]]["star_db"] = len(all_comp_star_db_uids)
-        sample_size[chamber_num[0]]["hoyobuddy"] = len(all_comp_hoyobuddy_uids)
+        stage = chamber_num[0]
+        sample_size[stage] = {
+            "total": len(all_comp_uids),
+            "prydwen": len(all_comp_self_uids),
+            "random": len(all_comp_random_uids),
+            "interknot": len(all_comp_interknot_uids),
+            "star_db": len(all_comp_star_db_uids),
+            "hoyobuddy": len(all_comp_hoyobuddy_uids),
+            "avg_round": (
+                round(mean((avg_round_stage[stage]) or [0]), 2)
+                if stage in avg_round_stage
+                else 0
+            ),
+        }
+
     if WHALE_ONLY:
         print("Whale percentage: " + str(whale_count / len(all_comp_uids)))
     return comps_dict

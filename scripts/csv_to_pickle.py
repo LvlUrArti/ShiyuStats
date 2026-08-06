@@ -35,7 +35,6 @@ class PickleData:
     all_players: dict[str, PlayerPhase]
     all_comps: list[Composition]
     avg_round_stage: dict[str, list[int]]
-    sample_size: dict[int | str, dict[str, int | float]]
 
 
 def save_pickle_data(filename: str, data: PickleData) -> None:
@@ -138,9 +137,6 @@ def main() -> None:
                 )
                 all_comps.append(comp)
 
-    sample_size: dict[int | str, dict[str, int | float]] = {}
-    for chamber_num in all_chambers:
-        sample_size[chamber_num] = {}
     avg_round_stage: dict[str, list[int]] = {}
     for chamber_num in all_chambers:
         avg_round_stage[chamber_num] = []
@@ -198,7 +194,6 @@ def main() -> None:
         all_players=all_players,
         all_comps=all_comps,
         avg_round_stage=avg_round_stage,
-        sample_size=sample_size,
     )
 
     save_pickle_data("../data/pickle/data" + mode_sfx + ".pkl", data)

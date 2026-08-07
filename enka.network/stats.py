@@ -88,7 +88,6 @@ class CharacterData:
         return cls(**data)  # pyright: ignore[reportArgumentType]
 
 
-# TODO: Builds only added in 1.7.1
 def transform_csv_data(file_path: str) -> dict[str, dict[str, CharacterData]]:
     """Transform the CSV data into a dictionary of UID → {character: CharacterData}."""
     result: dict[str, dict[str, CharacterData]] = {}
@@ -126,7 +125,11 @@ if os.path.exists("../data/raw_csvs_real/"):
     filename = "../data/raw_csvs_real/" + RECENT_PHASE + "_build.csv"
 else:
     filename = "../data/raw_csvs/" + RECENT_PHASE + "_build.csv"
-data = transform_csv_data(filename)
+try:
+    data = transform_csv_data(filename)
+except FileNotFoundError:
+    print("No build data found.")
+    data = {}
 
 type_hints = CharacterData.__annotations__
 statkeys = [key for key, type_ in type_hints.items() if type_ != "str"]

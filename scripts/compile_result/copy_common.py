@@ -43,7 +43,7 @@ if ENDGAME_INFO:
             writer = csv.writer(f)
             writer.writerow(["boss", "floor"])
             writer.writerows(
-                [getattr(ENDGAME_INFO.da, f"boss_{i}"), i] for i in range(1, 4)
+                [getattr(ENDGAME_INFO.da, f"boss_{i}", ""), i] for i in range(1, 5)
             )
 
     make_archive("../../results/results", "zip", "../../results/web_results")

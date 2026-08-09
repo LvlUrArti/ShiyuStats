@@ -94,6 +94,7 @@ def get_version_map(
                     "boss_1": endgame["boss_1"],
                     "boss_2": endgame["boss_2"],
                     "boss_3": endgame["boss_3"],
+                    "boss_4": endgame.get("boss_4", None),
                 }
 
             version_map[version][split_name] = entry

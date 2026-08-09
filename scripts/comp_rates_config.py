@@ -47,6 +47,7 @@ class EndgameMode(BaseModel):
     boss_1: str | None = None
     boss_2: str | None = None
     boss_3: str | None = None
+    boss_4: str | None = None
 
     @field_validator("start", "end", mode="before")
     @classmethod

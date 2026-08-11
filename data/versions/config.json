@@ -411,6 +411,23 @@
     }
   },
   "2.5.2": {
+    "collect_date": "12/01/2026",
+    "sd": {
+      "ver": "2.5.2",
+      "start": "09/01/2026",
+      "end": "23/01/2026"
+    },
+    "da": {
+      "ver": "2.5.1",
+      "start": "02/01/2026",
+      "end": "16/01/2026",
+      "boss_1": "Primordial Nightmare: \"The Creator\"",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "Wandering Hunter",
+      "boss_4": null
+    }
+  },
+  "2.5.3": {
     "collect_date": "26/01/2026",
     "sd": {
       "ver": "2.5.3",
@@ -424,23 +441,6 @@
       "boss_1": "The Defiler",
       "boss_2": "Notorious: Marionette",
       "boss_3": "Miasma Priest",
-      "boss_4": null
-    }
-  },
-  "2.5.3": {
-    "collect_date": "03/02/2026",
-    "sd": {
-      "ver": "2.5.3",
-      "start": "23/01/2026",
-      "end": "06/02/2026"
-    },
-    "da": {
-      "ver": "2.5.3",
-      "start": "30/01/2026",
-      "end": "13/02/2026",
-      "boss_1": "Primordial Nightmare: \"The Creator\"",
-      "boss_2": "Unknown Corruption Complex",
-      "boss_3": "Wandering Hunter",
       "boss_4": null
     }
   },

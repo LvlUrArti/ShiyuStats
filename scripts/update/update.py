@@ -221,7 +221,7 @@ class EndgameConfig(BaseModel):
 
 
 enemies: dict[str, dict[str, str]] = load_from_url(
-    "https://www.buhflipexplode.org/assets/zzz/enemies.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/assets/zzz/enemies.json",
 )
 
 
@@ -247,7 +247,7 @@ def add_endgame(versions_dict: dict[str, dict[str, Any]]) -> dict[str, dict[str,
 save_entries: dict[str, dict[str, dict[str, str]]] = {}
 
 sd_data: list[dict[str, dict[str, dict[str, str]]]] = load_from_url(
-    "https://www.buhflipexplode.org/zzz/sd/sd-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/zzz/sd/sd-versions.json",
 )
 for entry in sd_data:
     name = str(entry["name"])
@@ -255,7 +255,7 @@ for entry in sd_data:
         save_entries["Shiyu Defense"] = add_endgame(entry["versions"])
 
 da_data: dict[str, dict[str, str]] = load_from_url(
-    "https://www.buhflipexplode.org/zzz/da/da-versions.json",
+    "https://raw.githubusercontent.com/spiritfxxxx/buhflipexplode-src/refs/heads/main/zzz/da/da-versions.json",
 )
 save_entries["Deadly Assault"] = add_endgame(da_data)
 

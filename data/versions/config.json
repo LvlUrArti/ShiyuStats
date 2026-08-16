@@ -607,7 +607,7 @@
     "da": {
       "ver": "3.0.3",
       "start": "17/07/2026",
-      "end": "29/07/2026",
+      "end": "28/07/2026",
       "boss_1": "Phaethon of the Scorched Horizon",
       "boss_2": "Notorious: Pompey",
       "boss_3": "Miasmic Fiend: Unfathomable",
@@ -623,12 +623,29 @@
     },
     "da": {
       "ver": "3.1.1",
-      "start": "29/07/2026",
-      "end": "13/08/2026",
+      "start": "28/07/2026",
+      "end": "14/08/2026",
       "boss_1": "Girtablullu: Stagnant Aberrant",
       "boss_2": "Notorious: Dead End Butcher",
       "boss_3": "Unknown Corruption Complex",
-      "boss_4": "Integrated - Girtablullu"
+      "boss_4": "Integrated: Girtablullu"
+    }
+  },
+  "3.1.2": {
+    "collect_date": "16/08/2026",
+    "sd": {
+      "ver": "3.1.1",
+      "start": "07/08/2026",
+      "end": "21/08/2026"
+    },
+    "da": {
+      "ver": "3.1.2",
+      "start": "14/08/2026",
+      "end": "28/08/2026",
+      "boss_1": "Girtablullu: Stagnant Aberrant",
+      "boss_2": "Ye Shiyuan the Thrall",
+      "boss_3": "Miasma Priest",
+      "boss_4": "Rewritten: Sanguine Sweeper"
     }
   }
 }

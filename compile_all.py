@@ -16,7 +16,7 @@ HF_DATA_DIR = path.join(SCRIPTS_DIR, "hf_data")
 ENKA_DIR = path.join(BASE_DIR, "enka.network")
 COMPILE_RESULT_DIR = path.join(SCRIPTS_DIR, "compile_result")
 WEB_RESULTS_DIR = path.join(BASE_DIR, "results", "web_results")
-NEW_DATA = False
+NEW_DATA = True
 
 
 def run_sequential(cmd: list[str], cwd: str) -> None:
@@ -139,7 +139,7 @@ def main(add_args: list[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    versions_to_process: list[str] = ["1.6.1"]
+    versions_to_process: list[str] = []
 
     try:
         if len(versions_to_process) == 0:

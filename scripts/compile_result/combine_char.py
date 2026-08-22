@@ -314,7 +314,7 @@ VARIANTS = [("", ""), ("_e1", "_C1"), ("_s0", "_E0S0")]
 
 # Format: {mode: [(boss number, room id), ...]}
 BOSS_ROOMS: dict[str, list[tuple[int, str]]] = {
-    mode: [(int(stage[-1]), stage) for stage in config.all_stages]
+    mode: [(stage_num + 1, stage) for stage_num, stage in enumerate(config.all_stages)]
     for mode, config in mode_configs.items()
 }
 

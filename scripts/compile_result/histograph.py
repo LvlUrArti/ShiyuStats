@@ -27,7 +27,7 @@ for char_info in CHARS_INFO.values():
 # ----------------------------------------------------------------------
 # Group versions by mode and collect data dictionaries
 # ----------------------------------------------------------------------
-modes = ["sd", "da"]
+modes = ["sd", "da", "da_adversity"]
 
 
 def get_latest_unique_versions(
@@ -45,7 +45,7 @@ def get_latest_unique_versions(
     # Iterate over outer keys
     for patch_ver, patch_data in ENDGAME_INFOS.items():
         for mode in modes:
-            mode_obj = getattr(patch_data, mode)
+            mode_obj = getattr(patch_data, mode if mode != "da_adversity" else "da")
             version = mode_obj.ver if mode_obj else None
             if version:
                 mode_versions[mode].append((patch_ver, version))
@@ -84,9 +84,14 @@ for mode, versions in selected_versions.items():
     e1_data[mode] = []
 
     for version in versions:
-        base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
-        e0_path = f"{base_path}/all.json"
-        e1_path = f"{base_path}/all_C1.json"
+        if mode == "da_adversity":
+            base_path = f"../../results/all_results/{version}/{version}_da/chars"
+            e0_path = f"{base_path}/2-1.json"
+            e1_path = f"{base_path}/2-1_C1.json"
+        else:
+            base_path = f"../../results/all_results/{version}/{version}_{mode}/chars"
+            e0_path = f"{base_path}/all.json"
+            e1_path = f"{base_path}/all_C1.json"
         data_e0 = load_base_stats(e0_path)
         data_e1 = load_base_stats(e1_path)
         if data_e0:
@@ -113,6 +118,7 @@ modes_phases_data: dict[str, dict[str, list[dict[str, BaseCharacterStats]]]] = {
 default_values = {
     "sd": 22000,
     "da": 18000,
+    "da_adversity": 9000,
 }
 
 for char in sorted(all_chars):

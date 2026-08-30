@@ -739,5 +739,18 @@
         "faction": "Covenant of Dayat",
         "release_date": 1785283200,
         "role": "dps"
+    },
+    "Sigrid": {
+        "id": "1591",
+        "name": "Sigrid",
+        "full_name": "Sigrid de L'Azur",
+        "slug": "sigrid",
+        "element": "Ice",
+        "availability": "Limited S",
+        "specialty": "Attack",
+        "attack_type": "",
+        "faction": "Airspace Patrol Department",
+        "release_date": 1787097600,
+        "role": "dps"
     }
 }

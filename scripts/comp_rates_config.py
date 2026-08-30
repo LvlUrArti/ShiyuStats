@@ -29,7 +29,7 @@ parser.add_argument("-n", "--no", action="store_true")
 
 args = parser.parse_args()
 
-RECENT_PHASE: str = args.version or "3.1.2"
+RECENT_PHASE: str = args.version or "3.1.3"
 
 
 def relative_path(relative_path: str) -> str:

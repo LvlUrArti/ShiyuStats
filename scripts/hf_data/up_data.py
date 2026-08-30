@@ -115,7 +115,9 @@ def scan_upload_and_clean() -> None:
         return
 
     files_to_upload = [
-        f for f in listdir(LOCAL_DATA_DIR) if f.endswith((".csv", ".json"))
+        f
+        for f in listdir(LOCAL_DATA_DIR)
+        if (f.endswith((".csv", ".json")) and f.startswith(RECENT_PHASE))
     ]
 
     if not files_to_upload:
@@ -271,11 +273,7 @@ def delete_build_files() -> None:
     all_files = api.list_repo_files(repo_id=REPO_ID, repo_type="dataset")
 
     # 2. Filter for your target pattern (*_build_char.csv)
-    files_to_delete = [
-        f
-        for f in all_files
-        if (f.endswith("_build_char.csv") and f.startswith(RECENT_PHASE))
-    ]
+    files_to_delete = [f for f in all_files if (f.endswith("_build_char.csv"))]
 
     if not files_to_delete:
         print("✨ No files matching the pattern were found.")

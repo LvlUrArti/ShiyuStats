@@ -981,5 +981,30 @@
         "id": "14159",
         "name": "Knight's Extolment",
         "availability": "Limited S"
+    },
+    "[Lunar] Semiluna": {
+        "id": "12016",
+        "name": "[Lunar] Semiluna",
+        "availability": "B"
+    },
+    "Catty Luck": {
+        "id": "13017",
+        "name": "Catty Luck",
+        "availability": "A"
+    },
+    "Bloodmarrow Coffer": {
+        "id": "13021",
+        "name": "Bloodmarrow Coffer",
+        "availability": "A"
+    },
+    "Crimson Thirst": {
+        "id": "14161",
+        "name": "Crimson Thirst",
+        "availability": "Limited S"
+    },
+    "Crimson Moon Casket": {
+        "id": "14162",
+        "name": "Crimson Moon Casket",
+        "availability": "Limited S"
     }
 }

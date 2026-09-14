@@ -748,9 +748,22 @@
         "element": "Ice",
         "availability": "Limited S",
         "specialty": "Attack",
-        "attack_type": "",
+        "attack_type": "Pierce",
         "faction": "Airspace Patrol Department",
         "release_date": 1787097600,
+        "role": "dps"
+    },
+    "Claret": {
+        "id": "1611",
+        "name": "Claret",
+        "full_name": "Claret Flint",
+        "slug": "claret",
+        "element": "Electric",
+        "availability": "Limited S",
+        "specialty": "Armorer",
+        "attack_type": "Slash, Strike",
+        "faction": "Flint Workshop",
+        "release_date": 1788912000,
         "role": "dps"
     }
 }

@@ -131,7 +131,7 @@ for char in sorted(all_chars):
         match CHARS_BY_SLUG[char].specialty:
             case "Anomaly":
                 entry["role"] = "anomdps"
-            case "Attack" | "Rupture":
+            case "Attack" | "Rupture" | "Armorer":
                 entry["role"] = "critdps"
             case _:
                 entry["role"] = "support"

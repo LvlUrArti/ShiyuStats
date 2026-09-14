@@ -88,6 +88,7 @@ RoleLit = Literal[
     "Support",
     "Defense",
     "Rupture",
+    "Armorer",
 ]
 
 

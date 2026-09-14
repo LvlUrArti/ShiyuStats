@@ -141,6 +141,7 @@ SPECIALTY_MAP: dict[int, str] = {
     4: "Support",
     5: "Defense",
     6: "Rupture",
+    7: "Armorer",
 }
 
 
@@ -170,7 +171,7 @@ for char_id, char in raw_chars.items():
                 "role": "support",
             }
 
-            if char.type in {1, 3, 6}:
+            if char.type in {1, 3, 6, 7}:
                 is_sub_dps = input(f"Is {char_name} a sub-DPS? (y/n): ")
                 chars[char_name]["role"] = "subdps" if is_sub_dps == "y" else "dps"
 

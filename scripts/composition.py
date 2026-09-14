@@ -71,6 +71,7 @@ class Composition:
             "Support": 0,
             "Defense": 0,
             "Rupture": 0,
+            "Armorer": 0,
         }
         if comp_chars_cons:
             for char_iter in range(len(comp_chars)):

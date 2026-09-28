@@ -5,7 +5,7 @@
 import warnings
 
 from bs4 import BeautifulSoup
-from cloudscraper import create_scraper
+from curl_cffi import requests
 
 URL = "https://zenless-zone-zero.fandom.com/wiki/Agent"
 
@@ -27,9 +27,7 @@ MONTHS = [
 
 def scrape_wiki_chars() -> list[dict[str, str | int]]:
     """Scrape agent data from the wiki."""
-    scraper = create_scraper()
-    resp = scraper.get(URL)
-    resp.raise_for_status()
+    resp = requests.get(URL, impersonate="chrome124")
 
     soup = BeautifulSoup(resp.text, "html.parser")
 

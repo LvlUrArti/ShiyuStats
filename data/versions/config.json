@@ -681,5 +681,22 @@
       "boss_3": "Ye Shiyuan the Thrall",
       "boss_4": "Integrated: Scorched Horizon"
     }
+  },
+  "3.2.2": {
+    "collect_date": "28/09/2026",
+    "sd": {
+      "ver": "3.2.1",
+      "start": "18/09/2026",
+      "end": "02/10/2026"
+    },
+    "da": {
+      "ver": "3.2.2",
+      "start": "25/09/2026",
+      "end": "09/10/2026",
+      "boss_1": "Kusarikku",
+      "boss_2": "Miasmic Fiend: Unfathomable",
+      "boss_3": "Ye Shiyuan the Thrall",
+      "boss_4": "Integrated: Scorched Horizon"
+    }
   }
 }

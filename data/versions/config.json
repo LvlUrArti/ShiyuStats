@@ -698,5 +698,22 @@
       "boss_3": "Ye Shiyuan the Thrall",
       "boss_4": "Integrated: Scorched Horizon"
     }
+  },
+  "3.2.3": {
+    "collect_date": "12/10/2026",
+    "sd": {
+      "ver": "3.2.2",
+      "start": "02/10/2026",
+      "end": "16/10/2026"
+    },
+    "da": {
+      "ver": "3.2.3",
+      "start": "09/10/2026",
+      "end": "23/10/2026",
+      "boss_1": "Phaethon of the Scorched Horizon",
+      "boss_2": "Infernal Revenant",
+      "boss_3": "Kusarikku",
+      "boss_4": "Integrated: Girtablullu"
+    }
   }
 }

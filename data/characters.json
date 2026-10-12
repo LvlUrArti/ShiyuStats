@@ -765,5 +765,18 @@
         "faction": "Flint Workshop",
         "release_date": 1788912000,
         "role": "dps"
+    },
+    "Roxy": {
+        "id": "1621",
+        "name": "Roxy",
+        "full_name": "Roxy Ifrita Pryce",
+        "slug": "roxy",
+        "element": "Wind",
+        "availability": "Limited S",
+        "specialty": "Stun",
+        "attack_type": "Strike",
+        "faction": "Flint Workshop",
+        "release_date": 1790726400,
+        "role": "support"
     }
 }

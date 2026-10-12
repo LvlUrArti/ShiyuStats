@@ -22,6 +22,24 @@ run_all_chars = True
 run_chars_name = ["Miyabi"]
 
 
+iter_start = 0
+iter_end = 120
+
+if os.path.exists(f"../../char_data{iter_start}.csv"):
+    uidlist: set[int] = set()
+    try:
+        for i in range(iter_start, iter_end):
+            print(f"\x1b[1K\r{i} / {iter_end}", end="")
+
+            with open(f"../../char_data{i}.csv", encoding="cp1252") as f:
+                reader = csv.reader(f, delimiter=",")
+                headers = next(reader)
+                char_data_temp = list(reader)
+                for j in char_data_temp:
+                    uidlist.add(int(j[0]))
+    except FileNotFoundError:
+        pass
+    uids = list(uidlist)
 if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
     with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")

@@ -35,7 +35,7 @@ from utils.notif import send_notification
 if TYPE_CHECKING:
     from enka.zzz import ShowcaseResponse
 
-print(len(uids))
+print(f"\x1b[1K\r{len(uids)}")
 
 
 class CustomEncoder(json.JSONEncoder):

@@ -40,7 +40,7 @@ if os.path.exists(f"../../char_data{iter_start}.csv"):
     except FileNotFoundError:
         pass
     uids = list(uidlist)
-if os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
+elif os.path.exists(f"../{BASE_RESULT_PATH}/uids.csv"):
     with open(f"../{BASE_RESULT_PATH}/uids.csv", encoding="UTF8") as f:
         reader = csv.reader(f, delimiter=",")
         uids = list(reader)

@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.append("../scripts/")
-from comp_rates_config import BASE_RESULT_PATH, RECENT_PHASE
+from comp_rates_config import BASE_RESULT_PATH, RECENT_PHASE, mode_sfx
 from enka.zzz import AgentStatType, SkillType, StatType
 
 skip_self = False
@@ -24,19 +24,19 @@ run_chars_name = ["Miyabi"]
 
 iter_start = 0
 iter_end = 120
+filename = mode_sfx.replace("_sd", "")
 
-if os.path.exists(f"../../char_data{iter_start}.csv"):
-    uidlist: set[int] = set()
+if os.path.exists(f"../../spiraldata{filename}{iter_start}.csv"):
+    uidlist: list[int] = []
     try:
         for i in range(iter_start, iter_end):
             print(f"\x1b[1K\r{i} / {iter_end}", end="")
 
-            with open(f"../../char_data{i}.csv", encoding="cp1252") as f:
+            with open(f"../../spiraldata{filename}{i}.csv", encoding="cp1252") as f:
                 reader = csv.reader(f, delimiter=",")
                 headers = next(reader)
-                char_data_temp = list(reader)
-                for j in char_data_temp:
-                    uidlist.add(int(j[0]))
+                spiraldata_temp = list(reader)
+                uidlist.extend(int(j[0]) for j in spiraldata_temp)
     except FileNotFoundError:
         pass
     uids = list(uidlist)

@@ -1,6 +1,7 @@
 """Combine JSON results from different game modes into a unified build dataset."""
 
 import json
+from datetime import date
 from os.path import exists
 from sys import path as sys_path
 
@@ -321,11 +322,29 @@ BOSS_ROOMS: dict[str, list[tuple[int, str]]] = {
 raw: dict[str, dict[str, BaseCharacterStats]] = {}
 raw_full: dict[str, dict[str, FullCharacterStats]] = {}
 modes = ["sd", "da"]
+previous_phases: dict[str, str] = {
+    mode: get_previous_mode_phase(mode) for mode in modes
+}
+char_release_dates: dict[str, date] = {
+    info.slug: info.release_date.date() for info in CHARS_INFO.values()
+}
+
+
+def is_new_char(char: str, mode: str) -> bool:
+    """Return True if the character released after the previous phase collection."""
+    if ENDGAME_INFO is None:
+        return False
+    prev_info = ENDGAME_INFOS.get(previous_phases[mode])
+    if prev_info is None:
+        return False
+    release = char_release_dates.get(char)
+    if release is None:
+        return False
+    return prev_info.collect_date.date() < release <= ENDGAME_INFO.collect_date.date()
+
 
 for suf in ["", "_prev"]:
-    phases = {
-        mode: get_previous_mode_phase(mode) if suf else RECENT_PHASE for mode in modes
-    }
+    phases = previous_phases if suf else dict.fromkeys(modes, RECENT_PHASE)
     for mode in modes:
         folder = get_read_path(phases[mode], mode)
         raw_full[f"{mode}{suf}"] = load_full_stats(f"{folder}/all.json")
@@ -624,6 +643,10 @@ def process_chars() -> None:
                     "sample_size_players",
                     char,
                 )
+
+                # Only include is_new for the most recent phase (not previous)
+                if suf == "":
+                    out[f"is_new_{mode}"] = is_new_char(char, mode)
 
         # ----- 3. Mindscape round data (0..6) for base modes -----
         round_modes = [

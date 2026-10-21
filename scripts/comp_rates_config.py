@@ -176,7 +176,6 @@ mode_configs: dict[str, ModeConfig] = {
             ),
         ],
     ),
-    # TODO: Times only recorded since 1.4.1
     "sd": ModeConfig(
         all_stages=["7-1", "7-2"],
         one_stage=["7-1", "7-2"],

@@ -245,7 +245,6 @@ char_app_rate_threshold = 0.25
 # threshold for comps, not inclusive
 app_rate_threshold = 0.1
 app_rate_threshold_round = 0
-json_threshold = 0
 skew_num = 0.8
 duo_dict_len = 30
 duo_dict_len_print = 10

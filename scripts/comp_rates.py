@@ -30,7 +30,6 @@ from comp_rates_config import (
     char_infographics,
     da_mode,
     duo_dict_len,
-    json_threshold,
     mode_sfx,
     one_stage,
     run_commands,
@@ -173,7 +172,6 @@ class CompUsage(Composition):
         self.boo_freq: dict[str, int] = {}
         self.bangboo: str
         self.is_count_round: bool
-        self.is_count_round_print: bool
         self.app_rate: float
         self.round: float
         self.usage_rate: float
@@ -322,20 +320,15 @@ def rank_usages(
                     avg_round.append(mean(cur_round))
 
         cur_comp.is_count_round = True
-        cur_comp.is_count_round_print = True
         if rooms == one_stage:
             for uses_room_num in uses_room.values():
                 if uses_room_num < 20:
                     cur_comp.is_count_round = False
-                if uses_room_num < 3:
-                    cur_comp.is_count_round_print = False
         elif len(rooms) == 1 and cur_comp.uses < 15:
             if WHALE_ONLY and cur_comp.uses < 10:
                 cur_comp.is_count_round = False
             else:
                 cur_comp.is_count_round = False
-            if cur_comp.uses < 2:
-                cur_comp.is_count_round_print = False
 
         rounded_avg_round: float
         rounded_avg_round = round(mean(avg_round)) if avg_round else DEFAULT_ROUND
@@ -551,9 +544,7 @@ def comp_usages_write(
             outvar_comps_append["app_rate"] = str(cur_comp.app_rate) + "%"
             outvar_comps_append["avg_round"] = str(cur_comp.round)
             outvar_comps.append(outvar_comps_append)
-        if not info_char and (
-            cur_comp.is_count_round_print and (cur_comp.app_rate >= json_threshold)
-        ):
+        if not info_char:
             out = name_filter(list(comp), mode="out")
             for i in range(3):
                 out[i] = CHARS_INFO[out[i]].slug

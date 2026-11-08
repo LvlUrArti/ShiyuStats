@@ -235,6 +235,18 @@
     "3.2.3": {
       "time_start": "16/10/2026",
       "time_end": "30/10/2026"
+    },
+    "3.3.1": {
+      "time_start": "30/10/2026",
+      "time_end": "13/11/2026"
+    },
+    "3.3.2": {
+      "time_start": "13/11/2026",
+      "time_end": "27/11/2026"
+    },
+    "3.3.3": {
+      "time_start": "27/11/2026",
+      "time_end": "11/12/2026"
     }
   },
   "Deadly Assault": {
@@ -571,6 +583,30 @@
       "boss_1": "Phaethon of the Scorched Horizon",
       "boss_2": "Infernal Revenant",
       "boss_3": "Kusarikku",
+      "boss_4": "Integrated: Girtablullu"
+    },
+    "3.3.1": {
+      "time_start": "23/10/2026",
+      "time_end": "06/11/2026",
+      "boss_1": "Etheric Other: Truvia",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Discordant Solo: Vesper",
+      "boss_4": "Integrated: Stagnant Aberrant"
+    },
+    "3.3.2": {
+      "time_start": "06/11/2026",
+      "time_end": "20/11/2026",
+      "boss_1": "Etheric Other: Truvia",
+      "boss_2": "Infernal Revenant",
+      "boss_3": "Typhon Destroyer",
+      "boss_4": "Rewritten: Sanguine Sweeper"
+    },
+    "3.3.3": {
+      "time_start": "20/11/2026",
+      "time_end": "02/12/2026",
+      "boss_1": "Infernal Revenant",
+      "boss_2": "Kusarikku",
+      "boss_3": "Phaethon of the Scorched Horizon",
       "boss_4": "Integrated: Girtablullu"
     }
   }

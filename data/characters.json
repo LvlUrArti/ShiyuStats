@@ -778,5 +778,18 @@
         "faction": "Flint Workshop",
         "release_date": 1790726400,
         "role": "support"
+    },
+    "Phoenix": {
+        "id": "1641",
+        "name": "Phoenix",
+        "full_name": "Phoenix Reffaella",
+        "slug": "phoenix",
+        "element": "Fire",
+        "availability": "Limited S",
+        "specialty": "Anomaly",
+        "attack_type": "Slash",
+        "faction": "Krampus Compliance Authority",
+        "release_date": 1792540800,
+        "role": "dps"
     }
 }

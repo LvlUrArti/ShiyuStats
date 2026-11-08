@@ -1006,5 +1006,20 @@
         "id": "14162",
         "name": "Crimson Moon Casket",
         "availability": "Limited S"
+    },
+    "Candlelit Scheme": {
+        "id": "13022",
+        "name": "Candlelit Scheme",
+        "availability": "A"
+    },
+    "Incarcerating Grip": {
+        "id": "14163",
+        "name": "Incarcerating Grip",
+        "availability": "Limited S"
+    },
+    "Plume of Rebirth": {
+        "id": "14164",
+        "name": "Plume of Rebirth",
+        "availability": "Limited S"
     }
 }

@@ -715,5 +715,22 @@
       "boss_3": "Kusarikku",
       "boss_4": "Integrated: Girtablullu"
     }
+  },
+  "3.3.1": {
+    "collect_date": "25/10/2026",
+    "sd": {
+      "ver": "3.2.3",
+      "start": "16/10/2026",
+      "end": "30/10/2026"
+    },
+    "da": {
+      "ver": "3.3.1",
+      "start": "23/10/2026",
+      "end": "06/11/2026",
+      "boss_1": "Etheric Other: Truvia",
+      "boss_2": "Unknown Corruption Complex",
+      "boss_3": "Discordant Solo: Vesper",
+      "boss_4": "Integrated: Stagnant Aberrant"
+    }
   }
 }

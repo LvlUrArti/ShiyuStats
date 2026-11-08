@@ -732,5 +732,22 @@
       "boss_3": "Discordant Solo: Vesper",
       "boss_4": "Integrated: Stagnant Aberrant"
     }
+  },
+  "3.3.2": {
+    "collect_date": "08/11/2026",
+    "sd": {
+      "ver": "3.3.1",
+      "start": "30/10/2026",
+      "end": "13/11/2026"
+    },
+    "da": {
+      "ver": "3.3.2",
+      "start": "06/11/2026",
+      "end": "20/11/2026",
+      "boss_1": "Etheric Other: Truvia",
+      "boss_2": "Infernal Revenant",
+      "boss_3": "Typhon Destroyer",
+      "boss_4": "Rewritten: Sanguine Sweeper"
+    }
   }
 }

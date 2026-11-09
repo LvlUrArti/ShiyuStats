@@ -12,6 +12,73 @@ if TYPE_CHECKING:
 with open("../data/drive_affixes.json") as relic_file:
     articombinations = json.load(relic_file)
 
+# Affix groups in their JSON order, plus the set of all drives that belong to
+# one of those groups.
+AFFIX_GROUPS: list[list[str]] = list(articombinations.values())
+GROUPED_DRIVES: set[str] = {drive for drives in AFFIX_GROUPS for drive in drives}
+
+
+def _parse_artifacts(artifacts: str) -> tuple[list[list[str]], int]:
+    """Split a drive combination string into [prefix, drive] slots.
+
+    The prefix is either an empty string or the literal "4p", meaning that the
+    slot holds the 4-piece set and must never be replaced. Slot order is kept.
+    Any "Flex" tokens are counted separately since they are always placed last.
+    """
+    slots: list[list[str]] = []
+    flex_count = 0
+    for raw in artifacts.split(","):
+        token = raw.strip()
+        if not token:
+            continue
+        if token.lower() == "flex":
+            flex_count += 1
+            continue
+        prefix = ""
+        parts = token.split(None, 1)
+        if len(parts) == 2 and parts[0].lower() == "4p":
+            prefix = parts[0]
+            token = parts[1].strip()
+        slots.append([prefix, token])
+    return slots, flex_count
+
+
+def normalize_artifacts(artifacts: str) -> str:
+    """Normalize a drive combination string using the affix groups.
+
+    Drives that are not the 4-piece set are replaced by the earliest drive
+    (in JSON order) of the same affix group that is still available. Names
+    already used by a 4-piece set are never reused, and slots of the same
+    group are reassigned in their original order, which keeps the output
+    sorted by the group order.
+    """
+    slots, flex_count = _parse_artifacts(artifacts)
+
+    # Fixed names that may never be handed out: 4-piece drives and drives that
+    # do not belong to any affix group.
+    used: set[str] = set()
+    for prefix, drive in slots:
+        if prefix or drive not in GROUPED_DRIVES:
+            used.add(drive)
+
+    for drives in AFFIX_GROUPS:
+        slot_indices = [
+            index
+            for index, (prefix, drive) in enumerate(slots)
+            if not prefix and drive in drives
+        ]
+        available = [drive for drive in drives if drive not in used]
+        for index in slot_indices:
+            if not available:
+                break
+            new_drive = available.pop(0)
+            slots[index][1] = new_drive
+            used.add(new_drive)
+
+    parts = [f"{prefix} {drive}" if prefix else drive for prefix, drive in slots]
+    parts.extend("Flex" for _ in range(flex_count))
+    return ", ".join(parts)
+
 
 ElemLit = Literal[
     "Ice",
@@ -66,30 +133,7 @@ class PlayerPhase:
         char: OwnedChars,
     ) -> None:
         """Add in a character to the owned characters dict."""
-        for arti in articombinations:
-            articom: list[str] = []
-            comarti: list[str] = []
-            for artiset in articombinations[arti]:
-                articom.append(artiset + ", ")
-                comarti.append(", " + artiset)
-            replaced = False
-            arti_name = articombinations[arti][0]
-            for arti_replace in comarti:
-                if arti_replace in char.artifacts and "4p" not in char.artifacts:
-                    char.artifacts = char.artifacts.replace(
-                        arti_replace,
-                        ", " + arti_name,
-                    )
-                    replaced = True
-            if replaced:
-                arti_name = articombinations[arti][1]
-            for arti_replace in articom:
-                if arti_replace in char.artifacts and "4p" not in char.artifacts:
-                    char.artifacts = char.artifacts.replace(arti_replace, "")
-                    char.artifacts = char.artifacts + ", " + arti_name
-
-        if "Flex, " in char.artifacts:
-            char.artifacts = char.artifacts.replace("Flex, ", "") + ", Flex"
+        char.artifacts = normalize_artifacts(char.artifacts)
         self.owned[name] = char
 
     def add_comp(self, composition: Composition) -> None:
